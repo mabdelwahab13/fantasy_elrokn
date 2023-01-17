@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "723251504251",
+    "firebase_url": "https://fantasy-el-rokn-default-rtdb.firebaseio.com",
+    "project_id": "fantasy-el-rokn",
+    "storage_bucket": "fantasy-el-rokn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:723251504251:android:dee19c320a902afba96ede",
+        "android_client_info": {
+          "package_name": "com.example.fantasy_elrokn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "723251504251-3uo92blvj0rhm9i2sf16d7d78eh6aodk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fantasy_elrokn",
+            "certificate_hash": "d0a630f9886bf35c28c8784730f71aff54216ff0"
+          }
+        },
+        {
+          "client_id": "723251504251-p9td3n74bafiak6p6efo4khd9jio2981.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4hZd-fQnapEu1TE3xwyRgPWR3FS9TBjM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "723251504251-p9td3n74bafiak6p6efo4khd9jio2981.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
