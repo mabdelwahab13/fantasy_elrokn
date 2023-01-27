@@ -45,10 +45,10 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Container(
                   alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.4,
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -67,7 +67,7 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
                 flex: 1,
                 child: Container(
                     alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width * 0.25,
+                    width: MediaQuery.of(context).size.width * 0.2,
                     child: Text(
                       '${widget.points['event_transfers_cost']}',
                       style: SharedFonts.subWhiteFont,
@@ -77,7 +77,7 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
                 flex: 1,
                 child: Container(
                   alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.2,
                   child: Text(
                     '${widget.points['points']}',
                     style: SharedFonts.subWhiteFont,
@@ -88,7 +88,7 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
                 flex: 1,
                 child: Container(
                   alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.2,
                   child: Text(
                     '${widget.points['total_points']}',
                     style: SharedFonts.subWhiteFont,
@@ -131,10 +131,10 @@ class PlayerDataTopRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Container(
               alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width * 0.25,
+              width: MediaQuery.of(context).size.width * 0.4,
               child: Text(
                 'Player',
                 style: SharedFonts.whiteFont,
@@ -145,7 +145,7 @@ class PlayerDataTopRow extends StatelessWidget {
             flex: 1,
             child: Container(
               alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width * 0.25,
+              width: MediaQuery.of(context).size.width * 0.2,
               child: Text(
                 'Min',
                 style: SharedFonts.whiteFont,
@@ -156,7 +156,7 @@ class PlayerDataTopRow extends StatelessWidget {
             flex: 1,
             child: Container(
               alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width * 0.25,
+              width: MediaQuery.of(context).size.width * 0.2,
               child: Text(
                 'GW',
                 style: SharedFonts.whiteFont,
@@ -167,7 +167,7 @@ class PlayerDataTopRow extends StatelessWidget {
             flex: 1,
             child: Container(
               alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width * 0.25,
+              width: MediaQuery.of(context).size.width * 0.2,
               child: Text(
                 'Total',
                 style: SharedFonts.whiteFont,

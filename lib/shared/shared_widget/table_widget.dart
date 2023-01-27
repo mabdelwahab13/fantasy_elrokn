@@ -54,9 +54,9 @@ class _TableWidgetState extends State<TableWidget> {
               8: FlexColumnWidth(1.5),
               9: FlexColumnWidth(1),
             },
-            border: const TableBorder(
+            border: TableBorder(
               horizontalInside: BorderSide(
-                color: Colors.white,
+                color: SharedColors.yellowColor,
                 width: 2,
               ),
             ),

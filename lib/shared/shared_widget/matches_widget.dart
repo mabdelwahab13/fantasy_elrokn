@@ -17,6 +17,7 @@ class MatchesScreenWidget extends StatefulWidget {
 }
 
 class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
+  EdgeInsets padding = EdgeInsets.only(top: 15, bottom: 15);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,75 +32,149 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
           borderRadius: BorderRadius.circular(15),
           color: SharedColors.backgroundGreyColor,
         ),
-        padding: const EdgeInsets.all(15),
-        child: ListTile(
-          title: Text(
-            '${widget.division}\n',
-            style: SharedFonts.whiteFont,
-          ),
-          subtitle: ListView.builder(
-            //physics: const NeverScrollableScrollPhysics(),
-            itemCount: widget.numOfMatches,
-            itemBuilder: (context, index) {
-              return const MatchesWidget();
-            },
-          ),
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Text(
+              widget.division,
+              style: SharedFonts.whiteFont,
+            ),
+            SizedBox(height: 20,),
+            Table(
+              columnWidths: const {
+                0: FlexColumnWidth(3.5),
+                1: FlexColumnWidth(1),
+                2: FlexColumnWidth(0.3),
+                3: FlexColumnWidth(1),
+                4: FlexColumnWidth(3.5),
+              },
+              border: TableBorder(
+                horizontalInside: BorderSide(
+                color: SharedColors.yellowColor,
+                  width: 2,
+                ),
+              ),
+              children: [
+                for(int i =0; i<10; i++)
+                TableRow(
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Container(
+                       alignment: Alignment.center,
+                       padding: padding,
+                        child: Text(
+                          'The Gabblers',
+                          style: SharedFonts.whiteMatchesFont,
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Container(
+                        alignment: Alignment.center,
+                        color: SharedColors.greenTable,
+                        child: Text(
+                          '300',
+                          style: SharedFonts.whiteFont,
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Container(
+                       alignment: Alignment.center,
+                        child: Text(
+                          ':',
+                          style: SharedFonts.whiteFont,
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Container(
+                       alignment: Alignment.center,
+                        color: SharedColors.redTable,
+                        child: Text(
+                          '300',
+                          style: SharedFonts.whiteFont,
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Container(
+                       alignment: Alignment.center,
+                       padding: padding,
+                        child: Text(
+                          'Xhakalaka Boom',
+                          style: SharedFonts.whiteMatchesFont,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class MatchesWidget extends StatelessWidget {
-  const MatchesWidget({super.key});
+ 
+// class MatchesWidget extends StatelessWidget {
+//   const MatchesWidget({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 10),
-      alignment: Alignment.center,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text('Team1', style: SharedFonts.subWhiteFont),
-          Container(
-            alignment: Alignment.center,
-            height: 40,
-            width: 50,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15), color: Colors.grey),
-            child: Text(
-              '300',
-              style: SharedFonts.subWhiteFont,
-            ),
-          ),
-          const Text(
-            ':',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
-            ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            height: 40,
-            width: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.grey,
-            ),
-            child: Text(
-              '300',
-              style: SharedFonts.subWhiteFont,
-            ),
-          ),
-          Text(
-            'Team2',
-            style: SharedFonts.subWhiteFont,
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: const EdgeInsets.only(bottom: 10),
+//       alignment: Alignment.center,
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         children: [
+//           Text('Team1', style: SharedFonts.subWhiteFont),
+//           Container(
+//             alignment: Alignment.center,
+//             height: 40,
+//             width: 50,
+//             decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(15), color: Colors.grey),
+//             child: Text(
+//               '300',
+//               style: SharedFonts.subWhiteFont,
+//             ),
+//           ),
+//           const Text(
+//             ':',
+//             style: TextStyle(
+//               fontSize: 20,
+//               fontWeight: FontWeight.bold,
+//               color: Colors.grey,
+//             ),
+//           ),
+//           Container(
+//             alignment: Alignment.center,
+//             height: 40,
+//             width: 50,
+//             decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(15),
+//               color: Colors.grey,
+//             ),
+//             child: Text(
+//               '300',
+//               style: SharedFonts.subWhiteFont,
+//             ),
+//           ),
+//           Text(
+//             'Team2',
+//             style: SharedFonts.subWhiteFont,
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

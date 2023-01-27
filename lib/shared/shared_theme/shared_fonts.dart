@@ -35,4 +35,9 @@ class SharedFonts {
     fontSize: 15,
   );
 
+  static TextStyle whiteMatchesFont = TextStyle(
+    color: Colors.white,
+    fontSize: 17,
+  );
+
 }
