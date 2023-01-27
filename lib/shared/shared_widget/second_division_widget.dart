@@ -56,7 +56,7 @@ class _SecondDivisionWidgetState extends State<SecondDivisionWidget> {
           backgroundColor: SharedColors.backgroundGreyColor,
           title: Text(
             '${widget.title}',
-            style: SharedFonts.subYellowFontBold,
+            style: SharedFonts.yellowFont,
           ),
           bottom: _currentIndex == 0
               ? TabBar(

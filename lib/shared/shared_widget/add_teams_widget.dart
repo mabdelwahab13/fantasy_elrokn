@@ -1,9 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fantasy_elrokn/controllers/main_model.dart';
+import 'package:fantasy_elrokn/screens/admin/admin_division_one_screen.dart';
+import 'package:fantasy_elrokn/screens/admin/admin_group_one_screen.dart';
+import 'package:fantasy_elrokn/screens/admin/admin_group_two_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
-import 'package:fantasy_elrokn/controllers/team_controller.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/enabled_button_widget.dart';
@@ -25,7 +26,9 @@ class AddTeamsWidget extends StatefulWidget {
 
 class _AddTeamsWidgetState extends State<AddTeamsWidget> {
   TextEditingController teamNameController = TextEditingController();
-
+  int _idD1 = 0;
+  int _idG1 = 20;
+  int _idG2 = 38;
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
@@ -37,6 +40,118 @@ class _AddTeamsWidgetState extends State<AddTeamsWidget> {
               style: SharedFonts.yellowFont,
             ),
             backgroundColor: SharedColors.backgroundGreyColor,
+            leading: IconButton(
+              onPressed: () {
+                if (widget.league != 'D1') {
+                  if (widget.league != 'G1') {
+                    model.allGroupTwoTeams.isNotEmpty &&
+                            model.allGroupTwoTeams.length < 18
+                        ? ScaffoldMessenger.of(context).showSnackBar(
+                            snack('Enter all teams', SharedColors.redTable),
+                          )
+                        // showDialog(
+                        //     context: context,
+                        //     builder: (context) {
+                        //       return alertDialog(
+                        //         onPressedSure: () {
+                        //           model.resetGroupTwoData();
+                        //           Navigator.pushReplacement(
+                        //             context,
+                        //             MaterialPageRoute(
+                        //               builder: (context) {
+                        //                 return AdminGroupTwoScreen();
+                        //               },
+                        //             ),
+                        //           );
+                        //         },
+                        //         onPressedStay: () =>
+                        //             Navigator.of(context).pop(),
+                        //       );
+                        //     },
+                        //   )
+                        : Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return AdminGroupTwoScreen();
+                              },
+                            ),
+                          );
+                  } else {
+                    model.allGroupOneTeams.isNotEmpty &&
+                            model.allGroupOneTeams.length < 18
+                        ? ScaffoldMessenger.of(context).showSnackBar(
+                            snack('Enter all teams', SharedColors.redTable),
+                          )
+                        // showDialog(
+                        //     context: context,
+                        //     builder: (context) {
+                        //       return alertDialog(
+                        //         onPressedSure: () {
+                        //           model.resetGroupTwoData();
+                        //           Navigator.pushReplacement(
+                        //             context,
+                        //             MaterialPageRoute(
+                        //               builder: (context) {
+                        //                 return AdminGroupOneScreen();
+                        //               },
+                        //             ),
+                        //           );
+                        //         },
+                        //         onPressedStay: () =>
+                        //             Navigator.of(context).pop(),
+                        //       );
+                        //     },
+                        //   )
+                        : Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return AdminGroupOneScreen();
+                              },
+                            ),
+                          );
+                  }
+                } else {
+                  model.allDivOneTeams.isNotEmpty &&
+                          model.allDivOneTeams.length < 20
+                      ? ScaffoldMessenger.of(context).showSnackBar(
+                          snack('Enter all teams', SharedColors.redTable),
+                        )
+                      // showDialog(
+                      //     context: context,
+                      //     builder: (context) {
+                      //       return alertDialog(
+                      //         onPressedSure: () {
+                      //           model.resetGroupTwoData();
+                      //           Navigator.pushReplacement(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //               builder: (context) {
+                      //                 return AdminDivisionOneScreen();
+                      //               },
+                      //             ),
+                      //           );
+                      //         },
+                      //         onPressedStay: () => Navigator.of(context).pop(),
+                      //       );
+                      //     },
+                      //   )
+                      : Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return AdminDivisionOneScreen();
+                            },
+                          ),
+                        );
+                }
+              },
+              icon: Icon(
+                Icons.arrow_back,
+                color: SharedColors.yellowColor,
+              ),
+            ),
           ),
           body: GrediantBackgroundWidget(
             child: Padding(
@@ -68,13 +183,17 @@ class _AddTeamsWidgetState extends State<AddTeamsWidget> {
                               'pointsAgainst': 0,
                               'pointsDiff': 0,
                               'points': 0,
+                              'teamId': '$_idG2'
                             });
-                            isAddedG2
-                                ? ScaffoldMessenger.of(context).showSnackBar(
-                                    snack('Sucsses', SharedColors.greenTable))
-                                : ScaffoldMessenger.of(context).showSnackBar(
-                                    snack('Failed', SharedColors.redTable),
-                                  );
+                            if (isAddedG2) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snack('Sucsses', SharedColors.greenTable));
+                              _idG2++;
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                snack('Failed', SharedColors.redTable),
+                              );
+                            }
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               snack(
@@ -95,13 +214,17 @@ class _AddTeamsWidgetState extends State<AddTeamsWidget> {
                               'pointsAgainst': 0,
                               'pointsDiff': 0,
                               'points': 0,
+                              'teamId': '$_idG1'
                             });
-                            isAddedG1
-                                ? ScaffoldMessenger.of(context).showSnackBar(
-                                    snack('Sucsses', SharedColors.greenTable))
-                                : ScaffoldMessenger.of(context).showSnackBar(
-                                    snack('Failed', SharedColors.redTable),
-                                  );
+                            if (isAddedG1) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snack('Sucsses', SharedColors.greenTable));
+                              _idG1++;
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                snack('Failed', SharedColors.redTable),
+                              );
+                            }
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               snack(
@@ -122,13 +245,17 @@ class _AddTeamsWidgetState extends State<AddTeamsWidget> {
                             'pointsAgainst': 0,
                             'pointsDiff': 0,
                             'points': 0,
+                            'teamId': '$_idD1'
                           });
-                          isAddedD1
-                              ? ScaffoldMessenger.of(context).showSnackBar(
-                                  snack('Sucsses', SharedColors.greenTable))
-                              : ScaffoldMessenger.of(context).showSnackBar(
-                                  snack('Failed', SharedColors.redTable),
-                                );
+                          if (isAddedD1) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                snack('Sucsses', SharedColors.greenTable));
+                            _idD1++;
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              snack('Failed', SharedColors.redTable),
+                            );
+                          }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             snack(
@@ -186,5 +313,31 @@ SnackBar snack(String title, Color color) {
     content: Text('$title', style: SharedFonts.subWhiteFont),
     backgroundColor: color,
     duration: Duration(seconds: 3),
+  );
+}
+
+AlertDialog alertDialog(
+    {required Function onPressedSure, required Function onPressedStay}) {
+  return AlertDialog(
+    backgroundColor: SharedColors.backgroundBlackColor,
+    content: Text(
+        'You didn\'t enter all teams\n anything you added it will not save',
+        style: SharedFonts.whiteTableFont),
+    actions: [
+      TextButton(
+        onPressed: onPressedSure(),
+        child: Text(
+          'Sure',
+          style: SharedFonts.redFont,
+        ),
+      ),
+      TextButton(
+        onPressed: onPressedStay(),
+        child: Text(
+          'Stay',
+          style: SharedFonts.whiteTableFont,
+        ),
+      ),
+    ],
   );
 }

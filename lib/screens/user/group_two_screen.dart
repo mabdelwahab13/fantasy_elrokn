@@ -31,7 +31,7 @@ class _GroupTwoScreenState extends State<GroupTwoScreen> {
       // pointsScored: 0,
       // pointsAgainst: 0,
       // pointsDiff: 0,
-      navigatorScreen:  TeamProfileScreen(),
+      isUser:  true,
       league: 'G2',
     ),
     const PlayOffWidget(),

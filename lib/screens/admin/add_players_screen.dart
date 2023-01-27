@@ -1,65 +1,136 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import 'package:fantasy_elrokn/controllers/main_model.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/add_teams_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/enabled_button_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/grediant_backgound_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/txtfield_border.dart';
-import 'package:flutter/material.dart';
 
 import '../../shared/shared_theme/shared_fonts.dart';
 
-List<String> playerIDList =[];
-
 class AddPlayersScreen extends StatefulWidget {
-  const AddPlayersScreen({super.key});
+  String teamId;
+   AddPlayersScreen({
+    Key? key,
+    required this.teamId,
+  }) : super(key: key);
 
   @override
   State<AddPlayersScreen> createState() => _AddPlayersScreenState();
 }
 
 class _AddPlayersScreenState extends State<AddPlayersScreen> {
-  TextEditingController addedPlayerID = TextEditingController();
-  
+  TextEditingController addedPlayer1ID = TextEditingController();
+  TextEditingController addedPlayer2ID = TextEditingController();
+  TextEditingController addedPlayer3ID = TextEditingController();
+  TextEditingController addedPlayer4ID = TextEditingController();
+  TextEditingController addedPlayer5ID = TextEditingController();
+  List<String> playerIDList = [];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: SharedColors.backgroundGreyColor,
-        title: Text(
-          'Add Player',
-          style: SharedFonts.yellowFont,
-        ),
-      ),
-      body: GrediantBackgroundWidget(
-        child: Padding(
-          padding: EdgeInsets.all(30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AddPlayerTextField(
-                textFieldController: addedPlayerID,
-                hint: 'Enter the entered player ID',
-              ),
-              SizedBox(height: 20,),
-              EnabledButtonWidget(
-                buttonText: 'Add player',
-                onPressed: () {
-                  if (playerIDList.length < 5) {
-                  playerIDList.add(addedPlayerID.text);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    snack('Sucsses', SharedColors.greenTable),
-                  );
-                } else {
-                   ScaffoldMessenger.of(context).showSnackBar(
-                    snack('You already entered 5 Team', SharedColors.redTable),
-                  );
-                }
-                setState(() {});
-                },
-              ),
-            ],
+    return ScopedModelDescendant(
+      builder: (context, child, MainModel model) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: SharedColors.backgroundGreyColor,
+            title: Text(
+              'Add Player',
+              style: SharedFonts.yellowFont,
+            ),
           ),
-        ),
-      ),
+          body: GrediantBackgroundWidget(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(30),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AddPlayerTextField(
+                      textFieldController: addedPlayer1ID,
+                      hint: 'Enter player 1 ID',
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                     AddPlayerTextField(
+                      textFieldController: addedPlayer2ID,
+                      hint: 'Enter player 2 ID',
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    AddPlayerTextField(
+                      textFieldController: addedPlayer3ID,
+                      hint: 'Enter player 3 ID',
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    AddPlayerTextField(
+                      textFieldController: addedPlayer4ID,
+                      hint: 'Enter player 4 ID',
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    AddPlayerTextField(
+                      textFieldController: addedPlayer5ID,
+                      hint: 'Enter player 5 ID',
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    EnabledButtonWidget(
+                      buttonText: 'Add player',
+                      onPressed: () async {
+                        if (playerIDList.length < 5) {
+                          playerIDList.add(addedPlayer1ID.text.toString());
+                          playerIDList.add(addedPlayer2ID.text.toString());
+                          playerIDList.add(addedPlayer3ID.text.toString());
+                          playerIDList.add(addedPlayer4ID.text.toString());
+                          playerIDList.add(addedPlayer5ID.text.toString());
+                          model.addPlayersId({
+                            'playersId': playerIDList,
+                            'teamId': widget.teamId,
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            snack('Sucsses', SharedColors.greenTable),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            snack('You already entered 5 Payers',
+                                SharedColors.redTable),
+                          );
+                        }
+                        setState(() {});
+                      },
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        bool isReset = await model.resetAllData();
+                        isReset
+                            ? ScaffoldMessenger.of(context).showSnackBar(
+                                snack('Sucsses', SharedColors.greenTable))
+                            : ScaffoldMessenger.of(context).showSnackBar(
+                                snack('Failed', SharedColors.redTable),
+                              );
+                      },
+                      child: Text(
+                        'Reset',
+                        style: SharedFonts.redFont,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -95,7 +166,6 @@ class _AddPlayerTextFieldState extends State<AddPlayerTextField> {
     );
   }
 }
-
 
 SnackBar snack(String title, Color color) {
   return SnackBar(

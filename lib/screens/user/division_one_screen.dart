@@ -34,7 +34,7 @@ class _DivisionOneScreenState extends State<DivisionOneScreen> {
       // pointsScored: 0,
       // pointsAgainst: 0,
       // pointsDiff: 0,
-      navigatorScreen: TeamProfileScreen(),
+      isUser:true,
       league: 'D1',
     ),
   ];

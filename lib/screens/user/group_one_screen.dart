@@ -31,7 +31,7 @@ class _GroupOneScreenState extends State<GroupOneScreen> {
       // pointsScored: 0,
       // pointsAgainst: 0,
       // pointsDiff: 0,
-      navigatorScreen: TeamProfileScreen(),
+      isUser: true,
       league: 'G1',
     ),
     const PlayOffWidget(),

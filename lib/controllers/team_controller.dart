@@ -16,6 +16,15 @@ mixin TeamsController on Model {
   List<TeamDataModel> _allGroupTwoTeams = [];
   List<TeamDataModel> get allGroupTwoTeams => _allGroupTwoTeams;
 
+  bool _isD1Null =false;
+  bool get isD1Null => _isD1Null;
+
+  bool _isG1Null =false;
+  bool get isG1Null => _isG1Null;
+
+  bool _isG2Null =false;
+  bool get isG2Null => _isG2Null;
+
   Future<bool> addTeamsDivOne(Map<String, dynamic> teamData) async {
     http.Response response = await http.post(
       Uri.parse('${fireBase}teamsDivOne.json'),
@@ -69,14 +78,22 @@ mixin TeamsController on Model {
     http.Response response = await http.get(
       Uri.parse('${fireBase}teamsDivOne.json'),
     );
-    print(response.body);
 
     var teamsData = json.decode(response.body);
 
-    teamsData.forEach((k, v) {
-      v['id'] = k;
-      _allDivOneTeams.add(TeamDataModel.fromjson(v));
-    });
+    if (teamsData != null) {
+      teamsData.forEach(
+        (k, v) {
+          v['id'] = k;
+          _allDivOneTeams.add(TeamDataModel.fromjson(v));
+          _isD1Null=false;
+          notifyListeners();
+        },
+      );
+    }else{
+      _isD1Null=true;
+      notifyListeners();
+    }
 
     notifyListeners();
   }
@@ -86,13 +103,17 @@ mixin TeamsController on Model {
       Uri.parse('${fireBase}teamsGroupOne.json'),
     );
 
-
     var teamsData = json.decode(response.body);
 
-    teamsData.forEach((k, v) {
+    if(teamsData!=null){
+      teamsData.forEach((k, v) {
       v['id'] = k;
       _allGroupOneTeams.add(TeamDataModel.fromjson(v));
+      _isG1Null=false;
     });
+    }else{
+      _isG1Null=true;
+    }
 
     notifyListeners();
   }
@@ -103,12 +124,76 @@ mixin TeamsController on Model {
     );
 
     var teamsData = json.decode(response.body);
-    print(teamsData);
-    teamsData.forEach((k, v) {
+   
+   if(teamsData!=null){
+     teamsData.forEach((k, v) {
       v['id'] = k;
       _allGroupTwoTeams.add(TeamDataModel.fromjson(v));
+      _isG2Null=false;
     });
+   }else{
+    _isG2Null=true;
+   }
 
     notifyListeners();
   }
+   Future<bool> resetAllData() async {
+    http.Response response = await http.delete(
+      Uri.parse('$fireBase.json'),
+    );
+
+    if (response.statusCode == 200) {
+      notifyListeners();
+      return true;
+    } else {
+      notifyListeners();
+      return false;
+    }
+  }
+
+ Future<bool> resetDivOneData() async {
+    http.Response response = await http.delete(
+      Uri.parse('${fireBase}teamsDivOne.json'),
+    );
+
+    if (response.statusCode == 200) {
+      notifyListeners();
+      return true;
+    } else {
+      notifyListeners();
+      return false;
+    }
+  }
+
+ Future<bool> resetGroupOneData() async {
+    http.Response response = await http.delete(
+      Uri.parse('${fireBase}teamsGroupOne.json'),
+    );
+
+    if (response.statusCode == 200) {
+      notifyListeners();
+      return true;
+    } else {
+      notifyListeners();
+      return false;
+    }
+  }
+
+
+  Future<bool> resetGroupTwoData() async {
+    http.Response response = await http.delete(
+      Uri.parse('${fireBase}teamsGroupTwo.json'),
+    );
+
+    if (response.statusCode == 200) {
+      notifyListeners();
+      return true;
+    } else {
+      notifyListeners();
+      return false;
+    }
+  }
+
+
+  
 }

@@ -16,7 +16,7 @@ class PlayerSubScreen extends StatefulWidget {
 class _PlayerSubScreenState extends State<PlayerSubScreen> {
   TextEditingController enteredPlayerID = TextEditingController();
   TextEditingController outputtedPlayerID = TextEditingController();
-  List<String> subedPlayers =[];
+  List<String> subedPlayers = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,47 +28,36 @@ class _PlayerSubScreenState extends State<PlayerSubScreen> {
         ),
       ),
       body: GrediantBackgroundWidget(
-      child: Padding(
-        padding: EdgeInsets.all(30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SubtitutionTextField(
-              textFieldController: enteredPlayerID,
-              hint: 'Enter the entered player ID',
-            ),
-            SizedBox(height: 20,),
-            SubtitutionTextField(
-              textFieldController: outputtedPlayerID,
-              hint: 'Enter the outputted player ID',
-            ),
-            SizedBox(height: 20,),
-            EnabledButtonWidget(
-                buttonText: 'Add player',
-                onPressed: () {
-                  if (playerIDList.contains(outputtedPlayerID.text)) {
-                    subedPlayers.add(outputtedPlayerID.text);
-                    playerIDList.remove(outputtedPlayerID.text);
-                    playerIDList.add(enteredPlayerID.text);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    snack('Sucsses', SharedColors.greenTable),
-                  );
-                } else {
-                   ScaffoldMessenger.of(context).showSnackBar(
-                    snack('Player is not member', SharedColors.redTable),
-                  );
-                }
-                setState(() {});
-                },
+        child: Padding(
+          padding: EdgeInsets.all(30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SubtitutionTextField(
+                textFieldController: enteredPlayerID,
+                hint: 'Enter the entered player ID',
               ),
-          ],
+              SizedBox(
+                height: 20,
+              ),
+              SubtitutionTextField(
+                textFieldController: outputtedPlayerID,
+                hint: 'Enter the outputted player ID',
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              EnabledButtonWidget(
+                buttonText: 'Add player',
+                onPressed: () {},
+              ),
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
 }
-
 
 class SubtitutionTextField extends StatefulWidget {
   TextEditingController textFieldController;

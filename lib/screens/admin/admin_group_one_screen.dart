@@ -33,7 +33,7 @@ class _AdminGroupOneScreenState extends State<AdminGroupOneScreen> {
       // pointsScored: 0,
       // pointsAgainst: 0,
       // pointsDiff: 0,
-      navigatorScreen: AdminTeamProfileScreen(),
+      isUser: false,
        league: 'G1',
     ),
     const PlayOffWidget(),

@@ -1,9 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:fantasy_elrokn/controllers/main_model.dart';
+import 'package:fantasy_elrokn/models/team_data_model.dart';
+import 'package:fantasy_elrokn/screens/admin/admin_team_profile_screen.dart';
+import 'package:fantasy_elrokn/screens/user/team_profile_screen_.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import 'package:fantasy_elrokn/controllers/main_model.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class TableWidget extends StatefulWidget {
   int numOfTeams;
@@ -16,21 +20,12 @@ class TableWidget extends StatefulWidget {
   // int pointsAgainst;
   // int pointsDiff;
   // int points;
-  Widget navigatorScreen;
+  bool isUser;
   String league;
   TableWidget({
     Key? key,
     required this.numOfTeams,
-    // required this.teamName,
-    // required this.matchPlayed,
-    // required this.wins,
-    // required this.draw,
-    // required this.lose,
-    // required this.pointsScored,
-    // required this.pointsAgainst,
-    // required this.pointsDiff,
-    // required this.points,
-    required this.navigatorScreen,
+    required this.isUser,
     required this.league,
   }) : super(key: key);
 
@@ -166,10 +161,33 @@ class _TableWidgetState extends State<TableWidget> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return widget.navigatorScreen;
+                              return widget.isUser
+                                  ? TeamProfileScreen(
+                                      index: i,
+                                      league: widget.league,
+                                      teamId: widget.league != 'D1'
+                                        ? widget.league != 'G1'
+                                            ? model
+                                                .allGroupTwoTeams[i]
+                                                .teamId
+                                            : model
+                                                .allGroupOneTeams[i]
+                                                .teamId
+                                        : model.allDivOneTeams[i]
+                                            .teamId,
+                                    )
+                                  : AdminTeamProfileScreen(
+                                      index: i,
+                                      league: widget.league,
+                                    );
                             },
                           ),
                         );
+                        model.getData(widget.league != 'D1'
+                            ? widget.league != 'G1'
+                                ? model.allGroupTwoTeams[i].teamId
+                                : model.allGroupOneTeams[i].teamId
+                            : model.allDivOneTeams[i].teamId);
                       },
                     ),
                     Container(
@@ -244,7 +262,7 @@ class _TableWidgetState extends State<TableWidget> {
                       padding: padding,
                       alignment: Alignment.center,
                       child: Text(
-                         widget.league != 'D1'
+                          widget.league != 'D1'
                               ? widget.league != 'G1'
                                   ? model.allGroupTwoTeams.isEmpty
                                       ? '0'
@@ -351,4 +369,3 @@ bool teamNum(int numOfTeams) {
     return false;
   }
 }
-

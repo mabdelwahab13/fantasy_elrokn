@@ -49,7 +49,7 @@ class _DivisionOneWidgetState extends State<DivisionOneWidget> {
           backgroundColor: SharedColors.backgroundGreyColor,
           title: Text(
             'Permier League',
-            style: SharedFonts.subYellowFontBold,
+            style: SharedFonts.yellowFont,
           ),
           bottom: _currentIndex == 0
               ? TabBar(

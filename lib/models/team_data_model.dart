@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class TeamDataModel {
   String id;
+  String teamId;
   String teamName;
   int matchesPlayed;
   int wins;
@@ -13,6 +14,7 @@ class TeamDataModel {
   
   TeamDataModel(
     this.id,
+    this.teamId,
     this.teamName,
     this.matchesPlayed,
     this.wins,
@@ -27,6 +29,7 @@ class TeamDataModel {
   factory TeamDataModel.fromjson(Map<String,dynamic> data){
     return TeamDataModel(
       data['id'],
+      data['teamId'],
       data['teamName'],
       data['matchesPlayed'],
       data['wins'],

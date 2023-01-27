@@ -22,7 +22,7 @@ class SharedFonts {
   );
   static TextStyle yellowFont = TextStyle(
     color: SharedColors.yellowColor,
-    fontSize: 30,
+    fontSize: 20,
     fontFamily: 'RubikBubbles',
     fontWeight: FontWeight.bold,
   );
@@ -30,10 +30,9 @@ class SharedFonts {
     color: SharedColors.yellowColor,
     fontSize: 15,
   );
-  static TextStyle subYellowFontBold = TextStyle(
-    color: SharedColors.yellowColor,
-    fontFamily: 'RubikBubbles',
-    fontWeight: FontWeight.bold,
-    fontSize: 17,
+   static TextStyle redFont = TextStyle(
+    color: SharedColors.redTable,
+    fontSize: 15,
   );
+
 }

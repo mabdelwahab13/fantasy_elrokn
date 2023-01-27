@@ -60,7 +60,7 @@ class _AwardsDataState extends State<AwardsData> {
       margin: const EdgeInsets.only(
         top: 10,
         left: 10.0,
-        bottom: 20,
+        bottom: 5,
         right: 10,
       ),
       padding: EdgeInsets.all(7),

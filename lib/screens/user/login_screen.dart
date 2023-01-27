@@ -9,6 +9,7 @@ import 'package:fantasy_elrokn/shared/shared_widget/grediant_backgound_widget.da
 import 'package:fantasy_elrokn/shared/shared_widget/password_textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:async/async.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  var cancelGetData;
   EmailTextFieldWidget emailTextFieldWidget = EmailTextFieldWidget();
   PasswordTextFieldWidget passwordTextFieldWidget = PasswordTextFieldWidget();
   @override
@@ -60,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   EnabledButtonWidget(
                     buttonText: 'Login',
-                    onPressed: () async{
+                    onPressed: () async {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -69,9 +71,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                       );
-                        await model.getTeamsDivOneData();
-                     await model.getTeamsGroupOneData();
-                     await model.getTeamsGroupTwoData();
+                     model.isD1Null
+                        ? cancelGetData = CancelableOperation.fromFuture(
+                            model.getTeamsDivOneData(),
+                          )
+                        : await model.getTeamsDivOneData();
+                    model.isG1Null
+                        ?  cancelGetData = CancelableOperation.fromFuture(
+                            model.getTeamsGroupOneData(),
+                          )
+                        : await model.getTeamsGroupOneData();
+                    model.isG1Null
+                        ? cancelGetData = CancelableOperation.fromFuture(
+                            model.getTeamsGroupTwoData(),
+                          )
+                        : await model.getTeamsGroupTwoData();
                     },
                   ),
                   SizedBox(
@@ -110,4 +124,12 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
   }
+}
+
+SnackBar snack(String title, Color color) {
+  return SnackBar(
+    content: Text('$title', style: SharedFonts.subWhiteFont),
+    backgroundColor: color,
+    duration: Duration(seconds: 3),
+  );
 }

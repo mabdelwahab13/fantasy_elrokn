@@ -1,6 +1,6 @@
 import 'package:fantasy_elrokn/controllers/main_model.dart';
 import 'package:fantasy_elrokn/screens/admin/admin_division_one_screen.dart';
-import 'package:fantasy_elrokn/screens/user/division_one_screen.dart';
+import 'package:async/async.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/email_textfield_widget.dart';
@@ -17,6 +17,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  var cancelGetData;
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
@@ -46,7 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 PasswordTextFieldWidget(),
                 EnabledButtonWidget(
                   buttonText: 'SignUp',
-                  onPressed: () async{
+                  onPressed: () async {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -55,9 +56,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                       ),
                     );
-                    await model.getTeamsDivOneData();
-                     await model.getTeamsGroupOneData();
-                     await model.getTeamsGroupTwoData();
+                    model.isD1Null
+                        ? cancelGetData = CancelableOperation.fromFuture(
+                            model.getTeamsDivOneData(),
+                          )
+                        : await model.getTeamsDivOneData();
+                    model.isG1Null
+                        ?  cancelGetData = CancelableOperation.fromFuture(
+                            model.getTeamsGroupOneData(),
+                          )
+                        : await model.getTeamsGroupOneData();
+                    model.isG1Null
+                        ? cancelGetData = CancelableOperation.fromFuture(
+                            model.getTeamsGroupTwoData(),
+                          )
+                        : await model.getTeamsGroupTwoData();
                   },
                 )
               ],
@@ -67,4 +80,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       },
     );
   }
+}
+
+SnackBar snack(String title, Color color) {
+  return SnackBar(
+    content: Text('$title', style: SharedFonts.subWhiteFont),
+    backgroundColor: color,
+    duration: Duration(seconds: 3),
+  );
 }
