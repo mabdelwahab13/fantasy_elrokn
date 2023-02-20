@@ -8,12 +8,14 @@ import 'package:fantasy_elrokn/shared/shared_widget/awards_widget.dart';
 class PlayerDataWidget extends StatefulWidget {
   String playerName;
   String playerTeamName;
-  Map points;
+  List points;
+  int event;
   PlayerDataWidget({
     Key? key,
     required this.playerName,
     required this.playerTeamName,
     required this.points,
+    required this.event,
   }) : super(key: key);
 
   @override
@@ -69,7 +71,7 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
                     alignment: Alignment.center,
                     width: MediaQuery.of(context).size.width * 0.2,
                     child: Text(
-                      '${widget.points['event_transfers_cost']}',
+                      '${widget.points[widget.event-1]['event_transfers_cost']}',
                       style: SharedFonts.subWhiteFont,
                     )),
               ),
@@ -79,7 +81,7 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: Text(
-                    '${widget.points['points']}',
+                    '${widget.points[widget.event-1]['points']}',
                     style: SharedFonts.subWhiteFont,
                   ),
                 ),
@@ -90,7 +92,7 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: Text(
-                    '${widget.points['total_points']}',
+                    '${widget.points[widget.event-1]['total_points']}',
                     style: SharedFonts.subWhiteFont,
                   ),
                 ),

@@ -1,20 +1,20 @@
 import 'dart:convert';
 
-import 'package:fantasy_elrokn/models/team_data_model.dart';
+import 'package:fantasy_elrokn/models/team_table_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
 
 String fireBase = 'https://fantasy-el-rokn-default-rtdb.firebaseio.com/';
 
 mixin TeamsController on Model {
-  List<TeamDataModel> _allDivOneTeams = [];
-  List<TeamDataModel> get allDivOneTeams => _allDivOneTeams;
+  List<TeamTableModel> _allDivOneTeams = [];
+  List<TeamTableModel> get allDivOneTeams => _allDivOneTeams;
 
-  List<TeamDataModel> _allGroupOneTeams = [];
-  List<TeamDataModel> get allGroupOneTeams => _allGroupOneTeams;
+  List<TeamTableModel> _allGroupOneTeams = [];
+  List<TeamTableModel> get allGroupOneTeams => _allGroupOneTeams;
 
-  List<TeamDataModel> _allGroupTwoTeams = [];
-  List<TeamDataModel> get allGroupTwoTeams => _allGroupTwoTeams;
+  List<TeamTableModel> _allGroupTwoTeams = [];
+  List<TeamTableModel> get allGroupTwoTeams => _allGroupTwoTeams;
 
   bool _isD1Null =false;
   bool get isD1Null => _isD1Null;
@@ -33,7 +33,7 @@ mixin TeamsController on Model {
 
     if (response.statusCode == 200) {
       teamData['id'] = json.decode(response.body)['name'];
-      _allDivOneTeams.add(TeamDataModel.fromjson(teamData));
+      _allDivOneTeams.add(TeamTableModel.fromjson(teamData));
       notifyListeners();
       return true;
     } else {
@@ -49,7 +49,7 @@ mixin TeamsController on Model {
     );
     if (response.statusCode == 200) {
       teamData['id'] = json.decode(response.body)['name'];
-      _allGroupOneTeams.add(TeamDataModel.fromjson(teamData));
+      _allGroupOneTeams.add(TeamTableModel.fromjson(teamData));
       notifyListeners();
       return true;
     } else {
@@ -65,7 +65,7 @@ mixin TeamsController on Model {
     );
     if (response.statusCode == 200) {
       teamData['id'] = json.decode(response.body)['name'];
-      _allGroupTwoTeams.add(TeamDataModel.fromjson(teamData));
+      _allGroupTwoTeams.add(TeamTableModel.fromjson(teamData));
       notifyListeners();
       return true;
     } else {
@@ -85,7 +85,7 @@ mixin TeamsController on Model {
       teamsData.forEach(
         (k, v) {
           v['id'] = k;
-          _allDivOneTeams.add(TeamDataModel.fromjson(v));
+          _allDivOneTeams.add(TeamTableModel.fromjson(v));
           _isD1Null=false;
           notifyListeners();
         },
@@ -108,7 +108,7 @@ mixin TeamsController on Model {
     if(teamsData!=null){
       teamsData.forEach((k, v) {
       v['id'] = k;
-      _allGroupOneTeams.add(TeamDataModel.fromjson(v));
+      _allGroupOneTeams.add(TeamTableModel.fromjson(v));
       _isG1Null=false;
     });
     }else{
@@ -128,7 +128,7 @@ mixin TeamsController on Model {
    if(teamsData!=null){
      teamsData.forEach((k, v) {
       v['id'] = k;
-      _allGroupTwoTeams.add(TeamDataModel.fromjson(v));
+      _allGroupTwoTeams.add(TeamTableModel.fromjson(v));
       _isG2Null=false;
     });
    }else{

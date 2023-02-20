@@ -63,7 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   EnabledButtonWidget(
                     buttonText: 'Login',
                     onPressed: () async {
-                      Navigator.pushReplacement(
+                      await model.getCurrentEvent();
+                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (_) {
@@ -86,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             model.getTeamsGroupTwoData(),
                           )
                         : await model.getTeamsGroupTwoData();
+                          await model.gameweekCreation();
                     },
                   ),
                   SizedBox(

@@ -71,6 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             model.getTeamsGroupTwoData(),
                           )
                         : await model.getTeamsGroupTwoData();
+                        await model.gameweekCreation();
                   },
                 )
               ],

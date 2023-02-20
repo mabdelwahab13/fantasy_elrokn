@@ -5,14 +5,16 @@ import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
 
 class AwardsWidget extends StatefulWidget {
-  String winner;
+  List winner;
   String award;
   String points;
+  int num;
   AwardsWidget({
     Key? key,
     required this.winner,
     required this.award,
     required this.points,
+    required this.num,
   }) : super(key: key);
 
   @override
@@ -26,15 +28,29 @@ class _AwardsWidgetState extends State<AwardsWidget> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: SharedColors.backgroundGreyColor,
-          border: Border.all(
-              color: SharedColors.yellowColor,
-              width: 2,
-            ),
+        border: Border.all(
+          color: SharedColors.yellowColor,
+          width: 2,
+        ),
       ),
       child: ListTile(
-        subtitle: Text('${widget.winner}', style: SharedFonts.subWhiteFont),
-        title: Text('${widget.award}', style: SharedFonts.subWhiteFont),
-        trailing: Text('${widget.points}', style: SharedFonts.subWhiteFont),
+        subtitle: Column(
+          children: [
+            for(int i=0; i<widget.num;i++)
+            Text(
+              widget.winner[i],
+              style: SharedFonts.subWhiteFont,
+            ),
+          ],
+        ),
+        title: Text(
+          widget.award,
+          style: SharedFonts.subWhiteFont,
+        ),
+        trailing: Text(
+          widget.points,
+          style: SharedFonts.subWhiteFont,
+        ),
       ),
     );
   }

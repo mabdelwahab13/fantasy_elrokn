@@ -77,7 +77,18 @@ class _AdminTeamProfileScreenState extends State<AdminTeamProfileScreen> {
                             onPressed: () {
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (context) {
-                                  return PlayerSubScreen();
+                                  return PlayerSubScreen(
+                                    teamID: widget.league != 'D1'
+                                        ? widget.league != 'G1'
+                                            ? model
+                                                .allGroupTwoTeams[widget.index]
+                                                .teamId
+                                            : model
+                                                .allGroupOneTeams[widget.index]
+                                                .teamId
+                                        : model.allDivOneTeams[widget.index]
+                                            .teamId,
+                                  );
                                 },
                               ));
                             },
@@ -108,6 +119,7 @@ class _AdminTeamProfileScreenState extends State<AdminTeamProfileScreen> {
                     ? model.allGroupTwoTeams[widget.index].teamId
                     : model.allGroupOneTeams[widget.index].teamId
                 : model.allDivOneTeams[widget.index].teamId,
+            event: model.currentEvent,
           ),
         );
       },

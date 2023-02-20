@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-class TeamDataModel {
+class TeamTableModel {
   String id;
   String teamId;
   String teamName;
@@ -12,7 +12,7 @@ class TeamDataModel {
   int pointsDiff;
   int points;
   
-  TeamDataModel(
+  TeamTableModel(
     this.id,
     this.teamId,
     this.teamName,
@@ -26,8 +26,8 @@ class TeamDataModel {
     this.points,
   );
 
-  factory TeamDataModel.fromjson(Map<String,dynamic> data){
-    return TeamDataModel(
+  factory TeamTableModel.fromjson(Map<String,dynamic> data){
+    return TeamTableModel(
       data['id'],
       data['teamId'],
       data['teamName'],

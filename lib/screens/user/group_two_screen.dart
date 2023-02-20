@@ -15,27 +15,7 @@ class GroupTwoScreen extends StatefulWidget {
 }
 
 class _GroupTwoScreenState extends State<GroupTwoScreen> {
-  final List<Widget> _children = [
-    MatchesScreenWidget(
-      division: 'Group Two',
-      numOfMatches: 9,
-    ),
-    TableWidget(
-       numOfTeams: 18,
-      // teamName: ['Team1'],
-      // matchPlayed: 0,
-      // wins: 0,
-      // draw: 0,
-      // lose: 0,
-      // points: 0,
-      // pointsScored: 0,
-      // pointsAgainst: 0,
-      // pointsDiff: 0,
-      isUser:  true,
-      league: 'G2',
-    ),
-    const PlayOffWidget(),
-  ];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +24,9 @@ class _GroupTwoScreenState extends State<GroupTwoScreen> {
        divisionOne: const DivisionOneScreen(),
       groupOne: const GroupOneScreen(),
       groupTwo: const GroupTwoScreen(),
-      children: _children,
+        division: 'Group One',
+      league: 'G1',
+      isUser: true,
     );
   }
 }

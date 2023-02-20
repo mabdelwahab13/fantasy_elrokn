@@ -17,28 +17,6 @@ class AdminGroupOneScreen extends StatefulWidget {
 }
 
 class _AdminGroupOneScreenState extends State<AdminGroupOneScreen> {
-  final List<Widget> _children = [
-    MatchesScreenWidget(
-      division: 'Group One',
-      numOfMatches: 9,
-    ),
-    TableWidget(
-       numOfTeams: 18,
-      // teamName: ['Team1'],
-      // matchPlayed: 0,
-      // wins: 0,
-      // draw: 0,
-      // lose: 0,
-      // points: 0,
-      // pointsScored: 0,
-      // pointsAgainst: 0,
-      // pointsDiff: 0,
-      isUser: false,
-       league: 'G1',
-    ),
-    const PlayOffWidget(),
-  ];
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,10 +34,12 @@ class _AdminGroupOneScreenState extends State<AdminGroupOneScreen> {
       ),
       body: SecondDivisionWidget(
         title: 'Group One',
-        children: _children,
         divisionOne: AdminDivisionOneScreen(),
         groupOne: AdminGroupOneScreen(),
         groupTwo: AdminGroupTwoScreen(),
+        division: 'Group One',
+        league: 'G1',
+        isUser: false,
       ),
     );
   }

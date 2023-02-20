@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:fantasy_elrokn/models/team_data_model.dart';
+import 'package:fantasy_elrokn/models/team_table_model.dart';
 import 'package:fantasy_elrokn/screens/admin/admin_team_profile_screen.dart';
 import 'package:fantasy_elrokn/screens/user/team_profile_screen_.dart';
 import 'package:flutter/material.dart';
@@ -166,15 +166,11 @@ class _TableWidgetState extends State<TableWidget> {
                                       index: i,
                                       league: widget.league,
                                       teamId: widget.league != 'D1'
-                                        ? widget.league != 'G1'
-                                            ? model
-                                                .allGroupTwoTeams[i]
-                                                .teamId
-                                            : model
-                                                .allGroupOneTeams[i]
-                                                .teamId
-                                        : model.allDivOneTeams[i]
-                                            .teamId,
+                                          ? widget.league != 'G1'
+                                              ? model.allGroupTwoTeams[i].teamId
+                                              : model.allGroupOneTeams[i].teamId
+                                          : model.allDivOneTeams[i].teamId,
+                                      event: model.currentEvent,
                                     )
                                   : AdminTeamProfileScreen(
                                       index: i,

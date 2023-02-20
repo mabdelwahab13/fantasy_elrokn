@@ -1,13 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import 'package:fantasy_elrokn/controllers/main_model.dart';
 import 'package:fantasy_elrokn/screens/admin/add_players_screen.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/enabled_button_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/grediant_backgound_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/txtfield_border.dart';
-import 'package:flutter/material.dart';
 
 class PlayerSubScreen extends StatefulWidget {
-  const PlayerSubScreen({super.key});
+  String teamID;
+  PlayerSubScreen({
+    Key? key,
+    required this.teamID,
+  }) : super(key: key);
 
   @override
   State<PlayerSubScreen> createState() => _PlayerSubScreenState();
@@ -19,42 +27,58 @@ class _PlayerSubScreenState extends State<PlayerSubScreen> {
   List<String> subedPlayers = [];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: SharedColors.backgroundGreyColor,
-        title: Text(
-          'Substitute Player',
-          style: SharedFonts.yellowFont,
-        ),
-      ),
-      body: GrediantBackgroundWidget(
-        child: Padding(
-          padding: EdgeInsets.all(30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SubtitutionTextField(
-                textFieldController: enteredPlayerID,
-                hint: 'Enter the entered player ID',
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SubtitutionTextField(
-                textFieldController: outputtedPlayerID,
-                hint: 'Enter the outputted player ID',
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              EnabledButtonWidget(
-                buttonText: 'Add player',
-                onPressed: () {},
-              ),
-            ],
+    return ScopedModelDescendant(
+      builder: (context, child, MainModel model) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: SharedColors.backgroundGreyColor,
+            title: Text(
+              'Substitute Player',
+              style: SharedFonts.yellowFont,
+            ),
           ),
-        ),
-      ),
+          body: GrediantBackgroundWidget(
+            child: Padding(
+              padding: EdgeInsets.all(30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SubtitutionTextField(
+                    textFieldController: enteredPlayerID,
+                    hint: 'Enter the entered player ID',
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SubtitutionTextField(
+                    textFieldController: outputtedPlayerID,
+                    hint: 'Enter the outputted player ID',
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  EnabledButtonWidget(
+                    buttonText: 'Add player',
+                    onPressed: () async {
+                      bool isSuccsess = await model.replacePlayer(
+                        enteredPlayerID: enteredPlayerID.text,
+                        outputtedPlayerID: outputtedPlayerID.text,
+                      );
+                      isSuccsess
+                          ? ScaffoldMessenger.of(context).showSnackBar(
+                              snack('Sucsses', SharedColors.greenTable),
+                            )
+                          : ScaffoldMessenger.of(context).showSnackBar(
+                              snack('Sucsses', SharedColors.greenTable),
+                            );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

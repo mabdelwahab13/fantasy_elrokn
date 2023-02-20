@@ -13,11 +13,13 @@ class TeamProfileScreen extends StatefulWidget {
   int index;
   String league;
   String teamId;
+  int event;
   TeamProfileScreen({
     Key? key,
     required this.index,
     required this.league,
     required this.teamId,
+    required this.event,
   }) : super(key: key);
 
   @override
@@ -55,14 +57,16 @@ class _TeamProfileScreenState extends State<TeamProfileScreen> {
                       position:
                           const RelativeRect.fromLTRB(60.0, 40.0, 40.0, 40.0),
                       items: [
-                        for (int i = 0; i < 38; i++)
+                        for (int i = 1; i < 39; i++)
                           PopupMenuItem(
                             child: TextButton(
                               onPressed: () {
-                                model.getPerviousData(widget.teamId,(i+1).toString());
+                                setState(() {
+                                  widget.event = i;
+                                });
                               },
                               child: Text(
-                                'Gameweek ${i + 1}',
+                                'Gameweek $i',
                                 style: SharedFonts.subYellowFont,
                               ),
                             ),
@@ -72,7 +76,7 @@ class _TeamProfileScreenState extends State<TeamProfileScreen> {
                 child: Row(
                   children: [
                     Text(
-                      'Gameweek',
+                      'Gameweek ${model.currentEvent}',
                       style: SharedFonts.subYellowFont,
                     ),
                     Icon(
@@ -95,10 +99,11 @@ class _TeamProfileScreenState extends State<TeamProfileScreen> {
                   itemCount: model.playerPoints.length,
                   itemBuilder: (context, index) {
                     return PlayerDataWidget(
-                      playerName: '${model.playerInfo[index].playerFirstName} ${model.playerInfo[index].playerLastName}',
+                      playerName:
+                          '${model.playerInfo[index].playerFirstName} ${model.playerInfo[index].playerLastName}',
                       playerTeamName: model.playerInfo[index].name,
-                      points: model.playerPoints[index].entryHistory,
-                      
+                      points: model.playerPoints[index].current,
+                      event: widget.event,
                     );
                   },
                 ),

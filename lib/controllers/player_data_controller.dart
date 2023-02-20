@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:fantasy_elrokn/controllers/team_controller.dart';
 import 'package:fantasy_elrokn/models/player_gw_points.dart';
 import 'package:fantasy_elrokn/models/player_info_model.dart';
+import 'package:fantasy_elrokn/models/team_points_model.dart';
 import 'package:fantasy_elrokn/models/team_players_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:scoped_model/scoped_model.dart';
@@ -15,6 +17,7 @@ mixin PlayerDataController on Model {
 
   List<TeamPlayersModel> _allTeamPlayers = [];
   List<TeamPlayersModel> get allTeamPlayers => _allTeamPlayers;
+
 
   List _ids = [];
   var x;
@@ -66,12 +69,12 @@ mixin PlayerDataController on Model {
       notifyListeners();
     }
     for (int i = 0; i < _allTeamPlayers.length; i++) {
-      _ids=[];
+      _ids = [];
       if (_allTeamPlayers[i].teamId == teamId) {
         _ids = _allTeamPlayers[i].playersId;
         break;
-      }else{
-         _ids=[];
+      } else {
+        _ids = [];
       }
     }
     notifyListeners();
@@ -82,53 +85,58 @@ mixin PlayerDataController on Model {
       Uri.parse('https://fantasy.premierleague.com/api/entry/$playerId/'),
     );
     var info = json.decode(respo.body);
-    info['kit'] ?? (info['kit']='');
-    info['favourite_team']?? (info['favourite_team']=0);
-    
-   _playerInfo.add(PlayerInfoModel.fromjson(info));
+    info['kit'] ?? (info['kit'] = '');
+    info['favourite_team'] ?? (info['favourite_team'] = 0);
+    info['summary_event_rank']?? (info['summary_event_rank'] = 0);
 
+    _playerInfo.add(PlayerInfoModel.fromjson(info));
+
+    notifyListeners();
+  }
+
+  Future<void> getPlayerPoints(String playerId) async {
+    http.Response res = await http.get(
+      Uri.parse(
+          'https://fantasy.premierleague.com/api/entry/$playerId/history/'),
+    );
+
+    var points = json.decode(res.body);
+
+    _playerPoints.add(PlayerGwPoints.fromjson(points));
     notifyListeners();
   }
 
   Future<void> getData(String teamId) async {
     _playerInfo.clear();
     _playerPoints.clear();
-   await getPlayersId(teamId);
-     print(_ids);
-     print(teamId);
+    await getPlayersId(teamId);
+    print(_ids);
+    print(teamId);
     for (int i = 0; i < _ids.length; i++) {
       await getPlayerInfo(_ids[i]);
-      await getPlayerPoints(_ids[i],playerInfo[i].currentEvent.toString());
+      await getPlayerPoints(_ids[i]);
       notifyListeners();
     }
     notifyListeners();
   }
 
-   Future<void> getPerviousData(String teamId, String event) async {
+  Future<void> getPerviousData(String teamId, String event) async {
     _playerInfo.clear();
     _playerPoints.clear();
-   await getPlayersId(teamId);
-     print(_ids);
-     print(teamId);
+    await getPlayersId(teamId);
     for (int i = 0; i < _ids.length; i++) {
       await getPlayerInfo(_ids[i]);
-      await getPlayerPoints(_ids[i],event);
+      await getPlayerPoints(_ids[i]);
       notifyListeners();
     }
+   
     notifyListeners();
   }
 
-  Future<void> getPlayerPoints(String playerId, String event) async {
-    http.Response res = await http.get(
-      Uri.parse(
-          'https://fantasy.premierleague.com/api/entry/$playerId/event/$event/picks/'),
-    );
-
-    var points = json.decode(res.body);
-    points['active_chip']??(points['active_chip']='');
-    points['automatic_subs']??(points['automatic_subs']=[]);
-     
-   _playerPoints.add(PlayerGwPoints.fromjson(points));
-    notifyListeners();
-  }
+  // Future<bool> addPlayersData(String teamId, String event) async {
+  //   getPerviousData(teamId, event);
+  //   http.Response response = await http.post(
+  //       Uri.parse('${fireBase}playersData.json'),
+  //       body: json.encode(value));
+  // }
 }
