@@ -11,15 +11,6 @@ import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
 
 class TableWidget extends StatefulWidget {
   int numOfTeams;
-  // List<String> teamName;
-  // int matchPlayed;
-  // int wins;
-  // int draw;
-  // int lose;
-  // int pointsScored;
-  // int pointsAgainst;
-  // int pointsDiff;
-  // int points;
   bool isUser;
   String league;
   TableWidget({
@@ -179,11 +170,13 @@ class _TableWidgetState extends State<TableWidget> {
                             },
                           ),
                         );
-                        model.getData(widget.league != 'D1'
+                        widget.league != 'D1'
                             ? widget.league != 'G1'
-                                ? model.allGroupTwoTeams[i].teamId
-                                : model.allGroupOneTeams[i].teamId
-                            : model.allDivOneTeams[i].teamId);
+                                ? model
+                                    .getDataG2(model.allGroupTwoTeams[i].teamId)
+                                : model
+                                    .getDataG1(model.allGroupOneTeams[i].teamId)
+                            : model.getDataD1(model.allDivOneTeams[i].teamId);
                       },
                     ),
                     Container(

@@ -12,9 +12,11 @@ import 'package:fantasy_elrokn/shared/shared_widget/txtfield_border.dart';
 
 class PlayerSubScreen extends StatefulWidget {
   String teamID;
+  String league;
   PlayerSubScreen({
     Key? key,
     required this.teamID,
+    required this.league,
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class _PlayerSubScreenState extends State<PlayerSubScreen> {
   TextEditingController enteredPlayerID = TextEditingController();
   TextEditingController outputtedPlayerID = TextEditingController();
   List<String> subedPlayers = [];
+  bool isSuccsess = false;
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
@@ -60,10 +63,20 @@ class _PlayerSubScreenState extends State<PlayerSubScreen> {
                   EnabledButtonWidget(
                     buttonText: 'Add player',
                     onPressed: () async {
-                      bool isSuccsess = await model.replacePlayer(
-                        enteredPlayerID: enteredPlayerID.text,
-                        outputtedPlayerID: outputtedPlayerID.text,
-                      );
+                      widget.league != 'D1'
+                          ? widget.league != 'G1'
+                              ? isSuccsess = await model.replacePlayerG2(
+                                  enteredPlayerID: enteredPlayerID.text,
+                                  outputtedPlayerID: outputtedPlayerID.text,
+                                )
+                              : isSuccsess = await model.replacePlayerG1(
+                                  enteredPlayerID: enteredPlayerID.text,
+                                  outputtedPlayerID: outputtedPlayerID.text,
+                                )
+                          : isSuccsess = await model.replacePlayerD1(
+                              enteredPlayerID: enteredPlayerID.text,
+                              outputtedPlayerID: outputtedPlayerID.text,
+                            );
                       isSuccsess
                           ? ScaffoldMessenger.of(context).showSnackBar(
                               snack('Sucsses', SharedColors.greenTable),

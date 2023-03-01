@@ -13,9 +13,11 @@ import '../../shared/shared_theme/shared_fonts.dart';
 
 class AddPlayersScreen extends StatefulWidget {
   String teamId;
-   AddPlayersScreen({
+  String league;
+  AddPlayersScreen({
     Key? key,
     required this.teamId,
+    required this.league,
   }) : super(key: key);
 
   @override
@@ -56,7 +58,7 @@ class _AddPlayersScreenState extends State<AddPlayersScreen> {
                     SizedBox(
                       height: 15,
                     ),
-                     AddPlayerTextField(
+                    AddPlayerTextField(
                       textFieldController: addedPlayer2ID,
                       hint: 'Enter player 2 ID',
                     ),
@@ -93,10 +95,20 @@ class _AddPlayersScreenState extends State<AddPlayersScreen> {
                           playerIDList.add(addedPlayer3ID.text.toString());
                           playerIDList.add(addedPlayer4ID.text.toString());
                           playerIDList.add(addedPlayer5ID.text.toString());
-                          model.addPlayersId({
-                            'playersId': playerIDList,
-                            'teamId': widget.teamId,
-                          });
+                          widget.league != 'D1'
+                              ? widget.league != 'G1'
+                                  ? model.addPlayersIdG2({
+                                      'playersId': playerIDList,
+                                      'teamId': widget.teamId,
+                                    })
+                                  : model.addPlayersIdG1({
+                                      'playersId': playerIDList,
+                                      'teamId': widget.teamId,
+                                    })
+                              : model.addPlayersIdD1({
+                                  'playersId': playerIDList,
+                                  'teamId': widget.teamId,
+                                });
                           ScaffoldMessenger.of(context).showSnackBar(
                             snack('Sucsses', SharedColors.greenTable),
                           );

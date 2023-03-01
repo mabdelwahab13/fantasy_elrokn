@@ -25,7 +25,7 @@ class _GroupTwoScreenState extends State<GroupTwoScreen> {
       groupOne: const GroupOneScreen(),
       groupTwo: const GroupTwoScreen(),
         division: 'Group One',
-      league: 'G1',
+      league: 'G2',
       isUser: true,
     );
   }

@@ -68,21 +68,12 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
               Expanded(
                 flex: 1,
                 child: Container(
-                    alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    child: Text(
-                      '${widget.points[widget.event-1]['event_transfers_cost']}',
-                      style: SharedFonts.subWhiteFont,
-                    )),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: Text(
-                    '${widget.points[widget.event-1]['points']}',
-                    style: SharedFonts.subWhiteFont,
+                    '-${widget.points[widget.event - 1]['event_transfers_cost']}',
+                    style: SharedFonts.redFont,
+                                        
                   ),
                 ),
               ),
@@ -92,7 +83,18 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: Text(
-                    '${widget.points[widget.event-1]['total_points']}',
+                    '${widget.points[widget.event - 1]['points']}',
+                    style: SharedFonts.greenFont,
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  child: Text(
+                    '${widget.points[widget.event - 1]['total_points']}',
                     style: SharedFonts.subWhiteFont,
                   ),
                 ),
@@ -102,7 +104,9 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
         ),
         AwardsData(title: 'player Of Week', num: 2),
         AwardsData(title: 'Player Of Month', num: 2),
-        SizedBox(height: 25,),
+        SizedBox(
+          height: 25,
+        ),
       ],
     );
   }

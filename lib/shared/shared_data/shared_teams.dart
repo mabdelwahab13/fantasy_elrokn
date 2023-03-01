@@ -185,9 +185,18 @@ class TeamsName {
   };
 }
 
-class SharedLeagueGameWeeks {
+class SharedLeagueD1GameWeeks {
   static List<Widget> tabs = [
     for(int i =1; i<=38; i++)
+    Tab(
+      text: 'GW$i',
+    ),
+  ];
+}
+
+class SharedLeagueD2GameWeeks {
+  static List<Widget> tabs = [
+    for(int i =1; i<=34; i++)
     Tab(
       text: 'GW$i',
     ),

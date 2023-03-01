@@ -15,11 +15,19 @@ mixin PlayerDataController on Model {
   List<PlayerGwPoints> _playerPoints = [];
   List<PlayerGwPoints> get playerPoints => _playerPoints;
 
-  List<TeamPlayersModel> _allTeamPlayers = [];
-  List<TeamPlayersModel> get allTeamPlayers => _allTeamPlayers;
+  List<TeamPlayersModel> _allTeamPlayersD1 = [];
+  List<TeamPlayersModel> get allTeamPlayersD1 => _allTeamPlayersD1;
+
+  List<TeamPlayersModel> _allTeamPlayersG1 = [];
+  List<TeamPlayersModel> get allTeamPlayersG1 => _allTeamPlayersG1;
+
+  List<TeamPlayersModel> _allTeamPlayersG2 = [];
+  List<TeamPlayersModel> get allTeamPlayersG2 => _allTeamPlayersG2;
 
 
-  List _ids = [];
+  List _idsD1 = [];
+  List _idsG1 = [];
+  List _idsG2 = [];
   var x;
 
   bool _isteamPlayersNull = false;
@@ -31,15 +39,15 @@ mixin PlayerDataController on Model {
   late int _totalPoints;
   late int _minus;
 
-  Future<bool> addPlayersId(Map<String, dynamic> teamPlayersData) async {
+  Future<bool> addPlayersIdD1(Map<String, dynamic> teamPlayersDataD1) async {
     http.Response response = await http.post(
       Uri.parse('${fireBase}teamPlayers.json'),
-      body: json.encode(teamPlayersData),
+      body: json.encode(teamPlayersDataD1),
     );
 
     if (response.statusCode == 200) {
-      teamPlayersData['id'] = json.decode(response.body)['name'];
-      _allTeamPlayers.add(TeamPlayersModel.fromjson(teamPlayersData));
+      teamPlayersDataD1['id'] = json.decode(response.body)['name'];
+      _allTeamPlayersD1.add(TeamPlayersModel.fromjson(teamPlayersDataD1));
       notifyListeners();
       return true;
     } else {
@@ -48,18 +56,52 @@ mixin PlayerDataController on Model {
     }
   }
 
-  Future<void> getPlayersId(String teamId) async {
+  Future<bool> addPlayersIdG1(Map<String, dynamic> teamPlayersDataG1) async {
+    http.Response response = await http.post(
+      Uri.parse('${fireBase}teamPlayersG1.json'),
+      body: json.encode(teamPlayersDataG1),
+    );
+
+    if (response.statusCode == 200) {
+      teamPlayersDataG1['id'] = json.decode(response.body)['name'];
+      _allTeamPlayersG1.add(TeamPlayersModel.fromjson(teamPlayersDataG1));
+      notifyListeners();
+      return true;
+    } else {
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> addPlayersIdG2(Map<String, dynamic> teamPlayersDataG2) async {
+    http.Response response = await http.post(
+      Uri.parse('${fireBase}teamPlayersG2.json'),
+      body: json.encode(teamPlayersDataG2),
+    );
+
+    if (response.statusCode == 200) {
+      teamPlayersDataG2['id'] = json.decode(response.body)['name'];
+      _allTeamPlayersG2.add(TeamPlayersModel.fromjson(teamPlayersDataG2));
+      notifyListeners();
+      return true;
+    } else {
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<void> getPlayersIdD1(String teamId) async {
     http.Response response = await http.get(
       Uri.parse('${fireBase}teamPlayers.json'),
     );
 
-    var teamPlayersData = json.decode(response.body);
+    var teamPlayersDataD1 = json.decode(response.body);
 
-    if (teamPlayersData != null) {
-      teamPlayersData.forEach(
+    if (teamPlayersDataD1 != null) {
+      teamPlayersDataD1.forEach(
         (k, v) {
           v['id'] = k;
-          _allTeamPlayers.add(TeamPlayersModel.fromjson(v));
+          _allTeamPlayersD1.add(TeamPlayersModel.fromjson(v));
           _isteamPlayersNull = false;
           notifyListeners();
         },
@@ -68,13 +110,78 @@ mixin PlayerDataController on Model {
       _isteamPlayersNull = true;
       notifyListeners();
     }
-    for (int i = 0; i < _allTeamPlayers.length; i++) {
-      _ids = [];
-      if (_allTeamPlayers[i].teamId == teamId) {
-        _ids = _allTeamPlayers[i].playersId;
+    for (int i = 0; i < _allTeamPlayersD1.length; i++) {
+      _idsD1 = [];
+      if (_allTeamPlayersD1[i].teamId == teamId) {
+        _idsD1 = _allTeamPlayersD1[i].playersId;
         break;
       } else {
-        _ids = [];
+        _idsD1 = [];
+      }
+    }
+    notifyListeners();
+  }
+
+  Future<void> getPlayersIdG1(String teamId) async {
+    http.Response response = await http.get(
+      Uri.parse('${fireBase}teamPlayersG1.json'),
+    );
+
+    var teamPlayersDataG1 = json.decode(response.body);
+
+    if (teamPlayersDataG1 != null) {
+      teamPlayersDataG1.forEach(
+        (k, v) {
+          v['id'] = k;
+          _allTeamPlayersG1.add(TeamPlayersModel.fromjson(v));
+          _isteamPlayersNull = false;
+          notifyListeners();
+        },
+      );
+    } else {
+      _isteamPlayersNull = true;
+      notifyListeners();
+    }
+    for (int i = 0; i < _allTeamPlayersG1.length; i++) {
+      _idsG1 = [];
+      if (_allTeamPlayersG1[i].teamId == teamId) {
+        _idsG1 = _allTeamPlayersG1[i].playersId;
+        break;
+      } else {
+        _idsG1 = [];
+      }
+    }
+    notifyListeners();
+  }
+
+
+  Future<void> getPlayersIdG2(String teamId) async {
+    http.Response response = await http.get(
+      Uri.parse('${fireBase}teamPlayersG2.json'),
+    );
+
+    var teamPlayersDataG2 = json.decode(response.body);
+
+    if (teamPlayersDataG2 != null) {
+      teamPlayersDataG2.forEach(
+        (k, v) {
+          v['id'] = k;
+          _allTeamPlayersG2.add(TeamPlayersModel.fromjson(v));
+          _isteamPlayersNull = false;
+          notifyListeners();
+        },
+      );
+    } else {
+      _isteamPlayersNull = true;
+      notifyListeners();
+    }
+    for (int i = 0; i < _allTeamPlayersG2.length; i++) {
+      _idsG2 = [];
+      if (_allTeamPlayersG2[i].teamId == teamId) {
+        _idsG2 = _allTeamPlayersG2[i].playersId;
+        break;
+      } else {
+        _idsG2 = [];
       }
     }
     notifyListeners();
@@ -106,32 +213,80 @@ mixin PlayerDataController on Model {
     notifyListeners();
   }
 
-  Future<void> getData(String teamId) async {
+  Future<void> getDataD1(String teamId) async {
     _playerInfo.clear();
     _playerPoints.clear();
-    await getPlayersId(teamId);
-    print(_ids);
-    print(teamId);
-    for (int i = 0; i < _ids.length; i++) {
-      await getPlayerInfo(_ids[i]);
-      await getPlayerPoints(_ids[i]);
+    await getPlayersIdD1(teamId);
+    for (int i = 0; i < _idsD1.length; i++) {
+      await getPlayerInfo(_idsD1[i]);
+      await getPlayerPoints(_idsD1[i]);
+      notifyListeners();
+    }   
+    notifyListeners();
+  }
+
+  Future<void> getDataG1(String teamId) async {
+    _playerInfo.clear();
+    _playerPoints.clear();
+    await getPlayersIdG1(teamId);
+    for (int i = 0; i < _idsG1.length; i++) {
+      await getPlayerInfo(_idsG1[i]);
+      await getPlayerPoints(_idsG1[i]);
       notifyListeners();
     }
     notifyListeners();
   }
 
-  Future<void> getPerviousData(String teamId, String event) async {
+  Future<void> getDataG2(String teamId) async {
     _playerInfo.clear();
     _playerPoints.clear();
-    await getPlayersId(teamId);
-    for (int i = 0; i < _ids.length; i++) {
-      await getPlayerInfo(_ids[i]);
-      await getPlayerPoints(_ids[i]);
+    await getPlayersIdG2(teamId);
+    for (int i = 0; i < _idsG2.length; i++) {
+      await getPlayerInfo(_idsG2[i]);
+      await getPlayerPoints(_idsG2[i]);
       notifyListeners();
     }
-   
     notifyListeners();
   }
+
+  // Future<void> getPerviousDataD1(String teamId, String event) async {
+  //   _playerInfo.clear();
+  //   _playerPoints.clear();
+  //   await getPlayersIdD1(teamId);
+  //   for (int i = 0; i < _idsD1.length; i++) {
+  //     await getPlayerInfo(_idsD1[i]);
+  //     await getPlayerPoints(_idsD1[i]);
+  //     notifyListeners();
+  //   }
+   
+  //   notifyListeners();
+  // }
+
+  // Future<void> getPerviousDataG1(String teamId, String event) async {
+  //   _playerInfo.clear();
+  //   _playerPoints.clear();
+  //   await getPlayersIdG1(teamId);
+  //   for (int i = 0; i < _idsG1.length; i++) {
+  //     await getPlayerInfo(_idsG1[i]);
+  //     await getPlayerPoints(_idsG1[i]);
+  //     notifyListeners();
+  //   }
+   
+  //   notifyListeners();
+  // }
+
+  // Future<void> getPerviousDataG2(String teamId, String event) async {
+  //   _playerInfo.clear();
+  //   _playerPoints.clear();
+  //   await getPlayersIdG2(teamId);
+  //   for (int i = 0; i < _idsG2.length; i++) {
+  //     await getPlayerInfo(_idsG2[i]);
+  //     await getPlayerPoints(_idsG2[i]);
+  //     notifyListeners();
+  //   }
+   
+  //   notifyListeners();
+  // }
 
   // Future<bool> addPlayersData(String teamId, String event) async {
   //   getPerviousData(teamId, event);

@@ -13,7 +13,7 @@ class SharedFonts {
   );
   static TextStyle whiteTableFont = TextStyle(
     color: Colors.white,
-    fontSize: 15,
+    fontSize: 16,
   );
   static TextStyle whiteFont = const TextStyle(
     color: Colors.white,
@@ -32,7 +32,14 @@ class SharedFonts {
   );
    static TextStyle redFont = TextStyle(
     color: SharedColors.redTable,
-    fontSize: 15,
+    fontSize: 17,
+    fontWeight: FontWeight.bold
+  );
+
+  static TextStyle greenFont = TextStyle(
+    color: SharedColors.greenTable,
+    fontSize: 17,
+    fontWeight: FontWeight.bold
   );
 
   static TextStyle whiteMatchesFont = TextStyle(

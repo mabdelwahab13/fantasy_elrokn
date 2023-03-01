@@ -67,6 +67,7 @@ class _AdminTeamProfileScreenState extends State<AdminTeamProfileScreen> {
                                                 .teamId
                                         : model.allDivOneTeams[widget.index]
                                             .teamId,
+                                    league: widget.league,
                                   );
                                 },
                               ));
@@ -88,6 +89,7 @@ class _AdminTeamProfileScreenState extends State<AdminTeamProfileScreen> {
                                                 .teamId
                                         : model.allDivOneTeams[widget.index]
                                             .teamId,
+                                    league: widget.league,
                                   );
                                 },
                               ));

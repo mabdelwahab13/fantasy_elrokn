@@ -35,7 +35,7 @@ class MatchesScreenWidget extends StatefulWidget {
 }
 
 class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
-  EdgeInsets padding = EdgeInsets.only(top: 15, bottom: 15);
+  EdgeInsets padding = const EdgeInsets.only(top: 15, bottom: 15);
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
@@ -79,7 +79,7 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
                         ),
                       ),
                       children: [
-                        for (int i = 0; i < model.gw1.length; i++)
+                        for (int i = 0; i < widget.numOfMatches; i++)
                           TableRow(
                             children: [
                               TableCell(
@@ -89,7 +89,9 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
                                   alignment: Alignment.center,
                                   padding: padding,
                                   child: Text(
-                                    widget.teams[i].gwFixture[0],
+                                    widget.teams.isEmpty
+                                        ? 'teamName'
+                                        : widget.teams[i].gwFixture[0],
                                     style: SharedFonts.whiteMatchesFont,
                                   ),
                                 ),
@@ -99,15 +101,20 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
                                     TableCellVerticalAlignment.middle,
                                 child: Container(
                                   alignment: Alignment.center,
-                                  color: widget.teams[i].team0Result >
-                                          widget.teams[i].team1Result
-                                      ? SharedColors.greenTable
-                                      : widget.teams[i].team0Result ==
+                                  color: widget.teams.isEmpty
+                                      ? SharedColors.backgroundSubGreyColor
+                                      : widget.teams[i].team0Result >
                                               widget.teams[i].team1Result
-                                          ? SharedColors.backgroundSubGreyColor
-                                          : SharedColors.redTable,
+                                          ? SharedColors.greenTable
+                                          : widget.teams[i].team0Result ==
+                                                  widget.teams[i].team1Result
+                                              ? SharedColors
+                                                  .backgroundSubGreyColor
+                                              : SharedColors.redTable,
                                   child: Text(
-                                    '${widget.teams[i].team0Result}',
+                                    widget.teams.isEmpty
+                                        ? '0'
+                                        : '${widget.teams[i].team0Result}',
                                     style: SharedFonts.whiteFont,
                                   ),
                                 ),
@@ -128,15 +135,20 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
                                     TableCellVerticalAlignment.middle,
                                 child: Container(
                                   alignment: Alignment.center,
-                                  color: widget.teams[i].team1Result >
-                                          widget.teams[i].team0Result
-                                      ? SharedColors.greenTable
-                                      : widget.teams[i].team1Result ==
+                                  color: widget.teams.length <= i
+                                      ? SharedColors.backgroundSubGreyColor
+                                      : widget.teams[i].team1Result >
                                               widget.teams[i].team0Result
-                                          ? SharedColors.backgroundSubGreyColor
-                                          : SharedColors.redTable,
+                                          ? SharedColors.greenTable
+                                          : widget.teams[i].team1Result ==
+                                                  widget.teams[i].team0Result
+                                              ? SharedColors
+                                                  .backgroundSubGreyColor
+                                              : SharedColors.redTable,
                                   child: Text(
-                                    '${widget.teams[i].team1Result}',
+                                    widget.teams.isEmpty
+                                        ? '0'
+                                        : '${widget.teams[i].team1Result}',
                                     style: SharedFonts.whiteFont,
                                   ),
                                 ),
@@ -148,7 +160,9 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
                                   alignment: Alignment.center,
                                   padding: padding,
                                   child: Text(
-                                    widget.teams[i].gwFixture[1],
+                                    widget.teams.isEmpty
+                                        ? 'teamName'
+                                        : widget.teams[i].gwFixture[1],
                                     style: SharedFonts.whiteMatchesFont,
                                   ),
                                 ),

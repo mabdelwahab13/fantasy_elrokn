@@ -90,6 +90,7 @@ mixin TeamsController on Model {
           notifyListeners();
         },
       );
+      _allDivOneTeams.sort((a, b) => b.points.compareTo(a.points));
     }else{
       _isD1Null=true;
       notifyListeners();
@@ -137,6 +138,10 @@ mixin TeamsController on Model {
 
     notifyListeners();
   }
+
+
+
+
    Future<bool> resetAllData() async {
     http.Response response = await http.delete(
       Uri.parse('$fireBase.json'),
