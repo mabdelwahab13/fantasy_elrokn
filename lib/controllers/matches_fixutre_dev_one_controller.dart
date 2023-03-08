@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:fantasy_elrokn/controllers/team_controller.dart';
@@ -16,10 +17,9 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
 
 mixin MatchesFixtureDevOneController on Model {
+  List<TeamTableModel> _divOneTeams = [];
   int _currentEvent = 0;
   int get currentEvent => _currentEvent;
-
-  List<TeamTableModel> _divOneTeams = [];
 
   num _playerOfWeekD1 = 0;
   num get playerOfWeekD1 => _playerOfWeekD1;
@@ -36,7 +36,6 @@ mixin MatchesFixtureDevOneController on Model {
 
   num _teamOfWeekD1 = 0;
   num get teamOfWeekD1 => _teamOfWeekD1;
-
 
   List<MatchGWModel> _gw1D1 = [];
   List<MatchGWModel> get gw1D1 => _gw1D1;
@@ -258,11 +257,20 @@ mixin MatchesFixtureDevOneController on Model {
   List<num> _totalLastGWPoints = [];
   List<num> get totalLastGWPoints => _totalLastGWPoints;
 
-  bool _isPointsDataLoadingD1 = true;
-  bool get isPointsDataLoadingD1 => _isPointsDataLoadingD1;
+  bool _isLoadingD1 = true;
+  bool get isLoadingD1 => _isLoadingD1;
+  set setLoadD1(bool isLoadingD1) {
+    _isLoadingD1 = isLoadingD1;
+  }
+
   bool _isFinished = false;
 
+  bool _activeConnetion = true;
+  bool get activeConnetion => _activeConnetion;
+
   Future<void> getTeamsDivOneTeams() async {
+    _divOneTeams.clear();
+    notifyListeners();
     http.Response response = await http.get(
       Uri.parse('${fireBase}teamsDivOne.json'),
     );
@@ -274,18 +282,18 @@ mixin MatchesFixtureDevOneController on Model {
         (k, v) {
           v['id'] = k;
           _divOneTeams.add(TeamTableModel.fromjson(v));
-          isNull = false;
+          isNull=false;
           notifyListeners();
         },
       );
     } else {
-      isNull = true;
+      isNull=true;
       notifyListeners();
     }
-    notifyListeners();
   }
 
   Future<void> gameweekCreationD1() async {
+    notifyListeners();
     _gw1D1.add(MatchGWModel(
       gwFixture: [_divOneTeams[0].teamName, _divOneTeams[19].teamName],
       team0Result: _gw1CurrentD1
@@ -5307,312 +5315,367 @@ mixin MatchesFixtureDevOneController on Model {
               : _teamsPointsD1[37].gwPoints[14],
     ));
     notifyListeners();
+
+    _isLoadingD1 = false;
+    notifyListeners();
   }
 
   Future<void> getIdsForTeamPointsD1() async {
     _teamPlayersD1 = [];
     _allPlayersIdD1 = [];
-    http.Response response = await http.get(
-      Uri.parse('${fireBase}teamPlayers.json'),
-    );
-
-    var teamPlayersData = json.decode(response.body);
-
-    if (teamPlayersData != null) {
-      teamPlayersData.forEach(
-        (k, v) {
-          v['id'] = k;
-          _teamPlayersD1.add(TeamPlayersModel.fromjson(v));
-          _isteamPlayersNull = false;
-          notifyListeners();
-        },
+    try {
+      http.Response response = await http.get(
+        Uri.parse('${fireBase}teamPlayers.json'),
       );
-      _teamPlayersD1
-          .sort((a, b) => int.parse(a.teamId).compareTo(int.parse(b.teamId)));
-      for (int i = 0; i < _teamPlayersD1.length; i++) {
-        _allPlayersIdD1.add(_teamPlayersD1[i].playersId);
+
+      var teamPlayersData = json.decode(response.body);
+
+      if (teamPlayersData != null) {
+        teamPlayersData.forEach(
+          (k, v) {
+            v['id'] = k;
+            _teamPlayersD1.add(TeamPlayersModel.fromjson(v));
+            _isteamPlayersNull = false;
+            notifyListeners();
+          },
+        );
+        _teamPlayersD1
+            .sort((a, b) => int.parse(a.teamId).compareTo(int.parse(b.teamId)));
+        for (int i = 0; i < _teamPlayersD1.length; i++) {
+          _allPlayersIdD1.add(_teamPlayersD1[i].playersId);
+        }
+      } else {
+        _isteamPlayersNull = true;
+        notifyListeners();
       }
-    } else {
-      _isteamPlayersNull = true;
+      _activeConnetion = true;
+      notifyListeners();
+    } on SocketException catch (e) {
+      _activeConnetion = false;
       notifyListeners();
     }
   }
 
   Future<void> getPreviousPlayerInfoD1(String playerId) async {
-    http.Response respo = await http.get(
-      Uri.parse('https://fantasy.premierleague.com/api/entry/$playerId/'),
-    );
-    var info = json.decode(respo.body);
-    info['kit'] ?? (info['kit'] = '');
-    info['favourite_team'] ?? (info['favourite_team'] = 0);
-    info['summary_event_rank'] ?? (info['summary_event_rank'] = 0);
+    try {
+      http.Response respo = await http.get(
+        Uri.parse('https://fantasy.premierleague.com/api/entry/$playerId/'),
+      );
+      var info = json.decode(respo.body);
+      info['kit'] ?? (info['kit'] = '');
+      info['favourite_team'] ?? (info['favourite_team'] = 0);
+      info['summary_event_rank'] ?? (info['summary_event_rank'] = 0);
 
-    _previousPlayerInfoD1.add(PlayerInfoModel.fromjson(info));
+      _previousPlayerInfoD1.add(PlayerInfoModel.fromjson(info));
+      notifyListeners();
 
-    notifyListeners();
+      _activeConnetion = true;
+      notifyListeners();
+    } on SocketException catch (e) {
+      _activeConnetion = false;
+      notifyListeners();
+    }
   }
 
   Future<void> getLivePlayerPointsD1(String playerId, String event) async {
-    http.Response res = await http.get(
-      Uri.parse(
-          'https://fantasy.premierleague.com/api/entry/$playerId/event/$event/picks/'),
-    );
+    try {
+      http.Response res = await http.get(
+        Uri.parse(
+            'https://fantasy.premierleague.com/api/entry/$playerId/event/$event/picks/'),
+      );
 
-    var pointsData = json.decode(res.body);
-    pointsData['active_chip'] ?? (pointsData['active_chip'] = '');
-    pointsData['automatic_subs'] ?? (pointsData['automatic_subs'] = []);
-    pointsData['entry_history'] ??
-        (pointsData['entry_history'] = {
-          "event": 0,
-          "points": 0,
-          "total_points": 0,
-          "rank": 0,
-          "rank_sort": 0,
-          "overall_rank": 0,
-          "bank": 0,
-          "value": 0,
-          "event_transfers": 0,
-          "event_transfers_cost": 0,
-          "points_on_bench": 0,
-        });
-    pointsData['picks'] ?? (pointsData['picks'] = []);
+      var pointsData = json.decode(res.body);
+      pointsData['active_chip'] ?? (pointsData['active_chip'] = '');
+      pointsData['automatic_subs'] ?? (pointsData['automatic_subs'] = []);
+      pointsData['entry_history'] ??
+          (pointsData['entry_history'] = {
+            "event": 0,
+            "points": 0,
+            "total_points": 0,
+            "rank": 0,
+            "rank_sort": 0,
+            "overall_rank": 0,
+            "bank": 0,
+            "value": 0,
+            "event_transfers": 0,
+            "event_transfers_cost": 0,
+            "points_on_bench": 0,
+          });
+      pointsData['picks'] ?? (pointsData['picks'] = []);
 
-    _livePlayerPointsD1.add(CurrentPlayerGwPoints.fromjson(pointsData));
-    notifyListeners();
+      _livePlayerPointsD1.add(CurrentPlayerGwPoints.fromjson(pointsData));
+      notifyListeners();
+
+      _activeConnetion = true;
+      notifyListeners();
+    } on SocketException catch (e) {
+      _activeConnetion = false;
+      notifyListeners();
+    }
   }
 
   Future<void> getCurrentGWDataDevOne() async {
-    _isPointsDataLoadingD1 = true;
-    notifyListeners();
-    await getIdsForTeamPointsD1();
+    _isLoadingD1 = true;
+    try {
+      await getIdsForTeamPointsD1();
 
-    int i = 0;
-    for (int x = 0; x < _allPlayersIdD1.length; x++) {
-      _points = 0;
-      for (int j = 0; j < _allPlayersIdD1[x].length; j++) {
-        await getPreviousPlayerInfoD1(_allPlayersIdD1[x][j].toString());
-        await getLivePlayerPointsD1(_allPlayersIdD1[x][j].toString(),
-            (_previousPlayerInfoD1[i].currentEvent).toString());
+      int i = 0;
+      for (int x = 0; x < _allPlayersIdD1.length; x++) {
+        _points = 0;
+        for (int j = 0; j < _allPlayersIdD1[x].length; j++) {
+          await getPreviousPlayerInfoD1(_allPlayersIdD1[x][j].toString());
+          await getLivePlayerPointsD1(_allPlayersIdD1[x][j].toString(),
+              (_previousPlayerInfoD1[i].currentEvent).toString());
 
-        print(_livePlayerPointsD1[i].entryHistory['points'] -
-            _livePlayerPointsD1[i].entryHistory['event_transfers_cost']);
+          print(_livePlayerPointsD1[i].entryHistory['points'] -
+              _livePlayerPointsD1[i].entryHistory['event_transfers_cost']);
 
-        _points += _livePlayerPointsD1[i].entryHistory['points'] -
-            _livePlayerPointsD1[i].entryHistory['event_transfers_cost'];
+          _points += _livePlayerPointsD1[i].entryHistory['points'] -
+              _livePlayerPointsD1[i].entryHistory['event_transfers_cost'];
 
-        _players.add(_livePlayerPointsD1[i].entryHistory['points'] -
-            _livePlayerPointsD1[i].entryHistory['event_transfers_cost']);
+          _players.add(_livePlayerPointsD1[i].entryHistory['points'] -
+              _livePlayerPointsD1[i].entryHistory['event_transfers_cost']);
 
-        _playersNameD1.add(
-            '${_previousPlayerInfoD1[i].playerFirstName} ${_previousPlayerInfoD1[i].playerLastName}');
-        i++;
+          _playersNameD1.add(
+              '${_previousPlayerInfoD1[i].playerFirstName} ${_previousPlayerInfoD1[i].playerLastName}');
+          i++;
+        }
+        _totalCurrentGWPointsD1.add(_points);
+        notifyListeners();
       }
-      _totalCurrentGWPointsD1.add(_points);
+
+      _playerOfWeekD1 = _players.reduce(max);
+      _teamOfWeekD1 = _totalCurrentGWPointsD1.reduce(max);
+      notifyListeners();
+
+      _players.asMap().forEach((index, value) {
+        if (value == _playerOfWeekD1) {
+          _playerOfWeekNameD1.add(_playersNameD1[index]);
+        }
+      });
+      notifyListeners();
+
+      _totalCurrentGWPointsD1.asMap().forEach((index, value) {
+        if (value == _teamOfWeekD1) {
+          _teamOfWeekNameD1.add(_divOneTeams[index].teamName);
+        }
+      });
+      notifyListeners();
+
+      switch (_previousPlayerInfoD1[0].currentEvent) {
+        case 1:
+          _gw1CurrentD1 = true;
+          break;
+        case 2:
+          _gw2CurrentD1 = true;
+          break;
+        case 3:
+          _gw3CurrentD1 = true;
+          break;
+        case 4:
+          _gw4CurrentD1 = true;
+          break;
+        case 5:
+          _gw5CurrentD1 = true;
+          break;
+        case 6:
+          _gw6CurrentD1 = true;
+          break;
+        case 7:
+          _gw7CurrentD1 = true;
+          break;
+        case 8:
+          _gw8CurrentD1 = true;
+          break;
+        case 9:
+          _gw9CurrentD1 = true;
+          break;
+        case 10:
+          _gw10CurrentD1 = true;
+          break;
+        case 11:
+          _gw11CurrentD1 = true;
+          break;
+        case 12:
+          _gw12CurrentD1 = true;
+          break;
+        case 13:
+          _gw13CurrentD1 = true;
+          break;
+        case 14:
+          _gw14CurrentD1 = true;
+          break;
+        case 15:
+          _gw15CurrentD1 = true;
+          break;
+        case 16:
+          _gw16CurrentD1 = true;
+          break;
+        case 17:
+          _gw17CurrentD1 = true;
+          break;
+        case 18:
+          _gw18CurrentD1 = true;
+          break;
+        case 19:
+          _gw19CurrentD1 = true;
+          break;
+        case 20:
+          _gw20CurrentD1 = true;
+          break;
+        case 21:
+          _gw21CurrentD1 = true;
+          break;
+        case 22:
+          _gw22CurrentD1 = true;
+          break;
+        case 23:
+          _gw23CurrentD1 = true;
+          break;
+        case 24:
+          _gw24CurrentD1 = true;
+          break;
+        case 25:
+          _gw25CurrentD1 = true;
+          break;
+        case 26:
+          _gw26CurrentD1 = true;
+          break;
+        case 27:
+          _gw27CurrentD1 = true;
+          break;
+        case 28:
+          _gw28CurrentD1 = true;
+          break;
+        case 29:
+          _gw29CurrentD1 = true;
+          break;
+        case 30:
+          _gw30CurrentD1 = true;
+          break;
+        case 31:
+          _gw31CurrentD1 = true;
+          break;
+        case 32:
+          _gw32CurrentD1 = true;
+          break;
+        case 33:
+          _gw33CurrentD1 = true;
+          break;
+        case 34:
+          _gw34CurrentD1 = true;
+          break;
+        case 35:
+          _gw35CurrentD1 = true;
+          break;
+        case 36:
+          _gw36CurrentD1 = true;
+          break;
+        case 37:
+          _gw37CurrentD1 = true;
+          break;
+        case 38:
+          _gw38CurrentD1 = true;
+          break;
+        default:
+      }
+      notifyListeners();
+
+      _activeConnetion = true;
+      notifyListeners();
+    } on SocketException catch (e) {
+      _activeConnetion = false;
       notifyListeners();
     }
-
-    _playerOfWeekD1 = _players.reduce(max);
-    _teamOfWeekD1 = _totalCurrentGWPointsD1.reduce(max);
-    notifyListeners();
-
-    _players.asMap().forEach((index, value) {
-      if (value == _playerOfWeekD1) {
-        _playerOfWeekNameD1.add(_playersNameD1[index]);
-      }
-    });
-    notifyListeners();
-
-    _totalCurrentGWPointsD1.asMap().forEach((index, value) {
-      if (value == _teamOfWeekD1) {
-        _teamOfWeekNameD1.add(_divOneTeams[index].teamName);
-      }
-    });
-    notifyListeners();
-
-    switch (_previousPlayerInfoD1[0].currentEvent) {
-      case 1:
-        _gw1CurrentD1 = true;
-        break;
-      case 2:
-        _gw2CurrentD1 = true;
-        break;
-      case 3:
-        _gw3CurrentD1 = true;
-        break;
-      case 4:
-        _gw4CurrentD1 = true;
-        break;
-      case 5:
-        _gw5CurrentD1 = true;
-        break;
-      case 6:
-        _gw6CurrentD1 = true;
-        break;
-      case 7:
-        _gw7CurrentD1 = true;
-        break;
-      case 8:
-        _gw8CurrentD1 = true;
-        break;
-      case 9:
-        _gw9CurrentD1 = true;
-        break;
-      case 10:
-        _gw10CurrentD1 = true;
-        break;
-      case 11:
-        _gw11CurrentD1 = true;
-        break;
-      case 12:
-        _gw12CurrentD1 = true;
-        break;
-      case 13:
-        _gw13CurrentD1 = true;
-        break;
-      case 14:
-        _gw14CurrentD1 = true;
-        break;
-      case 15:
-        _gw15CurrentD1 = true;
-        break;
-      case 16:
-        _gw16CurrentD1 = true;
-        break;
-      case 17:
-        _gw17CurrentD1 = true;
-        break;
-      case 18:
-        _gw18CurrentD1 = true;
-        break;
-      case 19:
-        _gw19CurrentD1 = true;
-        break;
-      case 20:
-        _gw20CurrentD1 = true;
-        break;
-      case 21:
-        _gw21CurrentD1 = true;
-        break;
-      case 22:
-        _gw22CurrentD1 = true;
-        break;
-      case 23:
-        _gw23CurrentD1 = true;
-        break;
-      case 24:
-        _gw24CurrentD1 = true;
-        break;
-      case 25:
-        _gw25CurrentD1 = true;
-        break;
-      case 26:
-        _gw26CurrentD1 = true;
-        break;
-      case 27:
-        _gw27CurrentD1 = true;
-        break;
-      case 28:
-        _gw28CurrentD1 = true;
-        break;
-      case 29:
-        _gw29CurrentD1 = true;
-        break;
-      case 30:
-        _gw30CurrentD1 = true;
-        break;
-      case 31:
-        _gw31CurrentD1 = true;
-        break;
-      case 32:
-        _gw32CurrentD1 = true;
-        break;
-      case 33:
-        _gw33CurrentD1 = true;
-        break;
-      case 34:
-        _gw34CurrentD1 = true;
-        break;
-      case 35:
-        _gw35CurrentD1 = true;
-        break;
-      case 36:
-        _gw36CurrentD1 = true;
-        break;
-      case 37:
-        _gw37CurrentD1 = true;
-        break;
-      case 38:
-        _gw38CurrentD1 = true;
-        break;
-      default:
-    }
-    _isPointsDataLoadingD1 = false;
-    notifyListeners();
   }
 
   Future<void> getTeamsDataD1() async {
-    http.Response response = await http.get(
-      Uri.parse('${fireBase}GWD1PointsData.json'),
-    );
-
-    var teamsData = json.decode(response.body);
-
-    if (teamsData != null) {
-      teamsData.forEach(
-        (k, v) {
-          v['id'] = k;
-          _teamsPointsD1.add(GWPointsModel.fromjson(v));
-          notifyListeners();
-        },
+    _isLoadingD1 = true;
+    try {
+      _teamsPointsD1.clear();
+      http.Response response = await http.get(
+        Uri.parse('${fireBase}GWD1PointsData.json'),
       );
+
+      var teamsData = json.decode(response.body);
+
+      if (teamsData != null) {
+        teamsData.forEach(
+          (k, v) {
+            v['id'] = k;
+            _teamsPointsD1.add(GWPointsModel.fromjson(v));
+            notifyListeners();
+          },
+        );
+      }
+      _activeConnetion = true;
+      notifyListeners();
+    } on SocketException catch (e) {
+      _activeConnetion = false;
+      notifyListeners();
     }
   }
 
   Future<bool> addPlayersDataD1(Map<String, dynamic> players) async {
-    http.Response response = await http.post(
-      Uri.parse('${fireBase}GWD1PointsData.json'),
-      body: json.encode(players),
-    );
+    try {
+      http.Response response = await http.post(
+        Uri.parse('${fireBase}GWD1PointsData.json'),
+        body: json.encode(players),
+      );
 
-    if (response.statusCode == 200) {
-      players['id'] = json.decode(response.body)['name'];
-      
-      _teamsPointsD1.add(GWPointsModel.fromjson(players));
-      return true;
-    } else {
+      if (response.statusCode == 200) {
+        players['id'] = json.decode(response.body)['name'];
+
+        _teamsPointsD1.add(GWPointsModel.fromjson(players));
+        _activeConnetion = true;
+        notifyListeners();
+        return true;
+      } else {
+        _activeConnetion = true;
+        notifyListeners();
+        return false;
+      }
+    } on SocketException catch (e) {
+      _activeConnetion = false;
+      notifyListeners();
       return false;
     }
   }
 
   bool _isCurrentEventLoading = false;
   bool get isCurrentEventLoading => _isCurrentEventLoading;
-  
+
   Future<bool> getCurrentEventForAll() async {
     _isCurrentEventLoading = true;
     notifyListeners();
-    http.Response respo = await http.get(
-      Uri.parse('https://fantasy.premierleague.com/api/entry/1/'),
-    );
-    var info = json.decode(respo.body);
-    info['kit'] ?? (info['kit'] = '');
-    info['favourite_team'] ?? (info['favourite_team'] = 0);
-    info['summary_event_rank'] ?? (info['summary_event_rank'] = 0);
+    try {
+      http.Response respo = await http.get(
+        Uri.parse('https://fantasy.premierleague.com/api/entry/1/'),
+      );
+      var info = json.decode(respo.body);
+      info['kit'] ?? (info['kit'] = '');
+      info['favourite_team'] ?? (info['favourite_team'] = 0);
+      info['summary_event_rank'] ?? (info['summary_event_rank'] = 0);
 
-    if(respo.statusCode==200){
-      _toGetCurrentEvent.add(PlayerInfoModel.fromjson(info));
-    _currentEvent = _toGetCurrentEvent[0].currentEvent;
-     _isCurrentEventLoading = false;
-    notifyListeners();
-    return  true;
-    }else{
+      if (respo.statusCode == 200) {
+        _toGetCurrentEvent.add(PlayerInfoModel.fromjson(info));
+        _currentEvent = _toGetCurrentEvent[0].currentEvent;
+        _isCurrentEventLoading = false;
+        notifyListeners();
+        _activeConnetion = true;
+        notifyListeners();
+        return true;
+      } else {
+        _activeConnetion = true;
+        notifyListeners();
+        return false;
+      }
+    } catch (e) {
+      _activeConnetion = false;
       notifyListeners();
-      return  false;
+      return false;
     }
-
-   
-    
   }
-
 
   List<GeneralInfoModel> _generaInfo = [];
 
@@ -5628,18 +5691,26 @@ mixin MatchesFixtureDevOneController on Model {
   Future<void> getGeneralInfo() async {
     _isGeneralInfoLoading = true;
     notifyListeners();
-    http.Response respo = await http.get(
-      Uri.parse('https://fantasy.premierleague.com/api/bootstrap-static/'),
-    );
-    var gInfo = json.decode(respo.body);
+    try {
+      http.Response respo = await http.get(
+        Uri.parse('https://fantasy.premierleague.com/api/bootstrap-static/'),
+      );
+      var gInfo = json.decode(respo.body);
 
-    _generaInfo.add(GeneralInfoModel.fromjson(gInfo));
+      _generaInfo.add(GeneralInfoModel.fromjson(gInfo));
 
-    _isGwFinished = _generaInfo[0].events[currentEvent]['finished'];
-    _isPrevious = _generaInfo[0].events[currentEvent]['is_previous'];
-    notifyListeners();
+      _isGwFinished = _generaInfo[0].events[currentEvent - 1]['finished'];
+      _isPrevious = _generaInfo[0].events[currentEvent - 1]['is_previous'];
+      notifyListeners();
 
-    _isGeneralInfoLoading = false;
-    notifyListeners();
+      _isGeneralInfoLoading = false;
+      notifyListeners();
+
+      _activeConnetion = true;
+      notifyListeners();
+    } on SocketException catch (e) {
+      _activeConnetion = false;
+      notifyListeners();
+    }
   }
 }
