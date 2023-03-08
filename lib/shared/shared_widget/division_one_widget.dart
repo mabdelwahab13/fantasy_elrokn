@@ -1,5 +1,8 @@
-import 'package:fantasy_elrokn/controllers/main_model.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import 'package:fantasy_elrokn/controllers/main_model.dart';
 import 'package:fantasy_elrokn/shared/shared_data/shared_teams.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
@@ -8,12 +11,12 @@ import 'package:fantasy_elrokn/shared/shared_widget/drawer_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/grediant_backgound_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/matches_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/table_widget.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class DivisionOneWidget extends StatefulWidget {
   Widget divisionOne;
   Widget groupOne;
   Widget groupTwo;
+  Widget playOff;
   String league;
   String division;
   bool isUser;
@@ -22,6 +25,7 @@ class DivisionOneWidget extends StatefulWidget {
     required this.divisionOne,
     required this.groupOne,
     required this.groupTwo,
+    required this.playOff,
     required this.league,
     required this.division,
     required this.isUser,
@@ -33,8 +37,6 @@ class DivisionOneWidget extends StatefulWidget {
 
 class _DivisionOneWidgetState extends State<DivisionOneWidget> {
   int _currentBottomIndex = 0;
-  String pOfweek = '';
-  String tOfWeek = '';
   _changeBottomTab(int index) {
     setState(() {
       _currentBottomIndex = index;
@@ -59,7 +61,6 @@ class _DivisionOneWidgetState extends State<DivisionOneWidget> {
               ),
               bottom: _currentBottomIndex == 0
                   ? TabBar(
-                      // controller: _ChangeTabBar,
                       unselectedLabelStyle: SharedFonts.greyFont,
                       isScrollable: true,
                       indicatorColor: SharedColors.subYellowColor,
@@ -103,19 +104,60 @@ class _DivisionOneWidgetState extends State<DivisionOneWidget> {
               divisionOne: widget.divisionOne,
               groupOne: widget.groupOne,
               groupTwo: widget.groupTwo,
+              playOff: widget.playOff,
             ),
             body: GrediantBackgroundWidget(
               child: RefreshIndicator(
-                onRefresh: () async {},
+                onRefresh: () async {
+                  if (_currentBottomIndex == 0) {
+                    await model.getTeamsDivOneData();
+                    await model.getTeamsDivOneTeams();
+                    if (model.isGwFinished) {
+                      await model.getTeamsDataD1();
+                      if (model.teamsPointsD1.length < model.currentEvent) {
+                        await model.getCurrentGWDataDevOne();
+                        await model.addPlayersDataD1({
+                          'gwPoints': model.totalCurrentGWPointsD1,
+                          'playerOfWeekName': model.playerOfWeekNameD1,
+                          'playerOfWeek': '${model.playerOfWeekD1}',
+                          'teamOfWeekName': model.teamOfWeekNameD1,
+                          'teamOfWeek': '${model.teamOfWeekD1}',
+                        });
+                        await model.getTeamsDataD1();
+                        await model.gameweekCreationD1();
+                      } else {
+                        await model.gameweekCreationD1();
+                        model.setLoadD1 = false;
+                        return;
+                      }
+                    } else {
+                      await model.getCurrentGWDataDevOne();
+                      await model.getTeamsDataD1();
+                      await model.gameweekCreationD1();
+                    }
+                  } else {
+                    await model.getTeamsDivOneData();
+                  }
+                },
                 child: ListView(
                   children: [
                     _currentBottomIndex == 1
-                        ? TableWidget(
-                            numOfTeams: 20,
-                            isUser: widget.isUser,
-                            league: widget.league,
-                          )
-                        : model.isPointsDataLoadingD1
+                        ? model.isTableD1Loading
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  CircularProgressIndicator(
+                                    color: SharedColors.yellowColor,
+                                  ),
+                                ],
+                              )
+                            : TableWidget(
+                                numOfTeams: 20,
+                                isUser: widget.isUser,
+                                league: widget.league,
+                              )
+                        : model.isLoadingD1
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -67,41 +67,40 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () async {
                       await model.getCurrentEventForAll();
                       await model.getGeneralInfo();
-                      model.isCurrentEventLoading || model.isGeneralInfoLoading
-                          ? showDialog(
+                      model.activeConnetion
+                          ? model.isCurrentEventLoading ||
+                                  model.isGeneralInfoLoading
+                              ? showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Center(
+                                      // alignment: Alignment.center,
+                                      // height: 20,
+                                      // width: 20,
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  },
+                                )
+                              : Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) {
+                                      return const DivisionOneScreen();
+                                    },
+                                  ),
+                                )
+                          : showDialog(
                               context: context,
                               builder: (context) {
                                 return Container(
-                                  alignment: Alignment.center,
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(),
+                                  child: Text(
+                                    'No Internet Connection',
+                                    style: SharedFonts.subWhiteFont,
+                                  ),
                                 );
                               },
-                            )
-                          : Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) {
-                                  return const DivisionOneScreen();
-                                },
-                              ),
                             );
-                      model.isD1Null
-                          ? cancelGetData = CancelableOperation.fromFuture(
-                              model.getTeamsDivOneData(),
-                            )
-                          : await model.getTeamsDivOneData();
-                      model.isG1Null
-                          ? cancelGetData = CancelableOperation.fromFuture(
-                              model.getTeamsGroupOneData(),
-                            )
-                          : await model.getTeamsGroupOneData();
-                      model.isG1Null
-                          ? cancelGetData = CancelableOperation.fromFuture(
-                              model.getTeamsGroupTwoData(),
-                            )
-                          : await model.getTeamsGroupTwoData();
+                      await model.getTeamsDivOneData();
                       await model.getTeamsDivOneTeams();
                       if (model.isGwFinished) {
                         await model.getTeamsDataD1();
@@ -114,15 +113,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             'teamOfWeekName': model.teamOfWeekNameD1,
                             'teamOfWeek': '${model.teamOfWeekD1}',
                           });
+                          await model.getTeamsDataD1();
+                          await model.gameweekCreationD1();
                         } else {
+                          await model.gameweekCreationD1();
                           return;
                         }
                       } else {
                         await model.getCurrentGWDataDevOne();
+                        await model.getTeamsDataD1();
+                        await model.gameweekCreationD1();
                       }
-                      await model.getTeamsDataD1();
-                      await model.gameweekCreationD1();
                       if (model.isGwFinished) {
+                        await model.getTeamsDivOneData();
                         if (model.gw1CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 1
                               ? await model.makingTableD1(
@@ -149,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 13,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw2CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 2
                               ? await model.makingTableD1(
@@ -175,6 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 17,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw3CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 3
                               ? await model.makingTableD1(
@@ -201,6 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 9,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw4CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 4
                               ? await model.makingTableD1(
@@ -227,6 +233,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 16,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw5CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 5
                               ? await model.makingTableD1(
@@ -253,6 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 15,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw6CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 6
                               ? await model.makingTableD1(
@@ -279,6 +287,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 18,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw7CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 7
                               ? await model.makingTableD1(
@@ -305,6 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 15,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw8CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 8
                               ? await model.makingTableD1(
@@ -331,6 +341,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 19,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw9CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 9
                               ? await model.makingTableD1(
@@ -357,6 +368,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 18,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw10CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 10
                               ? await model.makingTableD1(
@@ -383,6 +395,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 6,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw11CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 11
                               ? await model.makingTableD1(
@@ -409,6 +422,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 4,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw12CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 12
                               ? await model.makingTableD1(
@@ -435,6 +449,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 1,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw13CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 13
                               ? await model.makingTableD1(
@@ -461,6 +476,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 4,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw14CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 14
                               ? await model.makingTableD1(
@@ -487,6 +503,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 0,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw15CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 15
                               ? await model.makingTableD1(
@@ -513,6 +530,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 8,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw16CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 16
                               ? await model.makingTableD1(
@@ -539,6 +557,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 10,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw17CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 17
                               ? await model.makingTableD1(
@@ -565,6 +584,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 4,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw18CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 18
                               ? await model.makingTableD1(
@@ -591,6 +611,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 12,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw19CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 19
                               ? await model.makingTableD1(
@@ -617,6 +638,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 14,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw20CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 20
                               ? await model.makingTableD1(
@@ -643,6 +665,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 13,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw21CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 21
                               ? await model.makingTableD1(
@@ -669,6 +692,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 17,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw22CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 22
                               ? await model.makingTableD1(
@@ -695,6 +719,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 9,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw23CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 23
                               ? await model.makingTableD1(
@@ -721,6 +746,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 16,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw24CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 24
                               ? await model.makingTableD1(
@@ -747,6 +773,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 15,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw25CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 25
                               ? await model.makingTableD1(
@@ -773,6 +800,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 18,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw26CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 26
                               ? await model.makingTableD1(
@@ -799,6 +827,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 15,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw27CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 27
                               ? await model.makingTableD1(
@@ -825,6 +854,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 19,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw28CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 28
                               ? await model.makingTableD1(
@@ -851,6 +881,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 18,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw29CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 29
                               ? await model.makingTableD1(
@@ -877,6 +908,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 6,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw30CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 30
                               ? await model.makingTableD1(
@@ -903,6 +935,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 4,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw31CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 31
                               ? await model.makingTableD1(
@@ -929,6 +962,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 1,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw32CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 32
                               ? await model.makingTableD1(
@@ -955,6 +989,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 4,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw33CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 33
                               ? await model.makingTableD1(
@@ -981,6 +1016,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 0,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw34CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 34
                               ? await model.makingTableD1(
@@ -1007,6 +1043,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 8,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw35CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 35
                               ? await model.makingTableD1(
@@ -1033,6 +1070,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 10,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw36CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 36
                               ? await model.makingTableD1(
@@ -1059,6 +1097,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 4,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw37CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 37
                               ? await model.makingTableD1(
@@ -1085,6 +1124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 12,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         } else if (model.gw38CurrentD1) {
                           model.allDivOneTeams[0].matchesPlayed != 38
                               ? await model.makingTableD1(
@@ -1111,10 +1151,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   team20Index: 14,
                                 )
                               : _isDone = true;
+                          await model.getTeamsDivOneData();
                         }
                       } else {
                         null;
-                      } 
+                      }
                     },
                   ),
                   SizedBox(

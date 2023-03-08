@@ -37,7 +37,6 @@ mixin ReplacePlayerController on Model {
       notifyListeners();
     }
   }
-  
 
   Future<bool> replacePlayerD1(
       {required String enteredPlayerID,
@@ -73,7 +72,6 @@ mixin ReplacePlayerController on Model {
       return false;
     }
   }
-
 
   Future<void> getIdsForReplacePlayerG1() async {
     http.Response response = await http.get(
@@ -130,7 +128,6 @@ mixin ReplacePlayerController on Model {
     }
   }
 
-
   Future<void> getIdsForReplacePlayerG2() async {
     http.Response response = await http.get(
       Uri.parse('${fireBase}teamPlayersG2.json'),
@@ -171,18 +168,20 @@ mixin ReplacePlayerController on Model {
         continue;
       }
     }
-
-    http.Response response = await http.put(
-      Uri.parse('${fireBase}teamPlayersG1/$_id.json'),
-      body: json.encode(_ids),
-    );
-
-    if (response.statusCode == 200) {
-      notifyListeners();
-      return true;
-    } else {
-      notifyListeners();
+    if (_subedPlayerIndex == -1) {
       return false;
+    }else{
+      http.Response response = await http.put(
+        Uri.parse('${fireBase}teamPlayersG2/$_id.json'),
+        body: json.encode(_ids),
+      );
+      if (response.statusCode == 200) {
+        notifyListeners();
+        return true;
+      } else {
+        notifyListeners();
+        return false;
+      }
     }
   }
 }

@@ -82,7 +82,7 @@ class _PlayerSubScreenState extends State<PlayerSubScreen> {
                               snack('Sucsses', SharedColors.greenTable),
                             )
                           : ScaffoldMessenger.of(context).showSnackBar(
-                              snack('Sucsses', SharedColors.greenTable),
+                              snack('Failed', SharedColors.redTable),
                             );
                     },
                   ),

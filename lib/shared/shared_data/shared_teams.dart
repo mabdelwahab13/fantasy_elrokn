@@ -211,3 +211,12 @@ class SharedCupGameWeeks {
     ),
   ];
 }
+
+class SharedPlayOffWeeks {
+  static List<Widget> tabs = [
+    for(int i =1; i<=4; i++)
+    Tab(
+      text: 'GW${i+34}',
+    ),
+  ];
+}

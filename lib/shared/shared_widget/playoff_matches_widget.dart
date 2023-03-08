@@ -1,40 +1,25 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 
-import 'package:fantasy_elrokn/controllers/main_model.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
-import 'package:fantasy_elrokn/shared/shared_widget/awards_widget.dart';
 
-class MatchesScreenWidget extends StatefulWidget {
-  String division;
+class PlayOffMatchesWidget extends StatefulWidget {
+  String round;
   int numOfMatches;
   List teams;
-  List playerOfWeek;
-  List teamOfWeek;
-  String playerOfWeekPoints;
-  String teamOfWeekPoints;
-  int numOfPlayers;
-  int numOfTeams;
-  MatchesScreenWidget({
+  PlayOffMatchesWidget({
     Key? key,
-    required this.division,
+    required this.round,
     required this.numOfMatches,
     required this.teams,
-    required this.playerOfWeek,
-    required this.teamOfWeek,
-    required this.playerOfWeekPoints,
-    required this.teamOfWeekPoints,
-    required this.numOfPlayers,
-    required this.numOfTeams,
   }) : super(key: key);
 
   @override
-  State<MatchesScreenWidget> createState() => _MatchesScreenWidgetState();
+  State<PlayOffMatchesWidget> createState() => _PlayOffMatchesWidgetState();
 }
 
-class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
+class _PlayOffMatchesWidgetState extends State<PlayOffMatchesWidget> {
   EdgeInsets padding = const EdgeInsets.only(top: 15, bottom: 15);
   @override
   Widget build(BuildContext context) {
@@ -43,8 +28,8 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
       child: Column(
         children: [
           Container(
-             alignment: Alignment.center,
-            height: MediaQuery.of(context).size.height / 1.4,
+            alignment: Alignment.center,
+            height: MediaQuery.of(context).size.height / 3,
             decoration: BoxDecoration(
               border: Border.all(
                 color: SharedColors.yellowColor,
@@ -57,7 +42,7 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
             child: Column(
               children: [
                 Text(
-                  widget.division,
+                  'PlayOff ${widget.round}',
                   style: SharedFonts.whiteFont,
                 ),
                 SizedBox(
@@ -173,21 +158,6 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
           ),
           SizedBox(
             height: 20,
-          ),
-          AwardsWidget(
-            winner: widget.playerOfWeek,
-            award: 'Player of The week',
-            points: widget.playerOfWeekPoints,
-            num: widget.numOfPlayers,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          AwardsWidget(
-            winner: widget.teamOfWeek,
-            award: 'Team of The week',
-            points: widget.teamOfWeekPoints,
-            num: widget.numOfTeams,
           ),
         ],
       ),

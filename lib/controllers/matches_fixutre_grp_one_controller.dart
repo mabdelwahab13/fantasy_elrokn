@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:fantasy_elrokn/controllers/team_controller.dart';
 import 'package:fantasy_elrokn/models/current_player_gw_point_model.dart';
-import 'package:fantasy_elrokn/models/general_info_model.dart';
 import 'package:fantasy_elrokn/models/match_gw_model.dart';
 import 'package:fantasy_elrokn/models/player_gw_points.dart';
 import 'package:fantasy_elrokn/models/player_info_model.dart';
@@ -16,9 +15,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
 
 mixin MatchesFixtureGroupOneController on Model {
-
   List<TeamTableModel> _groupOneTeams = [];
-
   num _playerOfWeekG1 = 0;
   num get playerOfWeekG1 => _playerOfWeekG1;
 
@@ -34,23 +31,6 @@ mixin MatchesFixtureGroupOneController on Model {
 
   num _teamOfWeekG1 = 0;
   num get teamOfWeekG1 => _teamOfWeekG1;
-
-  List<num> _playersLast = [];
-  List get playersLast => _playersLast;
-
-  List<String> _playersNameLast = [];
-
-  List<String> _playerOfWeekNameLast = [];
-  List<String> get playerOfWeekNameLast => _playerOfWeekNameLast;
-
-  List<String> _teamOfWeekNameLast = [];
-  List<String> get teamOfWeekNameLast => _teamOfWeekNameLast;
-
-  num _playerOfWeekLast = 0;
-  num get playerOfWeekLast => _playerOfWeekLast;
-
-  num _teamOfWeekLast = 0;
-  num get teamOfWeekLast => _teamOfWeekLast;
 
   List<MatchGWModel> _gw1G1 = [];
   List<MatchGWModel> get gw1G1 => _gw1G1;
@@ -153,18 +133,6 @@ mixin MatchesFixtureGroupOneController on Model {
 
   List<MatchGWModel> _gw34G1 = [];
   List<MatchGWModel> get gw34G1 => _gw34G1;
-
-  List<MatchGWModel> _gw35G1 = [];
-  List<MatchGWModel> get gw35G1 => _gw35G1;
-
-  List<MatchGWModel> _gw36G1 = [];
-  List<MatchGWModel> get gw36G1 => _gw36G1;
-
-  List<MatchGWModel> _gw37G1 = [];
-  List<MatchGWModel> get gw37G1 => _gw37G1;
-
-  List<MatchGWModel> _gw38G1 = [];
-  List<MatchGWModel> get gw38G1 => _gw38G1;
 
   List _teamsPointsG1 = [];
   List get teamsPointsG1 => _teamsPointsG1;
@@ -272,11 +240,16 @@ mixin MatchesFixtureGroupOneController on Model {
   List<num> _totalLastGWPoints = [];
   List<num> get totalLastGWPoints => _totalLastGWPoints;
 
-  bool _isPointsDataLoadingG1 = true;
-  bool get isPointsDataLoadingG1 => _isPointsDataLoadingG1;
+  bool _isLoadingG1 = true;
+  bool get isLoadingG1 => _isLoadingG1;
+  set setLoadG1(bool isLoadingG1) {
+    _isLoadingG1 = isLoadingG1;
+  }
+
   bool _isFinished = false;
 
   Future<void> getTeamsGroupOneTeams() async {
+    _groupOneTeams.clear();
     http.Response response = await http.get(
       Uri.parse('${fireBase}teamsGroupOne.json'),
     );
@@ -300,6 +273,7 @@ mixin MatchesFixtureGroupOneController on Model {
   }
 
   Future<void> gameweekCreationG1() async {
+    notifyListeners();
     _gw1G1.add(MatchGWModel(
       gwFixture: [_groupOneTeams[4].teamName, _groupOneTeams[1].teamName],
       team0Result: _gw1CurrentG1
@@ -1160,12 +1134,12 @@ mixin MatchesFixtureGroupOneController on Model {
               : _teamsPointsG1[7].gwPoints[16],
     ));
     _gw8G1.add(MatchGWModel(
-      gwFixture: [_groupOneTeams[13].teamName, _groupOneTeams[13].teamName],
+      gwFixture: [_groupOneTeams[15].teamName, _groupOneTeams[13].teamName],
       team0Result: _gw8CurrentG1
-          ? _totalCurrentGWPointsG1[13]
+          ? _totalCurrentGWPointsG1[15]
           : _teamsPointsG1.length < 8
               ? 0
-              : _teamsPointsG1[7].gwPoints[13],
+              : _teamsPointsG1[7].gwPoints[15],
       team1Result: _gw8CurrentG1
           ? _totalCurrentGWPointsG1[13]
           : _teamsPointsG1.length < 8
@@ -2244,12 +2218,12 @@ mixin MatchesFixtureGroupOneController on Model {
               : _teamsPointsG1[16].gwPoints[17],
     ));
     _gw17G1.add(MatchGWModel(
-      gwFixture: [_groupOneTeams[5].teamName, _groupOneTeams[5].teamName],
+      gwFixture: [_groupOneTeams[16].teamName, _groupOneTeams[5].teamName],
       team0Result: _gw17CurrentG1
-          ? _totalCurrentGWPointsG1[5]
+          ? _totalCurrentGWPointsG1[16]
           : _teamsPointsG1.length < 17
               ? 0
-              : _teamsPointsG1[16].gwPoints[5],
+              : _teamsPointsG1[16].gwPoints[16],
       team1Result: _gw17CurrentG1
           ? _totalCurrentGWPointsG1[5]
           : _teamsPointsG1.length < 17
@@ -2327,12 +2301,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[4].teamName, _groupOneTeams[1].teamName],
       team0Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[4]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[4],
       team1Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[1]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[1],
     ));
@@ -2340,12 +2314,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[9].teamName, _groupOneTeams[2].teamName],
       team0Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[9]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[9],
       team1Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[2]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[2],
     ));
@@ -2353,12 +2327,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[7].teamName, _groupOneTeams[12].teamName],
       team0Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[7]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[7],
       team1Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[12]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[12],
     ));
@@ -2366,12 +2340,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[11].teamName, _groupOneTeams[15].teamName],
       team0Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[11]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[11],
       team1Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[15]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[15],
     ));
@@ -2379,12 +2353,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[0].teamName, _groupOneTeams[8].teamName],
       team0Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[0]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[0],
       team1Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[8]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[8],
     ));
@@ -2392,12 +2366,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[5].teamName, _groupOneTeams[6].teamName],
       team0Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[5]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[5],
       team1Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[6]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[6],
     ));
@@ -2405,12 +2379,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[17].teamName, _groupOneTeams[16].teamName],
       team0Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[17]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[17],
       team1Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[16]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[16],
     ));
@@ -2418,12 +2392,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[14].teamName, _groupOneTeams[13].teamName],
       team0Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[14]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[14],
       team1Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[13]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[13],
     ));
@@ -2431,12 +2405,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[3].teamName, _groupOneTeams[10].teamName],
       team0Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[3]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[3],
       team1Result: _gw18CurrentG1
           ? _totalCurrentGWPointsG1[10]
-          : _teamsPointsG1.length< 18
+          : _teamsPointsG1.length < 18
               ? 0
               : _teamsPointsG1[17].gwPoints[10],
     ));
@@ -3279,12 +3253,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[6].teamName, _groupOneTeams[8].teamName],
       team0Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[6]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[6],
       team1Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[8]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[8],
     ));
@@ -3292,12 +3266,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[5].teamName, _groupOneTeams[11].teamName],
       team0Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[5]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[5],
       team1Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[11]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[11],
     ));
@@ -3305,12 +3279,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[17].teamName, _groupOneTeams[7].teamName],
       team0Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[17]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[17],
       team1Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[7]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[7],
     ));
@@ -3318,12 +3292,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[14].teamName, _groupOneTeams[9].teamName],
       team0Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[14]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[14],
       team1Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[9]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[9],
     ));
@@ -3331,12 +3305,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[3].teamName, _groupOneTeams[1].teamName],
       team0Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[3]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[3],
       team1Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[1]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[1],
     ));
@@ -3344,12 +3318,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[10].teamName, _groupOneTeams[2].teamName],
       team0Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[10]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[10],
       team1Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[2]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[2],
     ));
@@ -3357,12 +3331,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[13].teamName, _groupOneTeams[12].teamName],
       team0Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[13]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[13],
       team1Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[12]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[12],
     ));
@@ -3370,12 +3344,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[16].teamName, _groupOneTeams[15].teamName],
       team0Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[16]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[16],
       team1Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[15]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[15],
     ));
@@ -3383,12 +3357,12 @@ mixin MatchesFixtureGroupOneController on Model {
       gwFixture: [_groupOneTeams[4].teamName, _groupOneTeams[0].teamName],
       team0Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[4]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[4],
       team1Result: _gw26CurrentG1
           ? _totalCurrentGWPointsG1[0]
-          : _teamsPointsG1.length < 25
+          : _teamsPointsG1.length < 26
               ? 0
               : _teamsPointsG1[25].gwPoints[0],
     ));
@@ -4345,6 +4319,9 @@ mixin MatchesFixtureGroupOneController on Model {
               : _teamsPointsG1[33].gwPoints[1],
     ));
     notifyListeners();
+
+    _isLoadingG1 = false;
+    notifyListeners();
   }
 
   Future<void> getIdsForTeamPointsG1() async {
@@ -4420,8 +4397,12 @@ mixin MatchesFixtureGroupOneController on Model {
   }
 
   Future<void> getCurrentGWDataGroupOne() async {
-    _isPointsDataLoadingG1 = true;
-    notifyListeners();
+    _isLoadingG1 = true;
+    // _totalCurrentGWPointsG1.clear();
+    // _playerOfWeekG1 = 0;
+    // _teamOfWeekG1 = 0;
+    // _playerOfWeekNameG1.clear();
+    // _teamOfWeekNameG1.clear();
     await getIdsForTeamPointsG1();
 
     int i = 0;
@@ -4584,57 +4565,13 @@ mixin MatchesFixtureGroupOneController on Model {
         break;
       default:
     }
-    _isPointsDataLoadingG1 = false;
+
     notifyListeners();
-  }
-
-  Future<void> getLastData() async {
-    await getIdsForTeamPointsG1();
-
-    int i = 0;
-    for (int x = 0; x < _allPlayersIdG1.length; x++) {
-      _points = 0;
-      for (int j = 0; j < _allPlayersIdG1[x].length; j++) {
-        await getPreviousPlayerInfoG1(_allPlayersIdG1[x][j].toString());
-        await getPreviousPlayerPoints(_allPlayersIdG1[x][j].toString());
-        _points += _previousPlayerPointsG1[i].current[23]['points'] -
-            _previousPlayerPointsG1[i].current[23]['event_transfers_cost'];
-
-        print(_previousPlayerPointsG1[i].current[23]['points'] -
-            _previousPlayerPointsG1[i].current[23]['event_transfers_cost']);
-
-        _playersLast.add(_previousPlayerPointsG1[i].current[23]['points'] -
-            _previousPlayerPointsG1[i].current[23]['event_transfers_cost']);
-
-        _playersNameLast.add(
-            '${_previousPlayerInfoG1[i].playerFirstName} ${_previousPlayerInfoG1[i].playerLastName}');
-        i++;
-      }
-      _totalLastGWPoints.add(_points);
-      notifyListeners();
-    }
-
-    _playerOfWeekLast = _playersLast.reduce(max);
-    _teamOfWeekLast = _totalLastGWPoints.reduce(max);
-    notifyListeners();
-
-    _playersLast.asMap().forEach((index, value) {
-      if (value == _playerOfWeekLast) {
-        _playerOfWeekNameLast.add(_playersNameLast[index]);
-      }
-    });
-    notifyListeners();
-
-    _totalLastGWPoints.asMap().forEach((index, value) {
-      if (value == _teamOfWeekLast) {
-        _teamOfWeekNameLast.add(_groupOneTeams[index].teamName);
-      }
-    });
-    notifyListeners();
-
   }
 
   Future<void> getTeamsDataG1() async {
+    _isLoadingG1 = true;
+    _teamsPointsG1.clear();
     http.Response response = await http.get(
       Uri.parse('${fireBase}GWG1PointsData.json'),
     );
@@ -4660,14 +4597,13 @@ mixin MatchesFixtureGroupOneController on Model {
 
     if (response.statusCode == 200) {
       players['id'] = json.decode(response.body)['name'];
-      
+
       _teamsPointsG1.add(GWPointsModel.fromjson(players));
       return true;
     } else {
       return false;
     }
   }
-
 
   Future<void> getPreviousPlayerPoints(String playerId) async {
     http.Response res = await http.get(
@@ -4680,6 +4616,4 @@ mixin MatchesFixtureGroupOneController on Model {
     _previousPlayerPointsG1.add(PlayerGwPoints.fromjson(pointsData));
     notifyListeners();
   }
-
-
 }
