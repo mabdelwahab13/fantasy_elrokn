@@ -1,17 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_icons.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/txtfield_border.dart';
-import 'package:flutter/material.dart';
-
 
 class EmailTextFieldWidget extends StatefulWidget {
   // late bool? _isEmailEmpty;
   // void isEmailEmptySetter(bool isEmailEmpty) => _isEmailEmpty =isEmailEmpty;
   // bool get isEmailEmptyGetter => _isEmailEmpty!;
+
+  TextEditingController emailController;
   EmailTextFieldWidget({
     Key? key,
+    required this.emailController,
   }) : super(key: key);
 
   @override
@@ -19,8 +22,6 @@ class EmailTextFieldWidget extends StatefulWidget {
 }
 
 class _EmailTextFieldWidgetState extends State<EmailTextFieldWidget> {
-  TextEditingController emailController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,7 +42,7 @@ class _EmailTextFieldWidgetState extends State<EmailTextFieldWidget> {
         ),
         keyboardType: TextInputType.emailAddress,
         style: SharedFonts.whiteFont,
-        controller: emailController,
+        controller: widget.emailController,
         onChanged: (x) async {
           // widget.isEmailEmptySetter(false);
           // setState(() {});

@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
+import 'package:async/async.dart';
 import 'package:fantasy_elrokn/controllers/main_model.dart';
 import 'package:fantasy_elrokn/shared/shared_data/shared_teams.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
@@ -36,6 +36,7 @@ class DivisionOneWidget extends StatefulWidget {
 }
 
 class _DivisionOneWidgetState extends State<DivisionOneWidget> {
+  CancelableOperation? _myCancelableFuture;
   int _currentBottomIndex = 0;
   _changeBottomTab(int index) {
     setState(() {
@@ -105,40 +106,44 @@ class _DivisionOneWidgetState extends State<DivisionOneWidget> {
               groupOne: widget.groupOne,
               groupTwo: widget.groupTwo,
               playOff: widget.playOff,
+              isUser: widget.isUser,
             ),
             body: GrediantBackgroundWidget(
               child: RefreshIndicator(
-                onRefresh: () async {
-                  if (_currentBottomIndex == 0) {
-                    await model.getTeamsDivOneData();
-                    await model.getTeamsDivOneTeams();
-                    if (model.isGwFinished) {
-                      await model.getTeamsDataD1();
-                      if (model.teamsPointsD1.length < model.currentEvent) {
-                        await model.getCurrentGWDataDevOne();
-                        await model.addPlayersDataD1({
-                          'gwPoints': model.totalCurrentGWPointsD1,
-                          'playerOfWeekName': model.playerOfWeekNameD1,
-                          'playerOfWeek': '${model.playerOfWeekD1}',
-                          'teamOfWeekName': model.teamOfWeekNameD1,
-                          'teamOfWeek': '${model.teamOfWeekD1}',
-                        });
-                        await model.getTeamsDataD1();
-                        await model.gameweekCreationD1();
-                      } else {
-                        await model.gameweekCreationD1();
-                        model.setLoadD1 = false;
-                        return;
-                      }
-                    } else {
-                      await model.getCurrentGWDataDevOne();
-                      await model.getTeamsDataD1();
-                      await model.gameweekCreationD1();
-                    }
-                  } else {
-                    await model.getTeamsDivOneData();
-                  }
-                },
+                onRefresh: model.isLoadingD1
+                    ? () async {}
+                    : () async {
+                        if (_currentBottomIndex == 0) {
+                          await model.getTeamsDivOneData();
+                          await model.getTeamsDivOneTeams();
+                          if (model.isGwFinished) {
+                            await model.getTeamsDataD1();
+                            if (model.teamsPointsD1.length <
+                                model.currentEvent) {
+                              await model.getCurrentGWDataDevOne();
+                              await model.addPlayersDataD1({
+                                'gwPoints': model.totalCurrentGWPointsD1,
+                                'playerOfWeekName': model.playerOfWeekNameD1,
+                                'playerOfWeek': '${model.playerOfWeekD1}',
+                                'teamOfWeekName': model.teamOfWeekNameD1,
+                                'teamOfWeek': '${model.teamOfWeekD1}',
+                              });
+                              await model.getTeamsDataD1();
+                              await model.gameweekCreationD1();
+                            } else {
+                              await model.gameweekCreationD1();
+                              model.setLoadD1 = false;
+                              return;
+                            }
+                          } else {
+                            await model.getCurrentGWDataDevOne();
+                            await model.getTeamsDataD1();
+                            await model.gameweekCreationD1();
+                          }
+                        } else {
+                          await model.getTeamsDivOneData();
+                        }
+                      },
                 child: ListView(
                   children: [
                     _currentBottomIndex == 1

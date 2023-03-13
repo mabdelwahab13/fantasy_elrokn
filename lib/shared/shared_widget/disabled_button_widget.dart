@@ -1,13 +1,13 @@
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:flutter/material.dart';
-class DisabledButtonWidget extends StatefulWidget {
-  const DisabledButtonWidget({super.key});
 
-  @override
-  State<DisabledButtonWidget> createState() => _DisabledButtonWidgetState();
-}
+class DisabledButtonWidget extends StatelessWidget {
+  String title;
+  DisabledButtonWidget({
+    super.key,
+    required this.title,
+  });
 
-class _DisabledButtonWidgetState extends State<DisabledButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return TextButton(
@@ -18,8 +18,7 @@ class _DisabledButtonWidgetState extends State<DisabledButtonWidget> {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       ),
-      child:
-          const Text('Login', style: TextStyle(color: Colors.white, fontSize: 20.0)),
+      child: Text(title, style: TextStyle(color: Colors.white, fontSize: 20.0)),
     );
   }
 }

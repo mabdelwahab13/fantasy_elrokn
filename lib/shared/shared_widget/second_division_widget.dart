@@ -115,60 +115,69 @@ class _SecondDivisionWidgetState extends State<SecondDivisionWidget> {
               groupOne: widget.groupOne,
               groupTwo: widget.groupTwo,
               playOff: widget.playOff,
+              isUser: widget.isUser,
             ),
             body: GrediantBackgroundWidget(
               child: RefreshIndicator(
                 onRefresh: () async {
                   if (_currentBottomIndex == 0) {
                     if (widget.league == 'G1') {
-                      await model.getTeamsGroupOneData();
-                      await model.getTeamsGroupOneTeams();
-                      if (model.isGwFinished) {
-                        await model.getTeamsDataG1();
-                        if (model.teamsPointsG1.length < model.currentEvent) {
+                      if (!model.isLoadingG1) {
+                        await model.getTeamsGroupOneData();
+                        await model.getTeamsGroupOneTeams();
+                        if (model.isGwFinished) {
+                          await model.getTeamsDataG1();
+                          if (model.teamsPointsG1.length < model.currentEvent) {
+                            await model.getCurrentGWDataGroupOne();
+                            await model.addPlayersDataG1({
+                              'gwPoints': model.totalCurrentGWPointsG1,
+                              'playerOfWeekName': model.playerOfWeekNameG1,
+                              'playerOfWeek': '${model.playerOfWeekG1}',
+                              'teamOfWeekName': model.teamOfWeekNameG1,
+                              'teamOfWeek': '${model.teamOfWeekG1}',
+                            });
+                            await model.getTeamsDataG1();
+                            await model.gameweekCreationG1();
+                          } else {
+                            await model.gameweekCreationG1();
+                            return;
+                          }
+                        } else {
                           await model.getCurrentGWDataGroupOne();
-                          await model.addPlayersDataG1({
-                            'gwPoints': model.totalCurrentGWPointsG1,
-                            'playerOfWeekName': model.playerOfWeekNameG1,
-                            'playerOfWeek': '${model.playerOfWeekG1}',
-                            'teamOfWeekName': model.teamOfWeekNameG1,
-                            'teamOfWeek': '${model.teamOfWeekG1}',
-                          });
                           await model.getTeamsDataG1();
                           await model.gameweekCreationG1();
-                        } else {
-                          await model.gameweekCreationG1();
-                          return;
                         }
                       } else {
-                        await model.getCurrentGWDataGroupOne();
-                        await model.getTeamsDataG1();
-                        await model.gameweekCreationG1();
+                        null;
                       }
                     } else {
-                      await model.getTeamsGroupTwoData();
-                      await model.getTeamsGroupOneTeams();
-                      if (model.isGwFinished) {
-                        await model.getTeamsDataG2();
-                        if (model.teamsPointsG2.length < model.currentEvent) {
+                      if (!model.isLoadingG2) {
+                        await model.getTeamsGroupTwoData();
+                        await model.getTeamsGroupTwoTeams();
+                        if (model.isGwFinished) {
+                          await model.getTeamsDataG2();
+                          if (model.teamsPointsG2.length < model.currentEvent) {
+                            await model.getCurrentGWDataGroupTwo();
+                            await model.addPlayersDataG2({
+                              'gwPoints': model.totalCurrentGWPointsG2,
+                              'playerOfWeekName': model.playerOfWeekNameG2,
+                              'playerOfWeek': '${model.playerOfWeekG2}',
+                              'teamOfWeekName': model.teamOfWeekNameG2,
+                              'teamOfWeek': '${model.teamOfWeekG2}',
+                            });
+                            await model.getTeamsDataG2();
+                            await model.gameweekCreationG2();
+                          } else {
+                            await model.gameweekCreationG2();
+                            return;
+                          }
+                        } else {
                           await model.getCurrentGWDataGroupTwo();
-                          await model.addPlayersDataG2({
-                            'gwPoints': model.totalCurrentGWPointsG2,
-                            'playerOfWeekName': model.playerOfWeekNameG2,
-                            'playerOfWeek': '${model.playerOfWeekG2}',
-                            'teamOfWeekName': model.teamOfWeekNameG2,
-                            'teamOfWeek': '${model.teamOfWeekG2}',
-                          });
                           await model.getTeamsDataG2();
                           await model.gameweekCreationG2();
-                        } else {
-                          await model.gameweekCreationG2();
-                          return;
                         }
                       } else {
-                        await model.getCurrentGWDataGroupTwo();
-                        await model.getTeamsDataG2();
-                        await model.gameweekCreationG2();
+                        null;
                       }
                     }
                   } else if (_currentBottomIndex == 1) {

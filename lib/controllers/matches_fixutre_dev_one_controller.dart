@@ -282,12 +282,12 @@ mixin MatchesFixtureDevOneController on Model {
         (k, v) {
           v['id'] = k;
           _divOneTeams.add(TeamTableModel.fromjson(v));
-          isNull=false;
+          isNull = false;
           notifyListeners();
         },
       );
     } else {
-      isNull=true;
+      isNull = true;
       notifyListeners();
     }
   }
@@ -5416,10 +5416,12 @@ mixin MatchesFixtureDevOneController on Model {
 
   Future<void> getCurrentGWDataDevOne() async {
     _isLoadingD1 = true;
+    _totalCurrentGWPointsD1 = [];
     try {
       await getIdsForTeamPointsD1();
 
       int i = 0;
+  
       for (int x = 0; x < _allPlayersIdD1.length; x++) {
         _points = 0;
         for (int j = 0; j < _allPlayersIdD1[x].length; j++) {
@@ -5583,7 +5585,9 @@ mixin MatchesFixtureDevOneController on Model {
 
       _activeConnetion = true;
       notifyListeners();
-    } on SocketException catch (e) {
+    } on Exception catch (e) {
+      var x = e.toString();
+      print(x);
       _activeConnetion = false;
       notifyListeners();
     }
@@ -5670,7 +5674,7 @@ mixin MatchesFixtureDevOneController on Model {
         notifyListeners();
         return false;
       }
-    } catch (e) {
+    } on Exception catch (e) {
       _activeConnetion = false;
       notifyListeners();
       return false;

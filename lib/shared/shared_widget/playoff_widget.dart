@@ -1,7 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:fantasy_elrokn/shared/shared_widget/grediant_backgound_widget.dart';
-import 'package:fantasy_elrokn/shared/shared_widget/matches_widget.dart';
-import 'package:fantasy_elrokn/shared/shared_widget/playoff_matches_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -12,18 +9,23 @@ import 'package:fantasy_elrokn/shared/shared_data/shared_teams.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/drawer_widget.dart';
+import 'package:fantasy_elrokn/shared/shared_widget/grediant_backgound_widget.dart';
+import 'package:fantasy_elrokn/shared/shared_widget/matches_widget.dart';
+import 'package:fantasy_elrokn/shared/shared_widget/playoff_matches_widget.dart';
 
 class PlayOffWidget extends StatefulWidget {
   Widget divisionOne;
   Widget groupOne;
   Widget groupTwo;
   Widget playOff;
+  bool isUser;
   PlayOffWidget({
     Key? key,
     required this.divisionOne,
     required this.groupOne,
     required this.groupTwo,
     required this.playOff,
+    required this.isUser,
   }) : super(key: key);
 
   @override
@@ -58,6 +60,7 @@ class _PlayOffWidgetState extends State<PlayOffWidget> {
               groupOne: widget.groupOne,
               groupTwo: widget.groupTwo,
               playOff: widget.playOff,
+              isUser: widget.isUser,
             ),
             body: GrediantBackgroundWidget(
               child: RefreshIndicator(

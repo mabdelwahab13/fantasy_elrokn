@@ -36,6 +36,7 @@ class _AdminPlayOffScreenState extends State<AdminPlayOffScreen> {
       groupOne: const GroupOneScreen(),
       groupTwo: const GroupTwoScreen(),
       playOff: const PlayOffScreen(),
+      isUser: false,
     ),
     );
   }

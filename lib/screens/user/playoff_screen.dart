@@ -27,6 +27,7 @@ class _PlayOffScreenState extends State<PlayOffScreen> {
       groupOne: const GroupOneScreen(),
       groupTwo: const GroupTwoScreen(),
       playOff: const PlayOffScreen(),
+      isUser: true,
     );
   }
 }

@@ -1,12 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:async/async.dart';
+import 'package:fantasy_elrokn/screens/admin/profiles_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'package:fantasy_elrokn/controllers/main_model.dart';
-import 'package:fantasy_elrokn/screens/user/division_one_screen.dart';
-import 'package:fantasy_elrokn/screens/user/group_one_screen.dart';
-import 'package:fantasy_elrokn/screens/user/group_two_screen.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/grediant_backgound_widget.dart';
@@ -16,12 +13,14 @@ class DrawerWidget extends StatefulWidget {
   Widget groupOne;
   Widget groupTwo;
   Widget playOff;
+  bool isUser;
   DrawerWidget({
     Key? key,
     required this.divisionOne,
     required this.groupOne,
     required this.groupTwo,
     required this.playOff,
+    required this.isUser,
   }) : super(key: key);
 
   @override
@@ -75,30 +74,34 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           return widget.divisionOne;
                         }),
                       );
-                      await model.getTeamsDivOneData();
-                      await model.getTeamsDivOneTeams();
-                      if (model.isGwFinished) {
-                        await model.getTeamsDataD1();
-                        if (model.teamsPointsD1.length < model.currentEvent) {
+                      if (model.isLoadingD1) {
+                        null;
+                      } else {
+                        await model.getTeamsDivOneData();
+                        await model.getTeamsDivOneTeams();
+                        if (model.isGwFinished) {
+                          await model.getTeamsDataD1();
+                          if (model.teamsPointsD1.length < model.currentEvent) {
+                            await model.getCurrentGWDataDevOne();
+                            await model.addPlayersDataD1({
+                              'gwPoints': model.totalCurrentGWPointsD1,
+                              'playerOfWeekName': model.playerOfWeekNameD1,
+                              'playerOfWeek': '${model.playerOfWeekD1}',
+                              'teamOfWeekName': model.teamOfWeekNameD1,
+                              'teamOfWeek': '${model.teamOfWeekD1}',
+                            });
+                            await model.getTeamsDataD1();
+                            await model.gameweekCreationD1();
+                          } else {
+                            await model.gameweekCreationD1();
+                            model.setLoadD1 = false;
+                            return;
+                          }
+                        } else {
                           await model.getCurrentGWDataDevOne();
-                          await model.addPlayersDataD1({
-                            'gwPoints': model.totalCurrentGWPointsD1,
-                            'playerOfWeekName': model.playerOfWeekNameD1,
-                            'playerOfWeek': '${model.playerOfWeekD1}',
-                            'teamOfWeekName': model.teamOfWeekNameD1,
-                            'teamOfWeek': '${model.teamOfWeekD1}',
-                          });
                           await model.getTeamsDataD1();
                           await model.gameweekCreationD1();
-                        } else {
-                          await model.gameweekCreationD1();
-                          model.setLoadD1 = false;
-                          return;
                         }
-                      } else {
-                        await model.getCurrentGWDataDevOne();
-                        await model.getTeamsDataD1();
-                        await model.gameweekCreationD1();
                       }
 
                       if (model.isGwFinished) {
@@ -1191,33 +1194,36 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                   return widget.groupOne;
                                 }),
                               );
-                              await model.getTeamsGroupOneData();
-                              await model.getTeamsGroupOneTeams();
-                              if (model.isGwFinished) {
-                                await model.getTeamsDataG1();
-                                if (model.teamsPointsG1.length <
-                                    model.currentEvent) {
+                              if (model.isLoadingG1) {
+                                null;
+                              } else {
+                                await model.getTeamsGroupOneData();
+                                await model.getTeamsGroupOneTeams();
+                                if (model.isGwFinished) {
+                                  await model.getTeamsDataG1();
+                                  if (model.teamsPointsG1.length <
+                                      model.currentEvent) {
+                                    await model.getCurrentGWDataGroupOne();
+                                    await model.addPlayersDataG1({
+                                      'gwPoints': model.totalCurrentGWPointsG1,
+                                      'playerOfWeekName':
+                                          model.playerOfWeekNameG1,
+                                      'playerOfWeek': '${model.playerOfWeekG1}',
+                                      'teamOfWeekName': model.teamOfWeekNameG1,
+                                      'teamOfWeek': '${model.teamOfWeekG1}',
+                                    });
+                                    await model.getTeamsDataG1();
+                                    await model.gameweekCreationG1();
+                                  } else {
+                                    await model.gameweekCreationG1();
+                                    return;
+                                  }
+                                } else {
                                   await model.getCurrentGWDataGroupOne();
-                                  await model.addPlayersDataG1({
-                                    'gwPoints': model.totalCurrentGWPointsG1,
-                                    'playerOfWeekName':
-                                        model.playerOfWeekNameG1,
-                                    'playerOfWeek': '${model.playerOfWeekG1}',
-                                    'teamOfWeekName': model.teamOfWeekNameG1,
-                                    'teamOfWeek': '${model.teamOfWeekG1}',
-                                  });
                                   await model.getTeamsDataG1();
                                   await model.gameweekCreationG1();
-                                } else {
-                                  await model.gameweekCreationG1();
-                                  return;
                                 }
-                              } else {
-                                await model.getCurrentGWDataGroupOne();
-                                await model.getTeamsDataG1();
-                                await model.gameweekCreationG1();
                               }
-
                               if (model.isGwFinished) {
                                 if (model.gw1CurrentG1) {
                                   model.allGroupOneTeams[0].matchesPlayed != 1
@@ -2099,31 +2105,35 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                   return widget.groupTwo;
                                 }),
                               );
-                              await model.getTeamsGroupTwoData();
-                              await model.getTeamsGroupTwoTeams();
-                              if (model.isGwFinished) {
-                                await model.getTeamsDataG2();
-                                if (model.teamsPointsG2.length <
-                                    model.currentEvent) {
+                              if (model.isLoadingG2) {
+                                null;
+                              } else {
+                                await model.getTeamsGroupTwoData();
+                                await model.getTeamsGroupTwoTeams();
+                                if (model.isGwFinished) {
+                                  await model.getTeamsDataG2();
+                                  if (model.teamsPointsG2.length <
+                                      model.currentEvent) {
+                                    await model.getCurrentGWDataGroupTwo();
+                                    await model.addPlayersDataG2({
+                                      'gwPoints': model.totalCurrentGWPointsG2,
+                                      'playerOfWeekName':
+                                          model.playerOfWeekNameG2,
+                                      'playerOfWeek': '${model.playerOfWeekG2}',
+                                      'teamOfWeekName': model.teamOfWeekNameG2,
+                                      'teamOfWeek': '${model.teamOfWeekG2}',
+                                    });
+                                    await model.getTeamsDataG2();
+                                    await model.gameweekCreationG2();
+                                  } else {
+                                    await model.gameweekCreationG2();
+                                    return;
+                                  }
+                                } else {
                                   await model.getCurrentGWDataGroupTwo();
-                                  await model.addPlayersDataG2({
-                                    'gwPoints': model.totalCurrentGWPointsG2,
-                                    'playerOfWeekName':
-                                        model.playerOfWeekNameG2,
-                                    'playerOfWeek': '${model.playerOfWeekG2}',
-                                    'teamOfWeekName': model.teamOfWeekNameG2,
-                                    'teamOfWeek': '${model.teamOfWeekG2}',
-                                  });
                                   await model.getTeamsDataG2();
                                   await model.gameweekCreationG2();
-                                } else {
-                                  await model.gameweekCreationG2();
-                                  return;
                                 }
-                              } else {
-                                await model.getCurrentGWDataGroupTwo();
-                                await model.getTeamsDataG2();
-                                await model.gameweekCreationG2();
                               }
 
                               if (model.isGwFinished) {
@@ -3012,98 +3022,131 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ],
                     ),
                   ),
-                  TextButton(
-                    style: TextButton.styleFrom(minimumSize: Size(100, 80)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.arrow_circle_right_outlined,
-                            color: SharedColors.UnSelectedIconColor,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'El-Rokn League Cup',
-                            style: SharedFonts.whiteFont,
-                          ),
-                        ],
+                  if (widget.isUser)
+                    TextButton(
+                      style: TextButton.styleFrom(minimumSize: Size(100, 80)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.arrow_circle_right_outlined,
+                              color: SharedColors.UnSelectedIconColor,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Users Profiles',
+                              style: SharedFonts.whiteFont,
+                            ),
+                          ],
+                        ),
                       ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProfilesScreen();
+                            },
+                          ),
+                        );
+                      },
                     ),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(minimumSize: Size(100, 80)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.arrow_circle_right_outlined,
-                            color: SharedColors.UnSelectedIconColor,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Champions League',
-                            style: SharedFonts.whiteFont,
-                          ),
-                        ],
-                      ),
-                    ),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(minimumSize: Size(100, 80)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.arrow_circle_right_outlined,
-                            color: SharedColors.UnSelectedIconColor,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Awards',
-                            style: SharedFonts.whiteFont,
-                          ),
-                        ],
-                      ),
-                    ),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(minimumSize: Size(100, 80)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.arrow_circle_right_outlined,
-                            color: SharedColors.UnSelectedIconColor,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Rules',
-                            style: SharedFonts.whiteFont,
-                          ),
-                        ],
-                      ),
-                    ),
-                    onPressed: () {},
-                  ),
+                  // TextButton(
+                  //   style: TextButton.styleFrom(minimumSize: Size(100, 80)),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(10.0),
+                  //     child: Row(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Icon(
+                  //           Icons.arrow_circle_right_outlined,
+                  //           color: SharedColors.UnSelectedIconColor,
+                  //         ),
+                  //         SizedBox(
+                  //           width: 10,
+                  //         ),
+                  //         Text(
+                  //           'El-Rokn League Cup',
+                  //           style: SharedFonts.whiteFont,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  //   onPressed: () {},
+                  // ),
+                  // TextButton(
+                  //   style: TextButton.styleFrom(minimumSize: Size(100, 80)),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(10.0),
+                  //     child: Row(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Icon(
+                  //           Icons.arrow_circle_right_outlined,
+                  //           color: SharedColors.UnSelectedIconColor,
+                  //         ),
+                  //         SizedBox(
+                  //           width: 10,
+                  //         ),
+                  //         Text(
+                  //           'Champions League',
+                  //           style: SharedFonts.whiteFont,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  //   onPressed: () {},
+                  // ),
+                  // TextButton(
+                  //   style: TextButton.styleFrom(minimumSize: Size(100, 80)),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(10.0),
+                  //     child: Row(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Icon(
+                  //           Icons.arrow_circle_right_outlined,
+                  //           color: SharedColors.UnSelectedIconColor,
+                  //         ),
+                  //         SizedBox(
+                  //           width: 10,
+                  //         ),
+                  //         Text(
+                  //           'Awards',
+                  //           style: SharedFonts.whiteFont,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  //   onPressed: () {},
+                  // ),
+                  // TextButton(
+                  //   style: TextButton.styleFrom(minimumSize: Size(100, 80)),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(10.0),
+                  //     child: Row(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Icon(
+                  //           Icons.arrow_circle_right_outlined,
+                  //           color: SharedColors.UnSelectedIconColor,
+                  //         ),
+                  //         SizedBox(
+                  //           width: 10,
+                  //         ),
+                  //         Text(
+                  //           'Rules',
+                  //           style: SharedFonts.whiteFont,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  //   onPressed: () {},
+                  // ),
                 ],
               ),
             ),

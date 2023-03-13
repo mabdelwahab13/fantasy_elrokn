@@ -71,9 +71,10 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: Text(
-                    '-${widget.points[widget.event - 1]['event_transfers_cost']}',
+                    widget.points.length < widget.event
+                        ? '0'
+                        : '-${widget.points[widget.event - 1]['event_transfers_cost']}',
                     style: SharedFonts.redFont,
-                                        
                   ),
                 ),
               ),
@@ -83,7 +84,9 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: Text(
-                    '${widget.points[widget.event - 1]['points']}',
+                    widget.points.length < widget.event
+                        ? '0'
+                        : '${widget.points[widget.event - 1]['points']}',
                     style: SharedFonts.greenFont,
                   ),
                 ),
@@ -94,7 +97,9 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
                   alignment: Alignment.center,
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: Text(
-                    '${widget.points[widget.event - 1]['total_points']}',
+                    widget.points.length < widget.event
+                        ? '0'
+                        : '${widget.points[widget.event - 1]['total_points']}',
                     style: SharedFonts.subWhiteFont,
                   ),
                 ),
