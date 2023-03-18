@@ -1,3 +1,6 @@
+import 'package:fantasy_elrokn/screens/admin/admin_division_one_screen.dart';
+import 'package:fantasy_elrokn/screens/admin/admin_group_one_screen.dart';
+import 'package:fantasy_elrokn/screens/admin/admin_group_two_screen.dart';
 import 'package:fantasy_elrokn/screens/admin/fix_draw_playoff_screen.dart';
 import 'package:fantasy_elrokn/screens/user/division_one_screen.dart';
 import 'package:fantasy_elrokn/screens/user/group_one_screen.dart';
@@ -32,10 +35,10 @@ class _AdminPlayOffScreenState extends State<AdminPlayOffScreen> {
         },
       ),
       body: PlayOffWidget(
-      divisionOne: const DivisionOneScreen(),
-      groupOne: const GroupOneScreen(),
-      groupTwo: const GroupTwoScreen(),
-      playOff: const PlayOffScreen(),
+      divisionOne: const AdminDivisionOneScreen(),
+      groupOne: const AdminGroupOneScreen(),
+      groupTwo: const AdminGroupTwoScreen(),
+      playOff: const AdminPlayOffScreen(),
       isUser: false,
     ),
     );

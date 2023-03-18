@@ -2,12 +2,14 @@ import 'package:fantasy_elrokn/controllers/main_model.dart';
 import 'package:fantasy_elrokn/screens/auth/login_screen.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
+import 'package:fantasy_elrokn/shared/shared_theme/shared_images.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/disabled_button_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/enabled_button_widget.dart';
+import 'package:fantasy_elrokn/shared/shared_widget/grediant_backgound_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/txtfield_border.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
+import 'package:sizer/sizer.dart';
 import '../../shared/shared_theme/shared_icons.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -33,8 +35,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isObsecureConfirmEmailPassword = true;
   bool isObsecureAdminPassword = true;
   String rool = 'user';
-  var cancelGetData;
-  bool _isDone = false;
   List<String> options = [
     'user',
     'admin',
@@ -49,7 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             backgroundColor: SharedColors.backgroundSubGreyColor,
             title: Text(
               'Fantasy El-Rokn',
-              style: SharedFonts.yellowFont,
+              style: SharedFonts.babyBlueFont,
             ),
             actions: [
               TextButton(
@@ -70,36 +70,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ],
           ),
-          backgroundColor: SharedColors.backgroundBlackColor,
-          body: Center(
-            child: SingleChildScrollView(
+          body: GrediantBackgroundWidget(
+            child: Center(
               child: Form(
                 key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                child: ListView(
+                  // mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'SignUp\n',
-                        style: TextStyle(color: Colors.white, fontSize: 30),
-                      ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    Container(
+                      height: 25.h,
+                      width: 25.w,
+                      child: Image.asset(SharedImages.appLogo),
+                    ),
+                    SizedBox(
+                      height: 2.h,
                     ),
                     Container(
                       decoration: BoxDecoration(
                         color: SharedColors.backgroundGreyColor,
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      margin: const EdgeInsets.all(10),
+                      margin: EdgeInsets.fromLTRB(5.w, 1.5.h, 5.w, 1.5.h),
                       child: TextField(
                         decoration: InputDecoration(
                           border: TextFieldBorder.fieldBorder(
-                              SharedColors.yellowColor),
+                              SharedColors.babyBlueColor),
                           errorBorder: TextFieldBorder.fieldBorder(Colors.red),
                           // enabledBorder: TextFieldBorder.fieldBorder(
-                          //     SharedColors.yellowColor),
+                          //     SharedColors.babyBlueColor),
                           focusedBorder: TextFieldBorder.fieldBorder(
-                              SharedColors.yellowColor),
+                              SharedColors.babyBlueColor),
                           prefixIcon: SharedIcons.emailIcon,
                           labelText: 'Email',
                           labelStyle: SharedFonts.greyFont,
@@ -118,17 +121,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: SharedColors.backgroundGreyColor,
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      margin: const EdgeInsets.all(10),
+                      margin: EdgeInsets.fromLTRB(5.w, 1.5.h, 5.w, 1.5.h),
                       child: TextFormField(
                         decoration: InputDecoration(
                             border: TextFieldBorder.fieldBorder(
-                                SharedColors.yellowColor),
+                                SharedColors.babyBlueColor),
                             errorBorder:
                                 TextFieldBorder.fieldBorder(Colors.red),
                             // enabledBorder: TextFieldBorder.fieldBorder(
-                            //     SharedColors.yellowColor),
+                            //     SharedColors.babyBlueColor),
                             focusedBorder: TextFieldBorder.fieldBorder(
-                                SharedColors.yellowColor),
+                                SharedColors.babyBlueColor),
                             prefixIcon: SharedIcons.PasswordIcon,
                             labelText: 'Password',
                             labelStyle: SharedFonts.greyFont,
@@ -169,17 +172,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: SharedColors.backgroundGreyColor,
                         borderRadius: BorderRadius.circular(20.0),
                       ),
-                      margin: const EdgeInsets.all(10),
+                      margin: EdgeInsets.fromLTRB(5.w, 1.5.h, 5.w, 1.5.h),
                       child: TextFormField(
                         decoration: InputDecoration(
                             border: TextFieldBorder.fieldBorder(
-                                SharedColors.yellowColor),
+                                SharedColors.babyBlueColor),
                             errorBorder:
                                 TextFieldBorder.fieldBorder(Colors.red),
                             // enabledBorder: TextFieldBorder.fieldBorder(
-                            //     SharedColors.yellowColor),
+                            //     SharedColors.babyBlueColor),
                             focusedBorder: TextFieldBorder.fieldBorder(
-                                SharedColors.yellowColor),
+                                SharedColors.babyBlueColor),
                             prefixIcon: SharedIcons.PasswordIcon,
                             labelText: 'Confirm Password',
                             labelStyle: SharedFonts.greyFont,
@@ -212,34 +215,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                       ),
                     ),
-                    DropdownButton(
-                      dropdownColor: SharedColors.backgroundGreyColor,
-                      isDense: true,
-                      isExpanded: false,
-                      iconEnabledColor: SharedColors.yellowColor,
-                      focusColor: SharedColors.yellowColor,
-                      items: options.map((String dropDownItem) {
-                        return DropdownMenuItem<String>(
-                          value: dropDownItem,
-                          child:
-                              Text(dropDownItem, style: SharedFonts.whiteFont),
-                        );
-                      }).toList(),
-                      onChanged: (newValueSelected) {
-                        setState(() {
-                          _currentItemSelected = newValueSelected!;
-                          rool = newValueSelected;
-                          if (newValueSelected == 'admin') {
-                            isAdminPasswordEmpty = true;
-                          } else {
-                            isAdminPasswordEmpty = false;
-                          }
-                        });
-                      },
-                      value: _currentItemSelected,
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(38.w, 0.5.h, 38.w, 0.5.h),
+                      child: DropdownButton(
+                        dropdownColor: SharedColors.backgroundGreyColor,
+                        isDense: true,
+                        isExpanded: false,
+                        iconEnabledColor: SharedColors.babyBlueColor,
+                        focusColor: SharedColors.babyBlueColor,
+                        items: options.map((String dropDownItem) {
+                          return DropdownMenuItem<String>(
+                            value: dropDownItem,
+                            child: Text(dropDownItem,
+                                style: SharedFonts.whiteFont),
+                          );
+                        }).toList(),
+                        onChanged: (newValueSelected) {
+                          setState(() {
+                            _currentItemSelected = newValueSelected!;
+                            rool = newValueSelected;
+                            if (newValueSelected == 'admin') {
+                              isAdminPasswordEmpty = true;
+                            } else {
+                              isAdminPasswordEmpty = false;
+                            }
+                          });
+                        },
+                        value: _currentItemSelected,
+                      ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 1.5.h,
                     ),
                     rool == 'admin'
                         ? Container(
@@ -247,17 +253,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: SharedColors.backgroundGreyColor,
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            margin: const EdgeInsets.all(10),
+                            margin: EdgeInsets.fromLTRB(5.w, 1.5.h, 5.w, 1.5.h),
                             child: TextFormField(
                               decoration: InputDecoration(
                                   border: TextFieldBorder.fieldBorder(
-                                      SharedColors.yellowColor),
+                                      SharedColors.babyBlueColor),
                                   errorBorder:
                                       TextFieldBorder.fieldBorder(Colors.red),
                                   // enabledBorder: TextFieldBorder.fieldBorder(
-                                  //     SharedColors.yellowColor),
+                                  //     SharedColors.babyBlueColor),
                                   focusedBorder: TextFieldBorder.fieldBorder(
-                                      SharedColors.yellowColor),
+                                      SharedColors.babyBlueColor),
                                   prefixIcon: SharedIcons.PasswordIcon,
                                   labelText: 'Admin Password',
                                   labelStyle: SharedFonts.greyFont,

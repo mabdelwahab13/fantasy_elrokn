@@ -29,10 +29,10 @@ class _PlayOffMatchesWidgetState extends State<PlayOffMatchesWidget> {
         children: [
           Container(
             alignment: Alignment.center,
-            height: MediaQuery.of(context).size.height / 3,
+            
             decoration: BoxDecoration(
               border: Border.all(
-                color: SharedColors.yellowColor,
+                color: SharedColors.babyBlueColor,
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(15),
@@ -58,7 +58,7 @@ class _PlayOffMatchesWidgetState extends State<PlayOffMatchesWidget> {
                   },
                   border: TableBorder(
                     horizontalInside: BorderSide(
-                      color: SharedColors.yellowColor,
+                      color: SharedColors.babyBlueColor,
                       width: 2,
                     ),
                   ),

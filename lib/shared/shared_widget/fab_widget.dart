@@ -16,7 +16,7 @@ class _FabWidgetState extends State<FabWidget> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-        backgroundColor: SharedColors.yellowColor,
+        backgroundColor: SharedColors.babyBlueColor,
         child: Icon(
           Icons.add,
           color: SharedColors.backgroundBlackColor,

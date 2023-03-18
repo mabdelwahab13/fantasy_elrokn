@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fantasy_elrokn/screens/admin/profiles_screen.dart';
+import 'package:fantasy_elrokn/screens/user/about_us_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -32,7 +33,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   bool _isD1Done = false;
   bool _isG1Done = false;
   bool _isG2Done = false;
-
   var cancelGetData;
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         children: [
                           Icon(
                             Icons.arrow_circle_right_outlined,
-                            color: SharedColors.UnSelectedIconColor,
+                            color: SharedColors.unSelectedIconColor,
                           ),
                           const SizedBox(
                             width: 10,
@@ -74,36 +74,32 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           return widget.divisionOne;
                         }),
                       );
-                      if (model.isLoadingD1) {
-                        null;
-                      } else {
-                        await model.getTeamsDivOneData();
-                        await model.getTeamsDivOneTeams();
-                        if (model.isGwFinished) {
-                          await model.getTeamsDataD1();
-                          if (model.teamsPointsD1.length < model.currentEvent) {
-                            await model.getCurrentGWDataDevOne();
-                            await model.addPlayersDataD1({
-                              'gwPoints': model.totalCurrentGWPointsD1,
-                              'playerOfWeekName': model.playerOfWeekNameD1,
-                              'playerOfWeek': '${model.playerOfWeekD1}',
-                              'teamOfWeekName': model.teamOfWeekNameD1,
-                              'teamOfWeek': '${model.teamOfWeekD1}',
-                            });
-                            await model.getTeamsDataD1();
-                            await model.gameweekCreationD1();
-                          } else {
-                            await model.gameweekCreationD1();
-                            model.setLoadD1 = false;
-                            return;
-                          }
-                        } else {
+                      model.isLoadingD1
+                          ? null
+                          : await model.getTeamsDivOneData();
+                      await model.getTeamsDivOneTeams();
+                      if (model.isGwFinished) {
+                        await model.getTeamsDataD1();
+                        if (model.teamsPointsD1.length < model.currentEvent) {
                           await model.getCurrentGWDataDevOne();
+                          await model.addPlayersDataD1({
+                            'gwPoints': model.totalCurrentGWPointsD1,
+                            'playerOfWeekName': model.playerOfWeekNameD1,
+                            'playerOfWeek': '${model.playerOfWeekD1}',
+                            'teamOfWeekName': model.teamOfWeekNameD1,
+                            'teamOfWeek': '${model.teamOfWeekD1}',
+                          });
                           await model.getTeamsDataD1();
                           await model.gameweekCreationD1();
+                        } else {
+                          await model.gameweekCreationD1();
+                          return;
                         }
+                      } else {
+                        await model.getCurrentGWDataDevOne();
+                        await model.getTeamsDataD1();
+                        await model.gameweekCreationD1();
                       }
-
                       if (model.isGwFinished) {
                         await model.getTeamsDivOneData();
                         if (model.gw1CurrentD1) {
@@ -1153,7 +1149,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               children: [
                                 Icon(
                                   Icons.arrow_circle_right_outlined,
-                                  color: SharedColors.UnSelectedIconColor,
+                                  color: SharedColors.unSelectedIconColor,
                                 ),
                                 SizedBox(
                                   width: 10,
@@ -1179,7 +1175,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               children: [
                                 Icon(
                                   Icons.arrow_circle_right_outlined,
-                                  color: SharedColors.UnSelectedIconColor,
+                                  color: SharedColors.unSelectedIconColor,
                                 ),
                                 Text(
                                   'Group 1',
@@ -1194,35 +1190,33 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                   return widget.groupOne;
                                 }),
                               );
-                              if (model.isLoadingG1) {
-                                null;
-                              } else {
-                                await model.getTeamsGroupOneData();
-                                await model.getTeamsGroupOneTeams();
-                                if (model.isGwFinished) {
-                                  await model.getTeamsDataG1();
-                                  if (model.teamsPointsG1.length <
-                                      model.currentEvent) {
-                                    await model.getCurrentGWDataGroupOne();
-                                    await model.addPlayersDataG1({
-                                      'gwPoints': model.totalCurrentGWPointsG1,
-                                      'playerOfWeekName':
-                                          model.playerOfWeekNameG1,
-                                      'playerOfWeek': '${model.playerOfWeekG1}',
-                                      'teamOfWeekName': model.teamOfWeekNameG1,
-                                      'teamOfWeek': '${model.teamOfWeekG1}',
-                                    });
-                                    await model.getTeamsDataG1();
-                                    await model.gameweekCreationG1();
-                                  } else {
-                                    await model.gameweekCreationG1();
-                                    return;
-                                  }
-                                } else {
+                              model.isLoadingG1
+                                  ? null
+                                  : await model.getTeamsGroupOneData();
+                              await model.getTeamsGroupOneTeams();
+                              if (model.isGwFinished) {
+                                await model.getTeamsDataG1();
+                                if (model.teamsPointsG1.length <
+                                    model.currentEvent) {
                                   await model.getCurrentGWDataGroupOne();
+                                  await model.addPlayersDataG1({
+                                    'gwPoints': model.totalCurrentGWPointsG1,
+                                    'playerOfWeekName':
+                                        model.playerOfWeekNameG1,
+                                    'playerOfWeek': '${model.playerOfWeekG1}',
+                                    'teamOfWeekName': model.teamOfWeekNameG1,
+                                    'teamOfWeek': '${model.teamOfWeekG1}',
+                                  });
                                   await model.getTeamsDataG1();
                                   await model.gameweekCreationG1();
+                                } else {
+                                  await model.gameweekCreationG1();
+                                  return;
                                 }
+                              } else {
+                                await model.getCurrentGWDataGroupOne();
+                                await model.getTeamsDataG1();
+                                await model.gameweekCreationG1();
                               }
                               if (model.isGwFinished) {
                                 if (model.gw1CurrentG1) {
@@ -2090,7 +2084,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               children: [
                                 Icon(
                                   Icons.arrow_circle_right_outlined,
-                                  color: SharedColors.UnSelectedIconColor,
+                                  color: SharedColors.unSelectedIconColor,
                                 ),
                                 Text(
                                   'Group 2',
@@ -2105,37 +2099,34 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                   return widget.groupTwo;
                                 }),
                               );
-                              if (model.isLoadingG2) {
-                                null;
-                              } else {
-                                await model.getTeamsGroupTwoData();
-                                await model.getTeamsGroupTwoTeams();
-                                if (model.isGwFinished) {
-                                  await model.getTeamsDataG2();
-                                  if (model.teamsPointsG2.length <
-                                      model.currentEvent) {
-                                    await model.getCurrentGWDataGroupTwo();
-                                    await model.addPlayersDataG2({
-                                      'gwPoints': model.totalCurrentGWPointsG2,
-                                      'playerOfWeekName':
-                                          model.playerOfWeekNameG2,
-                                      'playerOfWeek': '${model.playerOfWeekG2}',
-                                      'teamOfWeekName': model.teamOfWeekNameG2,
-                                      'teamOfWeek': '${model.teamOfWeekG2}',
-                                    });
-                                    await model.getTeamsDataG2();
-                                    await model.gameweekCreationG2();
-                                  } else {
-                                    await model.gameweekCreationG2();
-                                    return;
-                                  }
-                                } else {
+                              model.isLoadingG2
+                                  ? null
+                                  : await model.getTeamsGroupTwoData();
+                              await model.getTeamsGroupTwoTeams();
+                              if (model.isGwFinished) {
+                                await model.getTeamsDataG2();
+                                if (model.teamsPointsG2.length <
+                                    model.currentEvent) {
                                   await model.getCurrentGWDataGroupTwo();
+                                  await model.addPlayersDataG2({
+                                    'gwPoints': model.totalCurrentGWPointsG2,
+                                    'playerOfWeekName':
+                                        model.playerOfWeekNameG2,
+                                    'playerOfWeek': '${model.playerOfWeekG2}',
+                                    'teamOfWeekName': model.teamOfWeekNameG2,
+                                    'teamOfWeek': '${model.teamOfWeekG2}',
+                                  });
                                   await model.getTeamsDataG2();
                                   await model.gameweekCreationG2();
+                                } else {
+                                  await model.gameweekCreationG2();
+                                  return;
                                 }
+                              } else {
+                                await model.getCurrentGWDataGroupTwo();
+                                await model.getTeamsDataG2();
+                                await model.gameweekCreationG2();
                               }
-
                               if (model.isGwFinished) {
                                 if (model.gw1CurrentG2) {
                                   model.allGroupTwoTeams[0].matchesPlayed != 1
@@ -3010,7 +3001,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               children: [
                                 Icon(
                                   Icons.arrow_circle_right_outlined,
-                                  color: SharedColors.UnSelectedIconColor,
+                                  color: SharedColors.unSelectedIconColor,
                                 ),
                                 Text(
                                   'PlayOff',
@@ -3022,39 +3013,71 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ],
                     ),
                   ),
-                  if (widget.isUser)
-                    TextButton(
-                      style: TextButton.styleFrom(minimumSize: Size(100, 80)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.arrow_circle_right_outlined,
-                              color: SharedColors.UnSelectedIconColor,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'Users Profiles',
-                              style: SharedFonts.whiteFont,
-                            ),
-                          ],
-                        ),
+                  // if (!widget.isUser)
+                  //   TextButton(
+                  //     style: TextButton.styleFrom(minimumSize: Size(100, 80)),
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.all(10.0),
+                  //       child: Row(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           Icon(
+                  //             Icons.arrow_circle_right_outlined,
+                  //             color: SharedColors.unSelectedIconColor,
+                  //           ),
+                  //           SizedBox(
+                  //             width: 10,
+                  //           ),
+                  //           Text(
+                  //             'Users Profiles',
+                  //             style: SharedFonts.whiteFont,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (context) {
+                  //             return ProfilesScreen();
+                  //           },
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  TextButton(
+                    style: TextButton.styleFrom(minimumSize: Size(100, 80)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.arrow_circle_right_outlined,
+                            color: SharedColors.unSelectedIconColor,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'About Us',
+                            style: SharedFonts.whiteFont,
+                          ),
+                        ],
                       ),
-                      onPressed: () {
-                        Navigator.push(
+                    ),
+                    onPressed: () {
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return ProfilesScreen();
+                              return AboutUsScreen();
                             },
                           ),
                         );
-                      },
-                    ),
+                    },
+                  ),
                   // TextButton(
                   //   style: TextButton.styleFrom(minimumSize: Size(100, 80)),
                   //   child: Padding(
@@ -3064,7 +3087,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   //       children: [
                   //         Icon(
                   //           Icons.arrow_circle_right_outlined,
-                  //           color: SharedColors.UnSelectedIconColor,
+                  //           color: SharedColors.unSelectedIconColor,
                   //         ),
                   //         SizedBox(
                   //           width: 10,
@@ -3087,7 +3110,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   //       children: [
                   //         Icon(
                   //           Icons.arrow_circle_right_outlined,
-                  //           color: SharedColors.UnSelectedIconColor,
+                  //           color: SharedColors.unSelectedIconColor,
                   //         ),
                   //         SizedBox(
                   //           width: 10,
@@ -3110,7 +3133,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   //       children: [
                   //         Icon(
                   //           Icons.arrow_circle_right_outlined,
-                  //           color: SharedColors.UnSelectedIconColor,
+                  //           color: SharedColors.unSelectedIconColor,
                   //         ),
                   //         SizedBox(
                   //           width: 10,
@@ -3133,7 +3156,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   //       children: [
                   //         Icon(
                   //           Icons.arrow_circle_right_outlined,
-                  //           color: SharedColors.UnSelectedIconColor,
+                  //           color: SharedColors.unSelectedIconColor,
                   //         ),
                   //         SizedBox(
                   //           width: 10,

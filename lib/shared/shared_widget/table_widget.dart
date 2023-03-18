@@ -47,7 +47,7 @@ class _TableWidgetState extends State<TableWidget> {
             },
             border: TableBorder(
               horizontalInside: BorderSide(
-                color: SharedColors.yellowColor,
+                color: SharedColors.babyBlueColor,
                 width: 2,
               ),
             ),

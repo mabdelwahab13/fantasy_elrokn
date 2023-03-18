@@ -77,7 +77,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
             backgroundColor: SharedColors.backgroundSubGreyColor,
             title: Text(
               'Verify Email',
-              style: SharedFonts.yellowFont,
+              style: SharedFonts.babyBlueFont,
             ),
           ),
           backgroundColor: SharedColors.backgroundBlackColor,

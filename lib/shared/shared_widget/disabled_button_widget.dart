@@ -1,5 +1,8 @@
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
+import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
 
 class DisabledButtonWidget extends StatelessWidget {
   String title;
@@ -10,15 +13,19 @@ class DisabledButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: null,
-      style: TextButton.styleFrom(
-        backgroundColor: SharedColors.backgroundGreyColor,
-        minimumSize: const Size(200, 50),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20.w,0.5.h,20.w,0.5.h),
+      child: TextButton(
+        onPressed: null,
+        style: TextButton.styleFrom(
+          backgroundColor: SharedColors.backgroundGreyColor,
+          minimumSize: Size(1.w, 7.h),
+          maximumSize: Size(1.w, 12.h),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        ),
+        child: Text(title, style: SharedFonts.whiteFont),
       ),
-      child: Text(title, style: TextStyle(color: Colors.white, fontSize: 20.0)),
     );
   }
 }

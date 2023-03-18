@@ -4406,7 +4406,7 @@ mixin MatchesFixtureGroupTwoController on Model {
 
   Future<void> getCurrentGWDataGroupTwo() async {
     _isLoadingG2 = true;
-    // _totalCurrentGWPointsG2.clear();
+    _totalCurrentGWPointsG2.clear();
     // _playerOfWeekG2 = 0;
     // _teamOfWeekG2 = 0;
     // _playerOfWeekNameG2.clear();
@@ -4420,9 +4420,6 @@ mixin MatchesFixtureGroupTwoController on Model {
         await getPreviousPlayerInfoG2(_allPlayersIdG2[x][j].toString());
         await getLivePlayerPointsG2(_allPlayersIdG2[x][j].toString(),
             (_previousPlayerInfoG2[i].currentEvent).toString());
-
-        print(_livePlayerPointsG2[i].entryHistory['points'] -
-            _livePlayerPointsG2[i].entryHistory['event_transfers_cost']);
 
         _points += _livePlayerPointsG2[i].entryHistory['points'] -
             _livePlayerPointsG2[i].entryHistory['event_transfers_cost'];

@@ -38,7 +38,7 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
-              color: SharedColors.yellowColor,
+              color: SharedColors.babyBlueColor,
               width: 2,
             ),
             color: SharedColors.backgroundGreyColor,
@@ -56,7 +56,7 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
                       children: [
                         Text(
                           widget.playerName,
-                          style: SharedFonts.subWhiteFont,
+                          style: SharedFonts.babyBlueFont,
                         ),
                         Text(
                           widget.playerTeamName,
@@ -107,11 +107,11 @@ class _PlayerDataWidgetState extends State<PlayerDataWidget> {
             ],
           ),
         ),
-        AwardsData(title: 'player Of Week', num: 2),
-        AwardsData(title: 'Player Of Month', num: 2),
-        SizedBox(
-          height: 25,
-        ),
+        // AwardsData(title: 'player Of Week', num: 2),
+        // AwardsData(title: 'Player Of Month', num: 2),
+        // SizedBox(
+        //   height: 25,
+        // ),
       ],
     );
   }
@@ -133,7 +133,7 @@ class PlayerDataTopRow extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
-          color: SharedColors.yellowColor,
+          color: SharedColors.babyBlueColor,
           width: 2,
         ),
         color: SharedColors.backgroundGreyColor,

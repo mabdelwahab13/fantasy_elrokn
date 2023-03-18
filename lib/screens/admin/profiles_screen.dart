@@ -40,7 +40,7 @@ class _ProfilesScreenState extends State<ProfilesScreen> {
             backgroundColor: SharedColors.backgroundSubGreyColor,
             title: Text(
               'Profiles',
-              style: SharedFonts.yellowFont,
+              style: SharedFonts.babyBlueFont,
             ),
           ),
           body: GrediantBackgroundWidget(
@@ -68,7 +68,7 @@ class _ProfilesScreenState extends State<ProfilesScreen> {
                                     onPressed: () {},
                                     child: Text(
                                       'Make Admin',
-                                      style: SharedFonts.subYellowFont,
+                                      style: SharedFonts.subBabyBlueFont,
                                     ),
                                   ),
                                 ),
@@ -77,7 +77,7 @@ class _ProfilesScreenState extends State<ProfilesScreen> {
                                     onPressed: () {},
                                     child: Text(
                                       'Remove Admin',
-                                      style: SharedFonts.subYellowFont,
+                                      style: SharedFonts.subBabyBlueFont,
                                     ),
                                   ),
                                 ),
@@ -85,7 +85,7 @@ class _ProfilesScreenState extends State<ProfilesScreen> {
                         },
                         icon: Icon(
                           Icons.mode_rounded,
-                          color: SharedColors.yellowColor,
+                          color: SharedColors.babyBlueColor,
                         ),
                       ),
                     ],

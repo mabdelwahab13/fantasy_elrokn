@@ -37,12 +37,12 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
       margin: const EdgeInsets.all(10),
       child: TextFormField(
         decoration: InputDecoration(
-            border: TextFieldBorder.fieldBorder(SharedColors.yellowColor),
+            border: TextFieldBorder.fieldBorder(SharedColors.babyBlueColor),
             errorBorder: TextFieldBorder.fieldBorder(Colors.red),
             enabledBorder:
-                TextFieldBorder.fieldBorder(SharedColors.yellowColor),
+                TextFieldBorder.fieldBorder(SharedColors.babyBlueColor),
             focusedBorder:
-                TextFieldBorder.fieldBorder(SharedColors.yellowColor),
+                TextFieldBorder.fieldBorder(SharedColors.babyBlueColor),
             prefixIcon: SharedIcons.PasswordIcon,
             labelText: 'Password',
             labelStyle: SharedFonts.greyFont,

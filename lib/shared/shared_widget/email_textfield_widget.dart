@@ -32,10 +32,10 @@ class _EmailTextFieldWidgetState extends State<EmailTextFieldWidget> {
       margin: const EdgeInsets.all(10),
       child: TextField(
         decoration: InputDecoration(
-          border: TextFieldBorder.fieldBorder(SharedColors.yellowColor),
+          border: TextFieldBorder.fieldBorder(SharedColors.babyBlueColor),
           errorBorder: TextFieldBorder.fieldBorder(Colors.red),
-          enabledBorder: TextFieldBorder.fieldBorder(SharedColors.yellowColor),
-          focusedBorder: TextFieldBorder.fieldBorder(SharedColors.yellowColor),
+          enabledBorder: TextFieldBorder.fieldBorder(SharedColors.babyBlueColor),
+          focusedBorder: TextFieldBorder.fieldBorder(SharedColors.babyBlueColor),
           prefixIcon: SharedIcons.emailIcon,
           labelText: 'Email',
           labelStyle: SharedFonts.greyFont,

@@ -46,12 +46,12 @@ class _PlayOffWidgetState extends State<PlayOffWidget> {
               backgroundColor: SharedColors.backgroundGreyColor,
               title: Text(
                 'Permier League',
-                style: SharedFonts.yellowFont,
+                style: SharedFonts.babyBlueFont,
               ),
               bottom: TabBar(
                 unselectedLabelStyle: SharedFonts.greyFont,
                 isScrollable: true,
-                indicatorColor: SharedColors.subYellowColor,
+                indicatorColor: SharedColors.subBabyBlueColor,
                 tabs: SharedPlayOffWeeks.tabs,
               ),
             ),

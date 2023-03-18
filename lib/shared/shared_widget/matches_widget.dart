@@ -1,11 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
-
-import 'package:fantasy_elrokn/controllers/main_model.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/awards_widget.dart';
+import 'package:sizer/sizer.dart';
 
 class MatchesScreenWidget extends StatefulWidget {
   String division;
@@ -35,25 +33,25 @@ class MatchesScreenWidget extends StatefulWidget {
 }
 
 class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
-  EdgeInsets padding = const EdgeInsets.only(top: 15, bottom: 15);
+  EdgeInsets padding =  EdgeInsets.only(top: 1.5.h, bottom: 1.5.h);
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding:  EdgeInsets.fromLTRB(2.w,1.h,2.w,1.h),
       child: Column(
         children: [
           Container(
              alignment: Alignment.center,
-            height: MediaQuery.of(context).size.height / 1.4,
+            // height: 70.h,
             decoration: BoxDecoration(
               border: Border.all(
-                color: SharedColors.yellowColor,
+                color: SharedColors.babyBlueColor,
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(15),
               color: SharedColors.backgroundGreyColor,
             ),
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.fromLTRB(2.w,0.5.h,2.w,0.5.h),
             child: Column(
               children: [
                 Text(
@@ -61,7 +59,7 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
                   style: SharedFonts.whiteFont,
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 0.5.h,
                 ),
                 Table(
                   columnWidths: const {
@@ -73,7 +71,7 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
                   },
                   border: TableBorder(
                     horizontalInside: BorderSide(
-                      color: SharedColors.yellowColor,
+                      color: SharedColors.babyBlueColor,
                       width: 2,
                     ),
                   ),
@@ -172,7 +170,7 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 5.h,
           ),
           AwardsWidget(
             winner: widget.playerOfWeek,
@@ -181,7 +179,7 @@ class _MatchesScreenWidgetState extends State<MatchesScreenWidget> {
             num: widget.numOfPlayers,
           ),
           SizedBox(
-            height: 10,
+            height: 1.h,
           ),
           AwardsWidget(
             winner: widget.teamOfWeek,

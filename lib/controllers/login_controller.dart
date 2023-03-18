@@ -47,6 +47,7 @@ mixin LoginController on Model {
         } else if (e.code == 'wrong-password') {
           _isEmailLoading = false;
           _wrongPassword = true;
+          notifyListeners();
         }
       }
       notifyListeners();
@@ -78,7 +79,7 @@ mixin LoginController on Model {
           );
         }
       } else {
-        print('Document does not exist on the database');
+        null;
       }
     });
   }

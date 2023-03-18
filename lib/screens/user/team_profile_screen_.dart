@@ -5,7 +5,6 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:fantasy_elrokn/controllers/main_model.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
-import 'package:fantasy_elrokn/shared/shared_widget/awards_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/grediant_backgound_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/player_data_widget.dart';
 
@@ -27,10 +26,13 @@ class TeamProfileScreen extends StatefulWidget {
 }
 
 class _TeamProfileScreenState extends State<TeamProfileScreen> {
+  List<String> options = [for (int i = 1; i <= 38; i++) 'Gameweek $i'];
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
       builder: (context, child, MainModel model) {
+        String currentItemSelected = 'Gameweek ${model.currentEvent}';
+        // int _current = model.currentEvent; 
         return Scaffold(
           appBar: AppBar(
             title: Text(
@@ -45,48 +47,74 @@ class _TeamProfileScreenState extends State<TeamProfileScreen> {
                   : model.allDivOneTeams.isEmpty
                       ? 'teamName'
                       : model.allDivOneTeams[widget.index].teamName,
-              style: SharedFonts.yellowFont,
+              style: SharedFonts.babyBlueFont,
             ),
             backgroundColor: SharedColors.backgroundGreyColor,
             actions: [
-              TextButton(
-                onPressed: () {
-                  showMenu(
-                      color: SharedColors.backgroundBlackColor,
-                      context: context,
-                      position:
-                          const RelativeRect.fromLTRB(60.0, 40.0, 40.0, 40.0),
-                      items: [
-                        for (int i = 1; i < 39; i++)
-                          PopupMenuItem(
-                            child: TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  widget.event = i;
-                                });
-                              },
-                              child: Text(
-                                'Gameweek $i',
-                                style: SharedFonts.subYellowFont,
-                              ),
-                            ),
-                          ),
-                      ]);
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      'Gameweek ${model.currentEvent}',
-                      style: SharedFonts.subYellowFont,
-                    ),
-                    Icon(
-                      Icons.arrow_drop_down,
-                      color: SharedColors.yellowColor,
-                      size: 25,
-                    ),
-                  ],
+              Align(
+                alignment: Alignment.center,
+                child: DropdownButton(
+                  dropdownColor: SharedColors.backgroundGreyColor,
+                  isDense: true,
+                  isExpanded: false,
+                  iconEnabledColor: SharedColors.babyBlueColor,
+                  focusColor: SharedColors.babyBlueColor,
+                  items: options.map((String dropDownItem) {
+                    return DropdownMenuItem<String>(
+                      value: dropDownItem,
+                      child:
+                          Text(dropDownItem, style: SharedFonts.subBabyBlueFont),
+                    );
+                  }).toList(),
+                  onChanged: (newValueSelected) {
+                    setState(() {
+                      currentItemSelected = newValueSelected!;
+                      widget.event =
+                          int.parse(newValueSelected.replaceAll('Gameweek ', ''));
+                    });
+                  },
+                  value: currentItemSelected,
                 ),
               ),
+              // TextButton(
+              //   onPressed: () {
+              //     showMenu(
+              //         color: SharedColors.backgroundBlackColor,
+              //         context: context,
+              //         position:
+              //             const RelativeRect.fromLTRB(60.0, 40.0, 40.0, 40.0),
+              //         items: [
+              //           for (int i = 1; i < 39; i++)
+              //             PopupMenuItem(
+              //               child: TextButton(
+              //                 onPressed: () {
+              //                   setState(() {
+              //                     widget.event = i;
+              //                     _current =i;
+              //                   });
+              //                 },
+              //                 child: Text(
+              //                   'Gameweek $i',
+              //                   style: SharedFonts.subBabyBlueFont,
+              //                 ),
+              //               ),
+              //             ),
+              //         ]);
+              //   },
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         'Gameweek $_current',
+              //         style: SharedFonts.subBabyBlueFont,
+              //       ),
+              //       Icon(
+              //         Icons.arrow_drop_down,
+              //         color: SharedColors.babyBlueColor,
+              //         size: 25,
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
           body: GrediantBackgroundWidget(
@@ -107,9 +135,9 @@ class _TeamProfileScreenState extends State<TeamProfileScreen> {
                     );
                   },
                 ),
-                SizedBox(
-                  height: 50,
-                ),
+                // SizedBox(
+                //   height: 50,
+                // ),
                 // Text(
                 //   'Replaced',
                 //   style: SharedFonts.whiteFont,
@@ -118,12 +146,12 @@ class _TeamProfileScreenState extends State<TeamProfileScreen> {
                 // SizedBox(
                 //   height: 50,
                 // ),
-                Text(
-                  'Awards',
-                  style: SharedFonts.whiteFont,
-                ),
-                AwardsData(title: 'Team Of Week', num: 2),
-                AwardsData(title: 'Team Of Month', num: 2),
+                // Text(
+                //   'Awards',
+                //   style: SharedFonts.whiteFont,
+                // ),
+                // AwardsData(title: 'Team Of Week', num: 2),
+                // AwardsData(title: 'Team Of Month', num: 2),
               ],
             ),
           ),

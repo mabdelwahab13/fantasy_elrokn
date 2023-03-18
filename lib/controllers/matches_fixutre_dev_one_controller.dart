@@ -5416,7 +5416,7 @@ mixin MatchesFixtureDevOneController on Model {
 
   Future<void> getCurrentGWDataDevOne() async {
     _isLoadingD1 = true;
-    _totalCurrentGWPointsD1 = [];
+    _totalCurrentGWPointsD1.clear();
     try {
       await getIdsForTeamPointsD1();
 
@@ -5428,9 +5428,6 @@ mixin MatchesFixtureDevOneController on Model {
           await getPreviousPlayerInfoD1(_allPlayersIdD1[x][j].toString());
           await getLivePlayerPointsD1(_allPlayersIdD1[x][j].toString(),
               (_previousPlayerInfoD1[i].currentEvent).toString());
-
-          print(_livePlayerPointsD1[i].entryHistory['points'] -
-              _livePlayerPointsD1[i].entryHistory['event_transfers_cost']);
 
           _points += _livePlayerPointsD1[i].entryHistory['points'] -
               _livePlayerPointsD1[i].entryHistory['event_transfers_cost'];
@@ -5586,8 +5583,6 @@ mixin MatchesFixtureDevOneController on Model {
       _activeConnetion = true;
       notifyListeners();
     } on Exception catch (e) {
-      var x = e.toString();
-      print(x);
       _activeConnetion = false;
       notifyListeners();
     }

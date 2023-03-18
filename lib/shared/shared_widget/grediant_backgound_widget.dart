@@ -14,14 +14,15 @@ class GrediantBackgroundWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-              gradient: LinearGradient(
-              begin: Alignment.center,
-              end: Alignment.bottomLeft,
-              colors: [
-                SharedColors.backgroundBlackColor,
-                SharedColors.backgroundSubGreyColor
-              ]
-            ),
+        color: SharedColors.backgroundColor,
+            //   gradient: LinearGradient(
+            //   begin: Alignment.center,
+            //   end: Alignment.bottomLeft,
+            //   colors: [
+            //     SharedColors.backgroundBlackColor,
+            //     SharedColors.backgroundSubGreyColor
+            //   ]
+            // ),
             ),
             child: child,
     );

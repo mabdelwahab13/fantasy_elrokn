@@ -1,9 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
+import 'package:sizer/sizer.dart';
 import 'package:fantasy_elrokn/controllers/main_model.dart';
-import 'package:fantasy_elrokn/screens/admin/add_players_screen.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_fonts.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/enabled_button_widget.dart';
@@ -37,14 +36,14 @@ class _PlayerSubScreenState extends State<PlayerSubScreen> {
             backgroundColor: SharedColors.backgroundGreyColor,
             title: Text(
               'Substitute Player',
-              style: SharedFonts.yellowFont,
+              style: SharedFonts.babyBlueFont,
             ),
           ),
           body: GrediantBackgroundWidget(
             child: Padding(
-              padding: EdgeInsets.all(30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              padding: EdgeInsets.fromLTRB(5.w, 10.h, 5.w, 10.h),
+              child: ListView(
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SubtitutionTextField(
                     textFieldController: enteredPlayerID,
@@ -114,10 +113,10 @@ class _SubtitutionTextFieldState extends State<SubtitutionTextField> {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-        border: TextFieldBorder.fieldBorder(SharedColors.yellowColor),
+        border: TextFieldBorder.fieldBorder(SharedColors.babyBlueColor),
         errorBorder: TextFieldBorder.fieldBorder(Colors.red),
-        enabledBorder: TextFieldBorder.fieldBorder(SharedColors.yellowColor),
-        focusedBorder: TextFieldBorder.fieldBorder(SharedColors.yellowColor),
+        enabledBorder: TextFieldBorder.fieldBorder(SharedColors.babyBlueColor),
+        focusedBorder: TextFieldBorder.fieldBorder(SharedColors.babyBlueColor),
         labelText: widget.hint,
         labelStyle: SharedFonts.greyFont,
       ),

@@ -11,6 +11,7 @@ import 'package:fantasy_elrokn/shared/shared_widget/drawer_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/grediant_backgound_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/matches_widget.dart';
 import 'package:fantasy_elrokn/shared/shared_widget/table_widget.dart';
+import 'package:sizer/sizer.dart';
 
 class DivisionOneWidget extends StatefulWidget {
   Widget divisionOne;
@@ -54,17 +55,18 @@ class _DivisionOneWidgetState extends State<DivisionOneWidget> {
           child: Scaffold(
             backgroundColor: SharedColors.backgroundBlackColor,
             appBar: AppBar(
-              iconTheme: IconThemeData(color: SharedColors.yellowColor),
+              iconTheme: IconThemeData(color: SharedColors.babyBlueColor),
               backgroundColor: SharedColors.backgroundGreyColor,
               title: Text(
                 'Permier League',
-                style: SharedFonts.yellowFont,
+                style: SharedFonts.babyBlueFont,
               ),
               bottom: _currentBottomIndex == 0
                   ? TabBar(
+                      labelColor: SharedColors.babyBlueColor,
                       unselectedLabelStyle: SharedFonts.greyFont,
                       isScrollable: true,
-                      indicatorColor: SharedColors.subYellowColor,
+                      indicatorColor: SharedColors.subBabyBlueColor,
                       tabs: SharedLeagueD1GameWeeks.tabs,
                     )
                   : null,
@@ -72,12 +74,12 @@ class _DivisionOneWidgetState extends State<DivisionOneWidget> {
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               unselectedIconTheme:
-                  IconThemeData(color: SharedColors.UnSelectedIconColor),
-              unselectedItemColor: SharedColors.UnSelectedIconColor,
+                  IconThemeData(color: SharedColors.unSelectedIconColor),
+              unselectedItemColor: SharedColors.unSelectedIconColor,
               unselectedLabelStyle: SharedFonts.greyFont,
               iconSize: 25,
               showUnselectedLabels: true,
-              fixedColor: SharedColors.yellowColor,
+              fixedColor: SharedColors.babyBlueColor,
               backgroundColor: SharedColors.backgroundBlackColor,
               currentIndex: _currentBottomIndex,
               onTap: _changeBottomTab,
@@ -89,7 +91,7 @@ class _DivisionOneWidgetState extends State<DivisionOneWidget> {
                     width: 40,
                   ),
                   activeIcon: Image.asset(
-                    SharedImages.yellowMatchesIcon,
+                    SharedImages.babyBlueMatchesIcon,
                     height: 28,
                     width: 38,
                   ),
@@ -153,7 +155,7 @@ class _DivisionOneWidgetState extends State<DivisionOneWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   CircularProgressIndicator(
-                                    color: SharedColors.yellowColor,
+                                    color: SharedColors.babyBlueColor,
                                   ),
                                 ],
                               )
@@ -168,12 +170,12 @@ class _DivisionOneWidgetState extends State<DivisionOneWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   CircularProgressIndicator(
-                                    color: SharedColors.yellowColor,
+                                    color: SharedColors.babyBlueColor,
                                   ),
                                 ],
                               )
                             : SizedBox(
-                                height: MediaQuery.of(context).size.height,
+                                height: 100.h,
                                 child: TabBarView(
                                   children: <Widget>[
                                     MatchesScreenWidget(

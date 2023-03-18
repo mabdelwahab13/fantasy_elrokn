@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
+import 'package:sizer/sizer.dart';
 import 'package:fantasy_elrokn/controllers/main_model.dart';
 import 'package:fantasy_elrokn/shared/shared_data/shared_teams.dart';
 import 'package:fantasy_elrokn/shared/shared_theme/shared_colors.dart';
@@ -63,17 +63,18 @@ class _SecondDivisionWidgetState extends State<SecondDivisionWidget> {
           child: Scaffold(
             backgroundColor: SharedColors.backgroundBlackColor,
             appBar: AppBar(
-              iconTheme: IconThemeData(color: SharedColors.yellowColor),
+              iconTheme: IconThemeData(color: SharedColors.babyBlueColor),
               backgroundColor: SharedColors.backgroundGreyColor,
               title: Text(
                 widget.title,
-                style: SharedFonts.yellowFont,
+                style: SharedFonts.babyBlueFont,
               ),
               bottom: _currentBottomIndex == 0
                   ? TabBar(
+                    labelColor: SharedColors.babyBlueColor,
                       unselectedLabelStyle: SharedFonts.greyFont,
                       isScrollable: true,
-                      indicatorColor: SharedColors.subYellowColor,
+                      indicatorColor: SharedColors.subBabyBlueColor,
                       tabs: SharedLeagueD2GameWeeks.tabs,
                     )
                   : null,
@@ -81,12 +82,12 @@ class _SecondDivisionWidgetState extends State<SecondDivisionWidget> {
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               unselectedIconTheme:
-                  IconThemeData(color: SharedColors.UnSelectedIconColor),
-              unselectedItemColor: SharedColors.UnSelectedIconColor,
+                  IconThemeData(color: SharedColors.unSelectedIconColor),
+              unselectedItemColor: SharedColors.unSelectedIconColor,
               unselectedLabelStyle: SharedFonts.greyFont,
               iconSize: 25,
               showUnselectedLabels: true,
-              fixedColor: SharedColors.yellowColor,
+              fixedColor: SharedColors.babyBlueColor,
               backgroundColor: SharedColors.backgroundBlackColor,
               currentIndex: _currentBottomIndex,
               onTap: _changeBottomTab,
@@ -98,9 +99,9 @@ class _SecondDivisionWidgetState extends State<SecondDivisionWidget> {
                     width: 40,
                   ),
                   activeIcon: Image.asset(
-                    SharedImages.yellowMatchesIcon,
-                    height: 28,
-                    width: 38,
+                    SharedImages.babyBlueMatchesIcon,
+                    height: 30,
+                    width: 40,
                   ),
                   label: 'Matches',
                 ),
@@ -197,7 +198,7 @@ class _SecondDivisionWidgetState extends State<SecondDivisionWidget> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       CircularProgressIndicator(
-                                        color: SharedColors.yellowColor,
+                                        color: SharedColors.babyBlueColor,
                                       ),
                                     ],
                                   )
@@ -213,7 +214,7 @@ class _SecondDivisionWidgetState extends State<SecondDivisionWidget> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       CircularProgressIndicator(
-                                        color: SharedColors.yellowColor,
+                                        color: SharedColors.babyBlueColor,
                                       ),
                                     ],
                                   )
@@ -230,12 +231,12 @@ class _SecondDivisionWidgetState extends State<SecondDivisionWidget> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       CircularProgressIndicator(
-                                        color: SharedColors.yellowColor,
+                                        color: SharedColors.babyBlueColor,
                                       ),
                                     ],
                                   )
                                 : SizedBox(
-                                    height: MediaQuery.of(context).size.height,
+                                    height: 100.h,
                                     child: TabBarView(
                                       children: [
                                         MatchesScreenWidget(
@@ -1599,7 +1600,7 @@ class _SecondDivisionWidgetState extends State<SecondDivisionWidget> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       CircularProgressIndicator(
-                                        color: SharedColors.yellowColor,
+                                        color: SharedColors.babyBlueColor,
                                       ),
                                     ],
                                   )
