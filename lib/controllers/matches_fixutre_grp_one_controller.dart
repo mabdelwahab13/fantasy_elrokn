@@ -4396,13 +4396,15 @@ mixin MatchesFixtureGroupOneController on Model {
     notifyListeners();
   }
 
+  bool _isGettingDataG1 = false;
+  bool get isGettingDataG1 => _isGettingDataG1;
+
   Future<void> getCurrentGWDataGroupOne() async {
     _isLoadingG1 = true;
+    notifyListeners();
+    _isGettingDataG1=true;
+    notifyListeners();
     _totalCurrentGWPointsG1.clear();
-    // _playerOfWeekG1 = 0;
-    // _teamOfWeekG1 = 0;
-    // _playerOfWeekNameG1.clear();
-    // _teamOfWeekNameG1.clear();
     await getIdsForTeamPointsG1();
 
     int i = 0;
@@ -4562,7 +4564,8 @@ mixin MatchesFixtureGroupOneController on Model {
         break;
       default:
     }
-
+    notifyListeners();
+    _isGettingDataG1=false;
     notifyListeners();
   }
 

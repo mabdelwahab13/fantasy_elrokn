@@ -3600,17 +3600,17 @@ mixin MatchesFixtureGroupTwoController on Model {
               : _teamsPointsG2[27].gwPoints[8],
     ));
     _gw28G2.add(MatchGWModel(
-      gwFixture: [_groupTwoTeams[13].teamName, _groupTwoTeams[5].teamName],
+      gwFixture: [_groupTwoTeams[13].teamName, _groupTwoTeams[15].teamName],
       team0Result: _gw28CurrentG2
           ? _totalCurrentGWPointsG2[13]
           : _teamsPointsG2.length < 28
               ? 0
               : _teamsPointsG2[27].gwPoints[13],
       team1Result: _gw28CurrentG2
-          ? _totalCurrentGWPointsG2[5]
+          ? _totalCurrentGWPointsG2[15]
           : _teamsPointsG2.length < 28
               ? 0
-              : _teamsPointsG2[27].gwPoints[5],
+              : _teamsPointsG2[27].gwPoints[15],
     ));
     notifyListeners();
 
@@ -4404,13 +4404,15 @@ mixin MatchesFixtureGroupTwoController on Model {
     notifyListeners();
   }
 
+  bool _isGettingDataG2 = false;
+  bool get isGettingDataG2 => _isGettingDataG2;
+
   Future<void> getCurrentGWDataGroupTwo() async {
     _isLoadingG2 = true;
+    notifyListeners();
+    _isGettingDataG2 = true;
+    notifyListeners();
     _totalCurrentGWPointsG2.clear();
-    // _playerOfWeekG2 = 0;
-    // _teamOfWeekG2 = 0;
-    // _playerOfWeekNameG2.clear();
-    // _teamOfWeekNameG2.clear();
     await getIdsForTeamPointsG2();
 
     int i = 0;
@@ -4570,6 +4572,8 @@ mixin MatchesFixtureGroupTwoController on Model {
         break;
       default:
     }
+    notifyListeners();
+    _isGettingDataG2 = false;
     notifyListeners();
   }
 

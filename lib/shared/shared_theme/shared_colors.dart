@@ -13,6 +13,7 @@ class SharedColors{
   static Color blueTable = const Color(0xff01489c);
   static Color orangeTable = const Color(0xffffa632);
   static Color backgroundColor =const Color(0xff242535);
+  static Color greyColor =const Color(0xffa0a0a0);
   
   // static Color subYellowColor = const Color(0xffc6dc01);
   // static Color yellowColor = const Color(0xffc3da0b);

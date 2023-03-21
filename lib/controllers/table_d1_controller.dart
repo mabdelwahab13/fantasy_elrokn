@@ -146,9 +146,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team3Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team3Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team3Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team3Index].pointsDiff +=
-            (_divOneTeamsForTable[team3Index].pointsScored -
-                _divOneTeamsForTable[team3Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team3Index].pointsScored -
+            _divOneTeamsForTable[team3Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team3Index].teamId,
         'teamName': _divOneTeamsForTable[team3Index].teamName,
         'points': _divOneTeamsForTable[team3Index].points,
@@ -165,9 +164,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team4Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team4Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team4Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team4Index].pointsDiff +=
-            (_divOneTeamsForTable[team4Index].pointsScored -
-                _divOneTeamsForTable[team4Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team4Index].pointsScored -
+            _divOneTeamsForTable[team4Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team4Index].teamId,
         'teamName': _divOneTeamsForTable[team4Index].teamName,
         'points': _divOneTeamsForTable[team4Index].points,
@@ -205,9 +203,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team5Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team5Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team5Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team5Index].pointsDiff +=
-            (_divOneTeamsForTable[team5Index].pointsScored -
-                _divOneTeamsForTable[team5Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team5Index].pointsScored -
+            _divOneTeamsForTable[team5Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team5Index].teamId,
         'teamName': _divOneTeamsForTable[team5Index].teamName,
         'points': _divOneTeamsForTable[team5Index].points,
@@ -224,9 +221,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team6Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team6Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team6Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team6Index].pointsDiff +=
-            (_divOneTeamsForTable[team6Index].pointsScored -
-                _divOneTeamsForTable[team6Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team6Index].pointsScored -
+            _divOneTeamsForTable[team6Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team6Index].teamId,
         'teamName': _divOneTeamsForTable[team6Index].teamName,
         'points': _divOneTeamsForTable[team6Index].points,
@@ -264,9 +260,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team7Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team7Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team7Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team7Index].pointsDiff +=
-            (_divOneTeamsForTable[team7Index].pointsScored -
-                _divOneTeamsForTable[team7Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team7Index].pointsScored -
+            _divOneTeamsForTable[team7Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team7Index].teamId,
         'teamName': _divOneTeamsForTable[team7Index].teamName,
         'points': _divOneTeamsForTable[team7Index].points,
@@ -283,9 +278,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team8Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team8Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team8Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team8Index].pointsDiff +=
-            (_divOneTeamsForTable[team8Index].pointsScored -
-                _divOneTeamsForTable[team8Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team8Index].pointsScored -
+            _divOneTeamsForTable[team8Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team8Index].teamId,
         'teamName': _divOneTeamsForTable[team8Index].teamName,
         'points': _divOneTeamsForTable[team8Index].points,
@@ -323,9 +317,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team9Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team9Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team9Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team9Index].pointsDiff +=
-            (_divOneTeamsForTable[team9Index].pointsScored -
-                _divOneTeamsForTable[team9Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team9Index].pointsScored -
+            _divOneTeamsForTable[team9Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team9Index].teamId,
         'teamName': _divOneTeamsForTable[team9Index].teamName,
         'points': _divOneTeamsForTable[team9Index].points,
@@ -342,9 +335,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team10Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team10Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team10Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team10Index].pointsDiff +=
-            (_divOneTeamsForTable[team10Index].pointsScored -
-                _divOneTeamsForTable[team10Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team10Index].pointsScored -
+            _divOneTeamsForTable[team10Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team10Index].teamId,
         'teamName': _divOneTeamsForTable[team10Index].teamName,
         'points': _divOneTeamsForTable[team10Index].points,
@@ -382,9 +374,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team11Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team11Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team11Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team11Index].pointsDiff +=
-            (_divOneTeamsForTable[team11Index].pointsScored -
-                _divOneTeamsForTable[team11Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team11Index].pointsScored -
+            _divOneTeamsForTable[team11Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team11Index].teamId,
         'teamName': _divOneTeamsForTable[team11Index].teamName,
         'points': _divOneTeamsForTable[team11Index].points,
@@ -401,9 +392,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team12Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team12Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team12Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team12Index].pointsDiff +=
-            (_divOneTeamsForTable[team12Index].pointsScored -
-                _divOneTeamsForTable[team12Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team12Index].pointsScored -
+            _divOneTeamsForTable[team12Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team12Index].teamId,
         'teamName': _divOneTeamsForTable[team12Index].teamName,
         'points': _divOneTeamsForTable[team12Index].points,
@@ -441,9 +431,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team13Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team13Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team13Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team13Index].pointsDiff +=
-            (_divOneTeamsForTable[team13Index].pointsScored -
-                _divOneTeamsForTable[team13Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team13Index].pointsScored -
+            _divOneTeamsForTable[team13Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team13Index].teamId,
         'teamName': _divOneTeamsForTable[team13Index].teamName,
         'points': _divOneTeamsForTable[team13Index].points,
@@ -460,9 +449,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team14Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team14Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team14Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team14Index].pointsDiff +=
-            (_divOneTeamsForTable[team14Index].pointsScored -
-                _divOneTeamsForTable[team14Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team14Index].pointsScored -
+            _divOneTeamsForTable[team14Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team14Index].teamId,
         'teamName': _divOneTeamsForTable[team14Index].teamName,
         'points': _divOneTeamsForTable[team14Index].points,
@@ -500,9 +488,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team15Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team15Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team15Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team15Index].pointsDiff +=
-            (_divOneTeamsForTable[team15Index].pointsScored -
-                _divOneTeamsForTable[team15Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team15Index].pointsScored -
+            _divOneTeamsForTable[team15Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team15Index].teamId,
         'teamName': _divOneTeamsForTable[team15Index].teamName,
         'points': _divOneTeamsForTable[team15Index].points,
@@ -519,9 +506,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team16Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team16Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team16Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team16Index].pointsDiff +=
-            (_divOneTeamsForTable[team16Index].pointsScored -
-                _divOneTeamsForTable[team16Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team16Index].pointsScored -
+            _divOneTeamsForTable[team16Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team16Index].teamId,
         'teamName': _divOneTeamsForTable[team16Index].teamName,
         'points': _divOneTeamsForTable[team16Index].points,
@@ -559,9 +545,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team17Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team17Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team17Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team17Index].pointsDiff +=
-            (_divOneTeamsForTable[team17Index].pointsScored -
-                _divOneTeamsForTable[team17Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team17Index].pointsScored -
+            _divOneTeamsForTable[team17Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team17Index].teamId,
         'teamName': _divOneTeamsForTable[team17Index].teamName,
         'points': _divOneTeamsForTable[team17Index].points,
@@ -578,9 +563,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team18Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team18Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team18Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team18Index].pointsDiff +=
-            (_divOneTeamsForTable[team18Index].pointsScored -
-                _divOneTeamsForTable[team18Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team18Index].pointsScored -
+            _divOneTeamsForTable[team18Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team18Index].teamId,
         'teamName': _divOneTeamsForTable[team18Index].teamName,
         'points': _divOneTeamsForTable[team18Index].points,
@@ -618,9 +602,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team19Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team19Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team19Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team19Index].pointsDiff +=
-            (_divOneTeamsForTable[team19Index].pointsScored -
-                _divOneTeamsForTable[team19Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team19Index].pointsScored -
+            _divOneTeamsForTable[team19Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team19Index].teamId,
         'teamName': _divOneTeamsForTable[team19Index].teamName,
         'points': _divOneTeamsForTable[team19Index].points,
@@ -637,9 +620,8 @@ mixin TableD1Controller on Model {
         'matchesPlayed': _divOneTeamsForTable[team20Index].matchesPlayed,
         'pointsScored': _divOneTeamsForTable[team20Index].pointsScored,
         'pointsAgainst': _divOneTeamsForTable[team20Index].pointsAgainst,
-        'pointsDiff': _divOneTeamsForTable[team20Index].pointsDiff +=
-            (_divOneTeamsForTable[team20Index].pointsScored -
-                _divOneTeamsForTable[team20Index].pointsAgainst),
+        'pointsDiff': (_divOneTeamsForTable[team20Index].pointsScored -
+            _divOneTeamsForTable[team20Index].pointsAgainst),
         'teamId': _divOneTeamsForTable[team20Index].teamId,
         'teamName': _divOneTeamsForTable[team20Index].teamName,
         'points': _divOneTeamsForTable[team20Index].points,

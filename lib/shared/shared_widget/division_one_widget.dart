@@ -63,6 +63,8 @@ class _DivisionOneWidgetState extends State<DivisionOneWidget> {
               ),
               bottom: _currentBottomIndex == 0
                   ? TabBar(
+                      labelStyle: SharedFonts.subBabyBlueFont,
+                      unselectedLabelColor: SharedColors.greyColor,
                       labelColor: SharedColors.babyBlueColor,
                       unselectedLabelStyle: SharedFonts.greyFont,
                       isScrollable: true,

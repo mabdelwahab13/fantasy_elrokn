@@ -40,7 +40,7 @@ class SecondDivisionWidget extends StatefulWidget {
 class _SecondDivisionWidgetState extends State<SecondDivisionWidget> {
   int _currentBottomIndex = 0;
   int _currentTabBarIndex = 0;
-
+  bool _isG2Done = false;
   _changeBottomTab(int index) {
     setState(() {
       _currentBottomIndex = index;
@@ -71,7 +71,9 @@ class _SecondDivisionWidgetState extends State<SecondDivisionWidget> {
               ),
               bottom: _currentBottomIndex == 0
                   ? TabBar(
-                    labelColor: SharedColors.babyBlueColor,
+                      labelStyle: SharedFonts.subBabyBlueFont,
+                      unselectedLabelColor: SharedColors.greyColor,
+                      labelColor: SharedColors.babyBlueColor,
                       unselectedLabelStyle: SharedFonts.greyFont,
                       isScrollable: true,
                       indicatorColor: SharedColors.subBabyBlueColor,

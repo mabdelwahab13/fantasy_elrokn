@@ -5,7 +5,7 @@ import 'package:sizer/sizer.dart';
 
 class SharedFonts {
   static TextStyle greyFont = TextStyle(
-    color: Color(0xffa0a0a0),
+    color: SharedColors.greyColor,
     fontSize: 12.sp,
     fontFamily: 'Ubuntu',
   );

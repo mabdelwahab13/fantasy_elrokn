@@ -49,6 +49,9 @@ class _PlayOffWidgetState extends State<PlayOffWidget> {
                 style: SharedFonts.babyBlueFont,
               ),
               bottom: TabBar(
+                labelStyle: SharedFonts.subBabyBlueFont,
+                unselectedLabelColor: SharedColors.greyColor,
+                labelColor: SharedColors.babyBlueColor,
                 unselectedLabelStyle: SharedFonts.greyFont,
                 isScrollable: true,
                 indicatorColor: SharedColors.subBabyBlueColor,
