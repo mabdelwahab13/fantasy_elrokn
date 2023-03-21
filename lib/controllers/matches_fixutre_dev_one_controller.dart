@@ -5414,8 +5414,14 @@ mixin MatchesFixtureDevOneController on Model {
     }
   }
 
+  bool _isGettingDataD1 = false;
+  bool get isGettingDataD1 => _isGettingDataD1;
+
   Future<void> getCurrentGWDataDevOne() async {
     _isLoadingD1 = true;
+    notifyListeners();
+    _isGettingDataD1 = true;
+    notifyListeners();
     _totalCurrentGWPointsD1.clear();
     try {
       await getIdsForTeamPointsD1();
@@ -5586,6 +5592,8 @@ mixin MatchesFixtureDevOneController on Model {
       _activeConnetion = false;
       notifyListeners();
     }
+    _isGettingDataD1= false;
+    notifyListeners();
   }
 
   Future<void> getTeamsDataD1() async {
